@@ -5,17 +5,22 @@
  */
 package Vista;
 
+import entidades.Usuario;
+
 /**
  *
  * @author Gerard
  */
 public class frmMenuPrincipal extends javax.swing.JFrame {
-
+    public static Usuario usuarioActual;
     /**
      * Creates new form frmMenuPrincipal
      */
     public frmMenuPrincipal() {
         initComponents();
+        lblEmpleado.setText(usuarioActual.getEmpleado().toString());
+        setExtendedState(MAXIMIZED_BOTH); 
+        setTitle(new configuracion.Gestionar().Leer("Empresa","nombre"));
     }
 
     /**
@@ -27,6 +32,8 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tblSesion = new javax.swing.JToolBar();
+        lblEmpleado = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -64,6 +71,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem24 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tblSesion.setRollover(true);
+
+        lblEmpleado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblEmpleado.setText("jLabel1");
+        tblSesion.add(lblEmpleado);
 
         jMenu1.setText("Operaciones");
         jMenu1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -190,11 +203,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 607, Short.MAX_VALUE)
+            .addComponent(tblSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 276, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 251, Short.MAX_VALUE)
+                .addComponent(tblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -275,5 +290,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JLabel lblEmpleado;
+    private javax.swing.JToolBar tblSesion;
     // End of variables declaration//GEN-END:variables
 }
