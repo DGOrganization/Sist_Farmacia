@@ -14,6 +14,7 @@ public class Usuario {
     private String _username;
     private String _password;
     private Empleado _empleado;
+    private boolean _estado;
 
     public long getId() {
         return _id;
@@ -47,14 +48,23 @@ public class Usuario {
         this._empleado = _empleado;
     }
 
+    public boolean isEstado() {
+        return _estado;
+    }
+
+    public void setEstado(boolean _estado) {
+        this._estado = _estado;
+    }
+
     public Usuario() {
     }
 
-    public Usuario(long _id, String _username, String _password, Empleado _empleado) {
+    public Usuario(long _id, String _username, String _password, Empleado _empleado, boolean _estado) {
         this._id = _id;
         this._username = _username;
         this._password = _password;
         this._empleado = _empleado;
+        this._estado = _estado;
     }
 
     @Override

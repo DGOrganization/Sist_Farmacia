@@ -9,11 +9,9 @@ package entidades;
  *
  * @author dakrpastiursSennin
  */
-public class Empleado {
+public class Marca {
     private long _id;
     private String _nombre;
-    private String _apellidopaterno;
-    private String _apellidomaterno;
     private boolean _estado;
 
     public long getId() {
@@ -32,22 +30,6 @@ public class Empleado {
         this._nombre = _nombre;
     }
 
-    public String getApellidopaterno() {
-        return _apellidopaterno;
-    }
-
-    public void setApellidopaterno(String _apellidopaterno) {
-        this._apellidopaterno = _apellidopaterno;
-    }
-
-    public String getApellidomaterno() {
-        return _apellidomaterno;
-    }
-
-    public void setApellidomaterno(String _apellidomaterno) {
-        this._apellidomaterno = _apellidomaterno;
-    }
-
     public boolean isEstado() {
         return _estado;
     }
@@ -56,20 +38,18 @@ public class Empleado {
         this._estado = _estado;
     }
 
-    public Empleado() {
+    public Marca() {
     }
 
-    public Empleado(long _id, String _nombre, String _apellidopaterno, String _apellidomaterno, boolean _estado) {
+    public Marca(long _id, String _nombre, boolean _estado) {
         this._id = _id;
         this._nombre = _nombre;
-        this._apellidopaterno = _apellidopaterno;
-        this._apellidomaterno = _apellidomaterno;
         this._estado = _estado;
     }
 
     @Override
     public String toString() {
-        return _nombre + " " + _apellidopaterno + " " + _apellidomaterno;
+        return _nombre;
     }
     
 }

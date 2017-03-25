@@ -5,14 +5,11 @@
  */
 package Vista;
 
+import configuracion.Gestionar;
 import controlador.Usuario_controlador;
 import entidades.Empleado;
 import entidades.Usuario;
 import javax.swing.JOptionPane;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 /**
  *
@@ -21,6 +18,7 @@ import java.util.Properties;
 public class Sesion extends javax.swing.JFrame {
     private final Usuario usuario;
     private final Usuario_controlador controlador;
+    Gestionar gestion;
     /**
      * Creates new form Sesion
      */
@@ -28,7 +26,9 @@ public class Sesion extends javax.swing.JFrame {
         initComponents();
         usuario = new Usuario();
         controlador = new Usuario_controlador();
+        gestion = new Gestionar();
         this.setLocationRelativeTo(null);
+        gestion.Modificar("Empresa", "nombre", "Farmacia La Salud");
         this.setTitle(new configuracion.Gestionar().Leer("Empresa","nombre"));
     }
 
@@ -162,7 +162,7 @@ public class Sesion extends javax.swing.JFrame {
         // TODO add your handling code here:
         usuario.setUsername(txtUsuario.getText());
         usuario.setPassword(String.valueOf(txtPassword.getPassword()));
-        Empleado empleado = new Empleado(1, "Juan Edgardo", "Perez", "Lopez");
+        Empleado empleado = new Empleado(1, "Juan Edgardo", "Perez", "Lopez", true);
         usuario.setEmpleado(empleado);
         if(controlador.Login(usuario)){
             frmMenuPrincipal.usuarioActual = usuario;

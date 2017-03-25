@@ -5,16 +5,10 @@
  */
 package controlador;
 
-import entidades.Usuario;
-
 /**
  *
  * @author dakrpastiursSennin
  */
-public class Usuario_controlador {
-    
-    public boolean Login(Usuario data){
-        return data.getUsername().equals("admin") && data.getPassword().equals("123456") && data.isEstado();
-    }
+public class Bodega_controlador {
     
 }

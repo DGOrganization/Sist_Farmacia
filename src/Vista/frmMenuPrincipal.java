@@ -5,7 +5,9 @@
  */
 package Vista;
 
+import configuracion.Gestionar;
 import entidades.Usuario;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,7 +38,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         lblEmpleado = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        miProducto = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -81,8 +83,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenu1.setText("Operaciones");
         jMenu1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        jMenuItem1.setText("Articulos");
-        jMenu1.add(jMenuItem1);
+        miProducto.setText("Articulos");
+        miProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miProductoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miProducto);
 
         jMenuItem2.setText("Clientes");
         jMenu1.add(jMenuItem2);
@@ -208,7 +215,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 251, Short.MAX_VALUE)
+                .addContainerGap(251, Short.MAX_VALUE)
                 .addComponent(tblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -218,6 +225,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void miProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miProductoActionPerformed
+        // TODO add your handling code here:
+        frmAgregarProductos frm = new frmAgregarProductos();
+        frm.setVisible(true);
+    }//GEN-LAST:event_miProductoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,7 +275,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
@@ -291,6 +303,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JLabel lblEmpleado;
+    private javax.swing.JMenuItem miProducto;
     private javax.swing.JToolBar tblSesion;
     // End of variables declaration//GEN-END:variables
 }

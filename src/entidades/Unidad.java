@@ -5,15 +5,17 @@
  */
 package entidades;
 
+import java.util.List;
+
 /**
  *
  * @author dakrpastiursSennin
  */
-public class Empleado {
+public class Unidad {
     private long _id;
     private String _nombre;
-    private String _apellidopaterno;
-    private String _apellidomaterno;
+    private String _abreviado;
+    private List<Unidad> _conversiones;
     private boolean _estado;
 
     public long getId() {
@@ -32,20 +34,20 @@ public class Empleado {
         this._nombre = _nombre;
     }
 
-    public String getApellidopaterno() {
-        return _apellidopaterno;
+    public String getAbreviado() {
+        return _abreviado;
     }
 
-    public void setApellidopaterno(String _apellidopaterno) {
-        this._apellidopaterno = _apellidopaterno;
+    public void setAbreviado(String _abreviado) {
+        this._abreviado = _abreviado;
     }
 
-    public String getApellidomaterno() {
-        return _apellidomaterno;
+    public List<Unidad> getConversiones() {
+        return _conversiones;
     }
 
-    public void setApellidomaterno(String _apellidomaterno) {
-        this._apellidomaterno = _apellidomaterno;
+    public void setConversiones(List<Unidad> _conversiones) {
+        this._conversiones = _conversiones;
     }
 
     public boolean isEstado() {
@@ -56,20 +58,27 @@ public class Empleado {
         this._estado = _estado;
     }
 
-    public Empleado() {
+    public Unidad() {
     }
 
-    public Empleado(long _id, String _nombre, String _apellidopaterno, String _apellidomaterno, boolean _estado) {
+    public Unidad(long _id, String _nombre, String _abreviado, boolean _estado) {
         this._id = _id;
         this._nombre = _nombre;
-        this._apellidopaterno = _apellidopaterno;
-        this._apellidomaterno = _apellidomaterno;
+        this._abreviado = _abreviado;
+        this._estado = _estado;
+    }
+
+    public Unidad(long _id, String _nombre, String _abreviado, List<Unidad> _conversiones, boolean _estado) {
+        this._id = _id;
+        this._nombre = _nombre;
+        this._abreviado = _abreviado;
+        this._conversiones = _conversiones;
         this._estado = _estado;
     }
 
     @Override
     public String toString() {
-        return _nombre + " " + _apellidopaterno + " " + _apellidomaterno;
+        return _nombre + "(" + _abreviado + ")";
     }
     
 }
