@@ -8,6 +8,7 @@ package Vista;
 import controlador.Inventario_controlador;
 import entidades.Inventario;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,7 +57,7 @@ public class frmAgregarProductos extends javax.swing.JFrame {
         jtInventario.setModel(modelo);
     }
     
-     private void buscarTXT(){
+    private void buscarTXT(){
         List<Inventario> encontrado = new ArrayList<>();
         encontrado = inventarioList.stream().filter(
                 datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())

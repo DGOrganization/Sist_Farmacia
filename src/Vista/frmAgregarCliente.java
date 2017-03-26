@@ -6,16 +6,75 @@
 
 package Vista;
 
+import controlador.Cliente_controlador;
+import entidades.Cliente;
+import entidades.Inventario;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gerard
  */
 public class frmAgregarCliente extends javax.swing.JDialog {
-
+    private final List<Cliente> clienteList;
+    private final Cliente_controlador controlador;
     /** Creates new form frmAgregarCliente */
     public frmAgregarCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
+        controlador = new Cliente_controlador();
+        clienteList = controlador.Obtener();
+        cargarDatos(clienteList);
+        changeText();
+    }
+    
+    private void cargarDatos(List<Cliente> lista){
+        String[] columnas = {"Nombre", "Telefono", "Direccion"};
+        ControlesGenerales.reiniciarJTable(jtClientes);
+        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        modelo.setColumnIdentifiers(columnas);
+        lista.forEach(datos -> {
+            Object[] nuevaFila= {
+                datos,
+                datos.getTelefono(),
+                datos.getDireccion()
+            };
+            modelo.addRow(nuevaFila);
+        });
+        jtClientes.setModel(modelo);
+    }
+    
+     private void buscarTXT(){
+        List<Cliente> encontrado = new ArrayList<>();
+        encontrado = clienteList.stream().filter(
+                datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
+        ).collect(Collectors.toList());
+        cargarDatos(encontrado);
+    }
+    
+    private void changeText(){
+        txtBusqueda.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+        
+        });
     }
 
     /** This method is called from within the constructor to
@@ -29,9 +88,9 @@ public class frmAgregarCliente extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtClientes = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -43,7 +102,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
             },
@@ -51,10 +110,15 @@ public class frmAgregarCliente extends javax.swing.JDialog {
                 "Codigo", "Nombres", "Tel/Cel", "Direccion"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtClientes);
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add16.png"))); // NOI18N
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit16.png"))); // NOI18N
         btnEditar.setText("Editar");
@@ -74,7 +138,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(btnAgregar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
@@ -87,7 +151,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
+                    .addComponent(txtBusqueda)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,6 +189,20 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        frmNuevoCliente frm = new frmNuevoCliente();
+        frm.setVisible(true);
+        if(!frm.isVisible()){
+            if(frm.getCliente().equals(new Cliente())){
+                System.out.println("Cliente := " + frm.getCliente());
+                clienteList.add(frm.getCliente());
+                cargarDatos(clienteList);
+            }
+            frm.dispose();
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -155,7 +233,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                frmAgregarCliente dialog = new frmAgregarCliente(new javax.swing.JFrame(), true);
+                frmAgregarCliente dialog = new frmAgregarCliente(new javax.swing.JFrame(), false);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -175,8 +253,8 @@ public class frmAgregarCliente extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jtClientes;
+    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 
 }
