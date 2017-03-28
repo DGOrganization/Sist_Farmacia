@@ -6,6 +6,9 @@
 package controlador;
 
 import entidades.Usuario;
+import java.util.Collections;
+import java.util.List;
+import modelo.Usuario_modelo;
 
 /**
  *
@@ -14,7 +17,30 @@ import entidades.Usuario;
 public class Usuario_controlador {
     
     public boolean Login(Usuario data){
-        return data.getUsername().equals("admin") && data.getPassword().equals("123456") && data.isEstado();
+        return new Usuario_modelo().Login(data);
     }
     
+    public List<Usuario> Obtener(){
+        List<Usuario> lista = new Usuario_modelo().ListarUsuarios();
+        Collections.sort(lista, (Usuario p1, Usuario p2) ->{
+            return (p1.getEmpleado().getApellidopaterno() + " " + p1.getEmpleado().getApellidomaterno()).compareTo(p2.getEmpleado().getApellidopaterno() + " " + p2.getEmpleado().getApellidomaterno());
+        });
+        return lista;
+    }
+    
+    public Usuario Obtener(Usuario pUsuario){
+        return new Usuario_modelo().ListarUsuario(pUsuario);
+    }
+    
+    public boolean Registrar(Usuario pUsuario){
+        return new Usuario_modelo().Registrar(pUsuario);
+    }
+    
+    public boolean Editar(Usuario pUsuario){
+        return new Usuario_modelo().Eliminar(pUsuario);
+    }
+    
+    public boolean Eliminar(Usuario pUsuario){
+        return new Usuario_modelo().Eliminar(pUsuario);
+    }
 }

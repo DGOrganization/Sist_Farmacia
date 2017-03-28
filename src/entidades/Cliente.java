@@ -18,7 +18,7 @@ public class Cliente {
     private String _apellidomaterno;
     private String _dui;
     private String _nit;
-    private char _sexo;
+    private String _sexo;
     private java.sql.Date _nacimiento;
     private String _direccion;
     private Municipio _municipio;
@@ -75,11 +75,11 @@ public class Cliente {
         this._nit = _nit;
     }
 
-    public char getSexo() {
+    public String getSexo() {
         return _sexo;
     }
 
-    public void setSexo(char _sexo) {
+    public void setSexo(String _sexo) {
         this._sexo = _sexo;
     }
 
@@ -142,7 +142,7 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(long _id, String _nombre, String _apellidopaterno, String _apellidomaterno, String _dui, String _nit, char _sexo, java.util.Date _nacimiento, String _direccion, Municipio _municipio, String _telefono, String _movil, String _email, boolean _estado) {
+    public Cliente(long _id, String _nombre, String _apellidopaterno, String _apellidomaterno, String _dui, String _nit, String _sexo, java.util.Date _nacimiento, String _direccion, Municipio _municipio, String _telefono, String _movil, String _email, boolean _estado) {
         this._id = _id;
         this._nombre = _nombre;
         this._apellidopaterno = _apellidopaterno;

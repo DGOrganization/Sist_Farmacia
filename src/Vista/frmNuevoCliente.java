@@ -354,7 +354,7 @@ public class frmNuevoCliente extends javax.swing.JFrame {
         cliente.setApellidoMaterno(nombre[2]);
         cliente.setDui(txtDUI.getText());
         cliente.setNit(txtNIT.getText());
-        cliente.setSexo(cboSexo.getSelectedItem().toString().charAt(0));
+        cliente.setSexo(cboSexo.getSelectedItem().toString().substring(0, 1));
         cliente.setNacimiento(new java.util.Date());
         cliente.setDireccion(txtDireccion.getText());
         cliente.setMunicipio(new Municipio(1, cboMunicipio.getSelectedItem().toString(), true));

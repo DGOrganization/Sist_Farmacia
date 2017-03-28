@@ -47,6 +47,10 @@ public class Municipio {
         this._estado = _estado;
     }
 
+    public Municipio(long _id) {
+        this._id = _id;
+    }
+    
     @Override
     public String toString() {
         return _nombre;
