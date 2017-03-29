@@ -12,6 +12,9 @@ import entidades.Cliente;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -23,7 +26,10 @@ import javax.swing.table.DefaultTableModel;
 public class frmAgregarCliente extends javax.swing.JDialog {
     private List<Cliente> clienteList;
     private final Cliente_controlador controlador;
-    /** Creates new form frmAgregarCliente */
+    /** Creates new form frmAgregarCliente
+     * @param parent
+     * @param modal 
+    */
     public frmAgregarCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -36,7 +42,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
     }
     
     private void cargarDatos(List<Cliente> lista){
-        String[] columnas = {"Nombre", "Telefono", "Direccion"};
+        String[] columnas = {"Nombre", "Telefono", "Direccion", "Eliminar"};
         ControlesGenerales.reiniciarJTable(jtClientes);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
@@ -46,7 +52,9 @@ public class frmAgregarCliente extends javax.swing.JDialog {
                 datos.getTelefono().get(0),
                 datos.getDireccion()
             };
-            modelo.addRow(nuevaFila);
+            if(datos.isEstado()){
+                modelo.addRow(nuevaFila);
+            }
         });
         jtClientes.setModel(modelo);
     }
@@ -111,6 +119,11 @@ public class frmAgregarCliente extends javax.swing.JDialog {
                 "Codigo", "Nombres", "Tel/Cel", "Direccion"
             }
         ));
+        jtClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtClientes);
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add16.png"))); // NOI18N
@@ -123,6 +136,11 @@ public class frmAgregarCliente extends javax.swing.JDialog {
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit16.png"))); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/okay16.png"))); // NOI18N
         btnSeleccionar.setText("Seleccionar");
@@ -192,9 +210,9 @@ public class frmAgregarCliente extends javax.swing.JDialog {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        frmNuevoCliente frm = new frmNuevoCliente();
+        frmRegistrarCliente frm = new frmRegistrarCliente(this, true);
         frm.setVisible(true);
-        if(!frm.isVisible()){
+        if(frm.isVisible() == false){
             if(!frm.getCliente().equals(new Cliente())){
                 clienteList = controlador.Obtener();
                 cargarDatos(clienteList);
@@ -202,6 +220,54 @@ public class frmAgregarCliente extends javax.swing.JDialog {
             frm.dispose();
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        frmRegistrarCliente frm = new frmRegistrarCliente(this, true);
+        int fila = jtClientes.getSelectedRow();
+        if (fila > -1) {
+            frm.setCliente(clienteList.get(clienteList.indexOf(jtClientes.getValueAt(fila, 0))));
+            frm.setEditar(true);
+            frm.setVisible(true);
+            if (frm.isVisible() == false) {
+                clienteList = controlador.Obtener();
+                cargarDatos(clienteList);
+                frm.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void jtClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtClientesMouseClicked
+        // TODO add your handling code here:
+        int fila = jtClientes.getSelectedRow();
+        if (fila > -1) {
+            int columna = jtClientes.getSelectedColumn();
+            if (jtClientes.getValueAt(fila, columna) instanceof JButton) {
+                int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
+                        JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    if (controlador.Eliminar(clienteList.get(clienteList.indexOf(jtClientes.getValueAt(fila, 0))))) {
+                        JOptionPane.showMessageDialog(this,
+                                "El registro ha sido eliminado exitosamente",
+                                "Sistema de Compras y Ventas - Categoria",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        clienteList = controlador.Obtener();
+                        cargarDatos(clienteList);
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jtClientesMouseClicked
 
     /**
      * @param args the command line arguments

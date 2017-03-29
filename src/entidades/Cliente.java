@@ -13,20 +13,20 @@ import java.util.List;
  * @author dakrpastiursSennin
  */
 public class Cliente extends Persona{
-    private long _id;
+    private int _id;
     
-    public long getId() {
+    public int getId() {
         return _id;
     }
 
-    public void setId(long _id) {
+    public void setId(int _id) {
         this._id = _id;
     }
 
     public Cliente() {
     }
 
-    public Cliente(long _id) {
+    public Cliente(int _id) {
         this._id = _id;
     }
 

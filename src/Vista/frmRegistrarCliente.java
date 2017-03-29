@@ -9,6 +9,7 @@ import configuracion.Gestionar;
 import controlador.Cliente_controlador;
 import controlador.Departamento_controlador;
 import entidades.Cliente;
+import entidades.Departamento;
 import entidades.Municipio;
 import entidades.Telefono;
 import java.util.ArrayList;
@@ -17,28 +18,45 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Gerard
+ * @author dakrpastiursSennin
  */
-public class frmNuevoCliente extends javax.swing.JFrame {
+public class frmRegistrarCliente extends javax.swing.JDialog {
     private Cliente cliente;
     private boolean editar;
+    private List<Departamento> deptos;
     private Departamento_controlador controlador_depto;
     private Cliente_controlador controlador;
     /**
-     * Creates new form frmNuevoCliente
+     * Creates new form frmRegistrarCliente
+     * @param parent
+     * @param modal
      */
-    public frmNuevoCliente() {
+    public frmRegistrarCliente(javax.swing.JFrame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
-        setLocationRelativeTo(null);
-        new Validaciones().duiFormato(txtDUI, this);
-        new Validaciones().nitFormato(txtNIT, this);
-        new Validaciones().telefonoFormato(txtTelefono, this);
-        new Validaciones().telefonoFormato(txtCelular, this);
-        controlador_depto = new Departamento_controlador();
-        controlador = new Cliente_controlador();
-        new Validaciones().cboDeptoMun(cboDepto, cboMunicipio, controlador_depto.Obtener());
+        this.setLocationRelativeTo(null);
+        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
     }
-
+    
+    public frmRegistrarCliente(javax.swing.JDialog parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
+    }
+    
+    private Departamento buscador(List<Departamento> deps){
+        Departamento encontrado = new Departamento();
+        for(Departamento dep : deps){
+            for(Municipio muni : dep.getMunicipios()){
+                if(muni.toString().equals(cliente.getMunicipio().toString())){
+                    encontrado = dep;
+                    break;
+                }
+            }
+        }
+        return encontrado;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,7 +104,7 @@ public class frmNuevoCliente extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -129,6 +147,12 @@ public class frmNuevoCliente extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Fecha de Nacimiento:");
 
+        cboDepto.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboDeptoItemStateChanged(evt);
+            }
+        });
+
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setText("Estado:");
 
@@ -136,6 +160,8 @@ public class frmNuevoCliente extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel14.setText("Municipio:");
+
+        jdcNacimiento.setDateFormatString("dd-MM-yyyy");
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText("Apellidos: ");
@@ -226,12 +252,13 @@ public class frmNuevoCliente extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel15)
-                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
@@ -359,19 +386,25 @@ public class frmNuevoCliente extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jpAcciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cboDeptoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboDeptoItemStateChanged
+        // TODO add your handling code here:
+        cboMunicipio.removeAllItems();
+        new Validaciones().cboMuni(cboMunicipio, deptos.get(deptos.indexOf(cboDepto.getSelectedItem())).getMunicipios());
+    }//GEN-LAST:event_cboDeptoItemStateChanged
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         Validaciones validar = new Validaciones();
         boolean valido = validar.validarCamposTexto(txtNombre) && validar.validarCamposTexto(txtApellidos) && validar.validarCamposTexto(txtTelefono) && validar.validarCamposTexto(txtCelular)
-                && validar.validarCamposTexto(txtDUI) && validar.validarCamposTexto(txtNIT) && validar.validarCamposTexto(txtDireccion) 
-                && validar.validarFechas(jdcNacimiento);
+        && validar.validarCamposTexto(txtDUI) && validar.validarCamposTexto(txtNIT) && validar.validarCamposTexto(txtDireccion)
+        && validar.validarFechas(jdcNacimiento);
         if(valido){
             cliente.setNombre(txtNombre.getText());
             String nombre[] = validar.editarApellidos(txtApellidos.getText());
@@ -399,31 +432,31 @@ public class frmNuevoCliente extends javax.swing.JFrame {
             }
             cliente.setEstado(chkEstado.isSelected());
             if(!isEditar()){
-                 if(controlador.Registrar(cliente)){
+                if(controlador.Registrar(cliente)){
                     JOptionPane.showMessageDialog(this,
-                             "El registro ha sido ingresado exitosamente",
-                             new Gestionar().Leer("Empresa", "nombre"),
-                             JOptionPane.INFORMATION_MESSAGE);
+                        "El registro ha sido ingresado exitosamente",
+                        new Gestionar().Leer("Empresa", "nombre"),
+                        JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
                 int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de editar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
-                        JOptionPane.YES_NO_OPTION);
+                    JOptionPane.YES_NO_OPTION);
                 if (respuesta == JOptionPane.YES_OPTION) {
                     if (controlador.Editar(cliente)) {
                         JOptionPane.showMessageDialog(this,
-                                "El registro ha sido actualizado exitosamente",
-                                new Gestionar().Leer("Empresa", "nombre"),
-                                JOptionPane.INFORMATION_MESSAGE);
+                            "El registro ha sido actualizado exitosamente",
+                            new Gestionar().Leer("Empresa", "nombre"),
+                            JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
             this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(
-                    null, 
-                    "Termina de ingresar los campos restantes",
-                    new Gestionar().Leer("Empresa", "nombre"),
-                    JOptionPane.ERROR_MESSAGE
+                null,
+                "Termina de ingresar los campos restantes",
+                new Gestionar().Leer("Empresa", "nombre"),
+                JOptionPane.ERROR_MESSAGE
             );
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -435,8 +468,30 @@ public class frmNuevoCliente extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        if(isEditar()){
+        new Validaciones().duiFormato(txtDUI, this);
+        new Validaciones().nitFormato(txtNIT, this);
+        new Validaciones().telefonoFormato(txtTelefono, this);
+        new Validaciones().telefonoFormato(txtCelular, this);
+        deptos = new ArrayList<>();
+        controlador_depto = new Departamento_controlador();
+        deptos = controlador_depto.Obtener();
+        controlador = new Cliente_controlador();
+        new Validaciones().cboDepto(cboDepto, deptos);
+        new Validaciones().cboMuni(cboMunicipio, deptos.get(deptos.indexOf(cboDepto.getSelectedItem())).getMunicipios());
+         if(isEditar()){
             txtNombre.setText(cliente.getNombre());
+            txtApellidos.setText(cliente.getApellidoPaterno() + " " + cliente.getApellidoMaterno());
+            txtDUI.setText(cliente.getDui());
+            txtNIT.setText(cliente.getNit());
+            cboSexo.setSelectedItem(cliente.getSexo());
+            jdcNacimiento.setDate(cliente.getNacimiento());
+            txtDireccion.setText(cliente.getDireccion());
+            cboDepto.setSelectedItem(buscador(deptos));
+            cboMunicipio.setSelectedItem(cliente.getMunicipio());
+            txtTelefono.setText(cliente.getTelefono().get(0).getNumero());
+            txtCelular.setText(cliente.getTelefono().get(1).getNumero());
+            txtEmail.setText(cliente.getEmail());
+            chkEstado.setSelected(cliente.isEstado());
         } else {
             cliente = new Cliente();
         }
@@ -459,20 +514,27 @@ public class frmNuevoCliente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmRegistrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmRegistrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmRegistrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmRegistrarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmNuevoCliente().setVisible(true);
+                frmRegistrarCliente dialog = new frmRegistrarCliente(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

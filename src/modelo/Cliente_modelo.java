@@ -34,7 +34,7 @@ public class Cliente_modelo {
                     ResultSet resultado = cmd.getResultSet();
                     while(resultado.next()){
                         Cliente cliente = new Cliente();
-                        cliente.setId(resultado.getLong("codigo"));
+                        cliente.setId(resultado.getInt("codigo"));
                         cliente.setNombre(resultado.getString("nombre"));
                         cliente.setApellidoPaterno(resultado.getString("apellido1"));
                         cliente.setApellidoMaterno(resultado.getObject("apellido2") == null ? "" : resultado.getString("apellido2"));
@@ -75,7 +75,7 @@ public class Cliente_modelo {
                 if(cmd.execute()){
                     ResultSet resultado = cmd.getResultSet();
                     while(resultado.next()){
-                        cliente.setId(resultado.getLong("codigo"));
+                        cliente.setId(resultado.getInt("codigo"));
                         cliente.setNombre(resultado.getString("nombre"));
                         cliente.setApellidoPaterno(resultado.getString("apellido1"));
                         cliente.setApellidoMaterno(resultado.getObject("apellido2") == null ? "" : resultado.getString("apellido2"));
@@ -110,17 +110,14 @@ public class Cliente_modelo {
         Conexion conn = new Conexion();
         try{
             if (conn.Conectar()) {
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call registrarcliente(?,?,?,?,?,?,?,?,?,?,?,?) }");
+                CallableStatement cmd = conn.getConnection().prepareCall("{ call registrarcliente(?,?,?,?,?,?,?,?,?,?,?) }");
                 cmd.setString(1, pCliente.getNombre());
                 cmd.setString(2, pCliente.getApellidoPaterno());
                 cmd.setString(3, pCliente.getApellidoMaterno());
                 cmd.setString(4, pCliente.getDui());
                 cmd.setString(5, pCliente.getNit());
                 cmd.setString(6, pCliente.getSexo());
-                PGobject nacimiento = new PGobject();
-                nacimiento.setType("date");
-                nacimiento.setValue(pCliente.getNacimiento().toString());
-                cmd.setObject(7, nacimiento);
+                cmd.setObject(7, pCliente.getNacimiento());
                 cmd.setString(8, pCliente.getDireccion());
                 JSONArray jsona = new JSONArray();
                 pCliente.getTelefono().forEach(datos -> {
@@ -133,9 +130,8 @@ public class Cliente_modelo {
                 telefonos.setType("json");
                 telefonos.setValue(jsona.toString());
                 cmd.setString(9, pCliente.getEmail());
-                cmd.setBoolean(10, pCliente.isEstado());
-                cmd.setInt(11, pCliente.getMunicipio().getId());
-                cmd.setObject(12, telefonos);
+                cmd.setInt(10, pCliente.getMunicipio().getId());
+                cmd.setObject(11, telefonos);
                 exito = cmd.execute();
             }
         } catch(Exception ex){
@@ -157,8 +153,8 @@ public class Cliente_modelo {
         Conexion conn = new Conexion();
         try{
             if (conn.Conectar()) {
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call actualizarcliente(?,?,?,?,?,?,?,?,?,?,?,?,?,?) }");
-                cmd.setLong(1, pCliente.getId());
+                CallableStatement cmd = conn.getConnection().prepareCall("{ call editarcliente(?,?,?,?,?,?,?,?,?,?,?,?) }");
+                cmd.setInt(1, pCliente.getId());
                 cmd.setString(2, pCliente.getNombre());
                 cmd.setString(3, pCliente.getApellidoPaterno());
                 cmd.setString(4, pCliente.getApellidoMaterno());
@@ -167,11 +163,19 @@ public class Cliente_modelo {
                 cmd.setString(7, pCliente.getSexo());
                 cmd.setDate(8, pCliente.getNacimiento());
                 cmd.setString(9, pCliente.getDireccion());
-                cmd.setLong(10, pCliente.getMunicipio().getId());
-//                cmd.setString(11, pCliente.getTelefono());
-                cmd.setString(12, pCliente.getMovil());
-                cmd.setString(13, pCliente.getEmail());
-                cmd.setBoolean(14, pCliente.isEstado());
+                JSONArray jsona = new JSONArray();
+                pCliente.getTelefono().forEach(datos -> {
+                    JSONObject jsono = new JSONObject();
+                    jsono.put("num", datos.getNumero());
+                    jsono.put("tip", datos.getTipo());
+                    jsona.put(jsono);
+                });
+                PGobject telefonos = new PGobject();
+                telefonos.setType("json");
+                telefonos.setValue(jsona.toString());
+                cmd.setString(10, pCliente.getEmail());
+                cmd.setInt(11, pCliente.getMunicipio().getId());
+                cmd.setObject(12, telefonos);
                 exito = cmd.execute();
             }
         } catch(Exception ex){
@@ -194,7 +198,7 @@ public class Cliente_modelo {
         try{
             if (conn.Conectar()) {
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call eliminarcliente(?) }");
-                cmd.setLong(1, pCliente.getId());
+                cmd.setInt(1, pCliente.getId());
                 exito = cmd.execute();
             }
         } catch(Exception ex){

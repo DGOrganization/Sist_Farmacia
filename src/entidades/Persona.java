@@ -85,7 +85,6 @@ public class Persona {
     }
 
     public java.sql.Date getNacimiento() {
-        System.out.println("Fecha = " + _nacimiento.toString());
         return _nacimiento;
     }
 

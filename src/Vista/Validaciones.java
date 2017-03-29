@@ -8,6 +8,7 @@ package Vista;
 
 import com.toedter.calendar.JDateChooser;
 import entidades.Departamento;
+import entidades.Municipio;
 import entidades.Usuario;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
@@ -248,14 +249,18 @@ public class Validaciones {
                 cbo.addItem(nivel);
         });
     }*/
-    public void cboDeptoMun(JComboBox cboPrincipal, JComboBox cboSecundario, List<Departamento> pDepto){
+    public void cboDepto(JComboBox cboPrincipal, List<Departamento> pDepto){
         pDepto.forEach(datos -> {
             cboPrincipal.addItem(datos);
-            datos.getMunicipios().forEach(dato -> {
-                cboSecundario.addItem(dato);
-            });
         });        
     }
+    
+    public void cboMuni(JComboBox cboPrincipal, List<Municipio> pDepto){
+        pDepto.forEach(datos -> {
+            cboPrincipal.addItem(datos);
+        });        
+    }
+    
     public boolean validarCamposTexto(JTextField text){
         if(!text.getText().trim().equals("")){
             return true;
