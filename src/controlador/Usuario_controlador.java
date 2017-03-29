@@ -23,7 +23,7 @@ public class Usuario_controlador {
     public List<Usuario> Obtener(){
         List<Usuario> lista = new Usuario_modelo().ListarUsuarios();
         Collections.sort(lista, (Usuario p1, Usuario p2) ->{
-            return (p1.getEmpleado().getApellidopaterno() + " " + p1.getEmpleado().getApellidomaterno()).compareTo(p2.getEmpleado().getApellidopaterno() + " " + p2.getEmpleado().getApellidomaterno());
+            return (p1.getEmpleado().getApellidoPaterno() + " " + p1.getEmpleado().getApellidoMaterno()).compareTo(p2.getEmpleado().getApellidoPaterno() + " " + p2.getEmpleado().getApellidoMaterno());
         });
         return lista;
     }

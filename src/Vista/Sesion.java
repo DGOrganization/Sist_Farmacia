@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author Gerard
  */
 public class Sesion extends javax.swing.JFrame {
-    private final Usuario usuario;
+    private Usuario usuario;
     private final Usuario_controlador controlador;
     Gestionar gestion;
     /**
@@ -162,9 +162,8 @@ public class Sesion extends javax.swing.JFrame {
         // TODO add your handling code here:
         usuario.setUsername(txtUsuario.getText());
         usuario.setPassword(String.valueOf(txtPassword.getPassword()));
-        Empleado empleado = new Empleado(1, "Juan Edgardo", "Perez", "Lopez", true);
-        usuario.setEmpleado(empleado);
         if(controlador.Login(usuario)){
+            usuario = controlador.Obtener(usuario);
             frmMenuPrincipal.usuarioActual = usuario;
             frmMenuPrincipal frm = new frmMenuPrincipal();
             JOptionPane.showMessageDialog(

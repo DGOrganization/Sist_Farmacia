@@ -11,6 +11,7 @@ package modelo;
  */
 
 import configuracion.Gestionar;
+import entidades.Empleado;
 import entidades.Usuario;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -60,10 +61,9 @@ public class Usuario_modelo {
                     ResultSet resultado = cmd.getResultSet();
                     while(resultado.next()){
                         Usuario usuario = new Usuario();
-                        usuario.setId(resultado.getLong("id"));
                         usuario.setUsername(resultado.getString("nickname"));
-                        usuario.setPassword(resultado.getString("contrasena"));
-                        usuario.setEmpleado(new Empleado_modelo().Empleado(usuario));
+                        usuario.setEmpleado(new Empleado_modelo().Empleado(new Empleado(resultado.getInt("idempleado"))));
+                        usuario.setEstado(resultado.getBoolean("estado"));
                         lista.add(usuario);
                     }
                 }
@@ -88,14 +88,13 @@ public class Usuario_modelo {
         try{
             if(conn.Conectar()){
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerusuario(?) }");
-                cmd.setLong(1, pUsuario.getId());
+                cmd.setString(1, pUsuario.getUsername());
                 if(cmd.execute()){
                     ResultSet resultado = cmd.getResultSet();
                     while(resultado.next()){
-                        usuario.setId(resultado.getLong("id"));
                         usuario.setUsername(resultado.getString("nickname"));
-                        usuario.setPassword(resultado.getString("contrasena"));
-                        usuario.setEmpleado(new Empleado_modelo().Empleado(usuario));
+                        usuario.setEmpleado(new Empleado_modelo().Empleado(new Empleado(resultado.getInt("idempleado"))));
+                        usuario.setEstado(resultado.getBoolean("estado"));
                     }
                 }
             }
@@ -113,6 +112,8 @@ public class Usuario_modelo {
         return usuario;
     }
     
+    
+    
     public boolean Registrar(Usuario pUsuario){
         boolean exito = false;
         Conexion conn = new Conexion();
@@ -121,9 +122,9 @@ public class Usuario_modelo {
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call registrarusuario(?,?,?,?,?) }");
                 cmd.setString(1, pUsuario.getUsername());
                 cmd.setString(2, pUsuario.getPassword());
-                cmd.setString(3, pUsuario.getEmpleado().getNombre());
-                cmd.setString(4, pUsuario.getEmpleado().getApellidopaterno());
-                cmd.setString(5, pUsuario.getEmpleado().getApellidomaterno());
+//                cmd.setString(3, pUsuario.getEmpleado().getNombre());
+//                cmd.setString(4, pUsuario.getEmpleado().getApellidopaterno());
+//                cmd.setString(5, pUsuario.getEmpleado().getApellidomaterno());
                 exito = cmd.execute();
             }
         } catch(Exception ex){
@@ -146,12 +147,12 @@ public class Usuario_modelo {
         try{
             if (conn.Conectar()) {
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call actualizarusuario(?,?,?,?,?,?) }");
-                cmd.setLong(1, pUsuario.getId());
-                cmd.setString(2, pUsuario.getUsername());
-                cmd.setString(3, pUsuario.getPassword());
-                cmd.setString(4, pUsuario.getEmpleado().getNombre());
-                cmd.setString(5, pUsuario.getEmpleado().getApellidopaterno());
-                cmd.setString(6, pUsuario.getEmpleado().getApellidomaterno());
+//                cmd.setLong(1, pUsuario.getId());
+//                cmd.setString(2, pUsuario.getUsername());
+//                cmd.setString(3, pUsuario.getPassword());
+//                cmd.setString(4, pUsuario.getEmpleado().getNombre());
+//                cmd.setString(5, pUsuario.getEmpleado().getApellidopaterno());
+//                cmd.setString(6, pUsuario.getEmpleado().getApellidomaterno());
                 exito = cmd.execute();
             }
         } catch(Exception ex){
@@ -174,7 +175,7 @@ public class Usuario_modelo {
         try{
             if (conn.Conectar()) {
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call eliminarusuario(?) }");
-                cmd.setLong(1, pUsuario.getId());
+//                cmd.setLong(1, pUsuario.getId());
                 exito = cmd.execute();
             }
         } catch(Exception ex){

@@ -5,71 +5,39 @@
  */
 package entidades;
 
+import java.sql.Date;
+import java.util.List;
+
 /**
  *
  * @author dakrpastiursSennin
  */
-public class Empleado {
-    private long _id;
-    private String _nombre;
-    private String _apellidopaterno;
-    private String _apellidomaterno;
-    private boolean _estado;
+public class Empleado extends Persona{
+    private int _id;
+    
 
-    public long getId() {
+    public int getId() {
         return _id;
     }
 
-    public void setId(long _id) {
+    public void setId(int _id) {
         this._id = _id;
-    }
-
-    public String getNombre() {
-        return _nombre;
-    }
-
-    public void setNombre(String _nombre) {
-        this._nombre = _nombre;
-    }
-
-    public String getApellidopaterno() {
-        return _apellidopaterno;
-    }
-
-    public void setApellidopaterno(String _apellidopaterno) {
-        this._apellidopaterno = _apellidopaterno;
-    }
-
-    public String getApellidomaterno() {
-        return _apellidomaterno;
-    }
-
-    public void setApellidomaterno(String _apellidomaterno) {
-        this._apellidomaterno = _apellidomaterno;
-    }
-
-    public boolean isEstado() {
-        return _estado;
-    }
-
-    public void setEstado(boolean _estado) {
-        this._estado = _estado;
     }
 
     public Empleado() {
     }
 
-    public Empleado(long _id, String _nombre, String _apellidopaterno, String _apellidomaterno, boolean _estado) {
+    public Empleado(int _id) {
         this._id = _id;
-        this._nombre = _nombre;
-        this._apellidopaterno = _apellidopaterno;
-        this._apellidomaterno = _apellidomaterno;
-        this._estado = _estado;
     }
 
-    @Override
-    public String toString() {
-        return _nombre + " " + _apellidopaterno + " " + _apellidomaterno;
+    public Empleado(int _id, String _nombre, String _apellidopaterno, String _apellidomaterno, String _dui, String _nit, String _sexo, Date _nacimiento, String _direccion, Municipio _municipio, List<Telefono> _telefono, String _movil, String _email, boolean _estado) {
+        super(_id, _nombre, _apellidopaterno, _apellidomaterno, _dui, _nit, _sexo, _nacimiento, _direccion, _municipio, _telefono, _movil, _email, _estado);
     }
     
+    
+    @Override
+    public String toString() {
+        return this.getNombre() + " " + this.getApellidoPaterno() + " " + this.getApellidoMaterno();
+    }
 }

@@ -7,6 +7,7 @@ package modelo;
 
 import configuracion.Gestionar;
 import entidades.Empleado;
+import entidades.Persona;
 import entidades.Usuario;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -18,21 +19,29 @@ import javax.swing.JOptionPane;
  */
 public class Empleado_modelo {
     
-    public Empleado Empleado(Usuario pUsuario){
+    public Empleado Empleado(Empleado pEmpleado){
         Empleado empleado = new Empleado();
         Conexion conn = new Conexion();
         try{
             if (conn.Conectar()) {
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerempleado(?) }");
-                cmd.setLong(1, pUsuario.getId());
+                cmd.setInt(1, pEmpleado.getId());
                 if(cmd.execute()){
                     ResultSet resultado = cmd.getResultSet();
-                    if(resultado.next()){
-                        empleado.setId(resultado.getLong("id"));
+                    while(resultado.next()){
+                        empleado.setId(resultado.getInt("codigo"));
                         empleado.setNombre(resultado.getString("nombre"));
-                        empleado.setApellidopaterno(resultado.getString("apellidopaterno"));
-                        empleado.setApellidomaterno(resultado.getString("apellidomaterno"));
-                        empleado.setEstado(resultado.getBoolean("estado"));
+                        empleado.setApellidoPaterno(resultado.getString("apellido1"));
+                        empleado.setApellidoMaterno(resultado.getObject("apellido2") == null ? "" : resultado.getString("apellido2"));
+                        empleado.setDui(resultado.getString("dui"));
+                        empleado.setNit(resultado.getString("nit"));
+                        empleado.setSexo(resultado.getString("genero").equals("F") ? "Femenino" : "Masculino");
+                        empleado.setNacimiento(resultado.getDate("nacimiento"));
+                        empleado.setDireccion(resultado.getString("direccion"));
+                        empleado.setEmail(resultado.getObject("correo") == null ? "" : resultado.getString("correo"));
+                        empleado.setEstado(resultado.getBoolean("est"));
+                        empleado.setMunicipio(new Municipio_modelo().ListarMunicipio(new Persona(resultado.getInt("codpersona"))));
+                        empleado.setTelefono(new Telefono_modelo().ListarTelefonos(new Persona(resultado.getInt("codpersona"))));
                     }
                 }
             }

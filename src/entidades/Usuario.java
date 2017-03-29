@@ -10,19 +10,10 @@ package entidades;
  * @author dakrpastiursSennin
  */
 public class Usuario {
-    private long _id;
     private String _username;
     private String _password;
     private Empleado _empleado;
     private boolean _estado;
-
-    public long getId() {
-        return _id;
-    }
-
-    public void setId(long _id) {
-        this._id = _id;
-    }
 
     public String getUsername() {
         return _username;
@@ -59,8 +50,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(long _id, String _username, String _password, Empleado _empleado, boolean _estado) {
-        this._id = _id;
+    public Usuario(String _username, String _password, Empleado _empleado, boolean _estado) {
         this._username = _username;
         this._password = _password;
         this._empleado = _empleado;
