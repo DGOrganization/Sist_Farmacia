@@ -10,15 +10,15 @@ package entidades;
  * @author dakrpastiursSennin
  */
 public class Municipio {
-    private long _id;
+    private int _id;
     private String _nombre;
     private boolean _estado;
 
-    public long getId() {
+    public int getId() {
         return _id;
     }
 
-    public void setId(long _id) {
+    public void setId(int _id) {
         this._id = _id;
     }
 
@@ -41,13 +41,13 @@ public class Municipio {
     public Municipio() {
     }
 
-    public Municipio(long _id, String _nombre, boolean _estado) {
+    public Municipio(int _id, String _nombre, boolean _estado) {
         this._id = _id;
         this._nombre = _nombre;
         this._estado = _estado;
     }
 
-    public Municipio(long _id) {
+    public Municipio(int _id) {
         this._id = _id;
     }
     

@@ -12,16 +12,16 @@ import java.util.List;
  * @author dakrpastiursSennin
  */
 public class Departamento {
-    private long _id;
+    private int _id;
     private String _nombre;
     private List<Municipio> _municipios;
     private boolean _estado;
 
-    public long getId() {
+    public int getId() {
         return _id;
     }
 
-    public void setId(long _id) {
+    public void setId(int _id) {
         this._id = _id;
     }
 
@@ -52,7 +52,7 @@ public class Departamento {
     public Departamento() {
     }
 
-    public Departamento(long _id, String _nombre, List<Municipio> _municipios, boolean _estado) {
+    public Departamento(int _id, String _nombre, List<Municipio> _municipios, boolean _estado) {
         this._id = _id;
         this._nombre = _nombre;
         this._municipios = _municipios;

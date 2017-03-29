@@ -6,6 +6,7 @@
 package Vista;
 
 
+import com.toedter.calendar.JDateChooser;
 import entidades.Departamento;
 import entidades.Usuario;
 import java.awt.Component;
@@ -247,15 +248,13 @@ public class Validaciones {
                 cbo.addItem(nivel);
         });
     }*/
-    public static void cboLoad(JComboBox cbo, List<Departamento> pDepto){
+    public void cboDeptoMun(JComboBox cboPrincipal, JComboBox cboSecundario, List<Departamento> pDepto){
         pDepto.forEach(datos -> {
-            cbo.addItem(datos);
+            cboPrincipal.addItem(datos);
             datos.getMunicipios().forEach(dato -> {
-            
+                cboSecundario.addItem(dato);
             });
-            
-        });
-        
+        });        
     }
     public boolean validarCamposTexto(JTextField text){
         if(!text.getText().trim().equals("")){
@@ -318,7 +317,7 @@ public class Validaciones {
         });
     }
     
-    /*public boolean validarFechas(JDateChooser dc){
+    public boolean validarFechas(JDateChooser dc){
         boolean exito = false;
         Date validar = new Date();
         if (dc != null) {
@@ -343,7 +342,7 @@ public class Validaciones {
                     JOptionPane.ERROR_MESSAGE);
         }
         return exito;
-    }*/
+    }
     
     public boolean validarEmail(String correo, Component componente) {
         Pattern pat = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
@@ -373,14 +372,14 @@ public class Validaciones {
         return eject;
     }
     
-    public void SelectedItem(JComboBox cbo, Object value){
+    /*public void SelectedItem(JComboBox cbo, Object value){
         for(int i = 0; i < cbo.getItemCount(); i++){
             if(cbo.getItemAt(i).toString().equals(value.toString())){
                 cbo.setSelectedIndex(i);
                 break;
             }
         }
-    }
+    }*/
     
     public String[] editarApellidos(String apellidos){
         int primero = apellidos.indexOf(" ");

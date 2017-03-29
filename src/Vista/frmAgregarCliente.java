@@ -6,9 +6,9 @@
 
 package Vista;
 
+import configuracion.Gestionar;
 import controlador.Cliente_controlador;
 import entidades.Cliente;
-import entidades.Inventario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Gerard
  */
 public class frmAgregarCliente extends javax.swing.JDialog {
-    private final List<Cliente> clienteList;
+    private List<Cliente> clienteList;
     private final Cliente_controlador controlador;
     /** Creates new form frmAgregarCliente */
     public frmAgregarCliente(java.awt.Frame parent, boolean modal) {
@@ -32,6 +32,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         clienteList = controlador.Obtener();
         cargarDatos(clienteList);
         changeText();
+        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
     }
     
     private void cargarDatos(List<Cliente> lista){
@@ -42,7 +43,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         lista.forEach(datos -> {
             Object[] nuevaFila= {
                 datos,
-                datos.getTelefono(),
+                datos.getTelefono().get(0),
                 datos.getDireccion()
             };
             modelo.addRow(nuevaFila);
@@ -194,9 +195,8 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         frmNuevoCliente frm = new frmNuevoCliente();
         frm.setVisible(true);
         if(!frm.isVisible()){
-            if(frm.getCliente().equals(new Cliente())){
-                System.out.println("Cliente := " + frm.getCliente());
-                clienteList.add(frm.getCliente());
+            if(!frm.getCliente().equals(new Cliente())){
+                clienteList = controlador.Obtener();
                 cargarDatos(clienteList);
             }
             frm.dispose();
