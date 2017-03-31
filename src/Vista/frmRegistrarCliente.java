@@ -424,7 +424,6 @@ public class frmRegistrarCliente extends javax.swing.JDialog {
             cliente.setDireccion(txtDireccion.getText());
             cliente.setMunicipio((Municipio) cboMunicipio.getSelectedItem());
             cliente.setTelefono(telefonos);
-            cliente.setMovil(txtCelular.getText());
             if(!txtEmail.equals("")){
                 if(validar.validarEmail(txtEmail.getText(), this)){
                     cliente.setEmail(txtEmail.getText());

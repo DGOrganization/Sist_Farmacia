@@ -59,6 +59,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return _username;
+        return this.getEmpleado().toString();
     }
 }

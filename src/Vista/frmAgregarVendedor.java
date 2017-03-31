@@ -5,20 +5,79 @@
  */
 package Vista;
 
+import controlador.Usuario_controlador;
+import entidades.Usuario;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gerard
  */
 public class frmAgregarVendedor extends javax.swing.JDialog {
 
+    private List<Usuario> usuarioList;
+    private Usuario_controlador controlador;
     /**
      * Creates new form frmAgregarVendedor
+     * @param parent
+     * @param modal
      */
     public frmAgregarVendedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+        changeText();
     }
 
+    private void cargarDatos(List<Usuario> lista){
+        String[] columnas = {"Nombre", "Telefono", "Usuario"};
+        ControlesGenerales.reiniciarJTable(jtUsuarios);
+        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        modelo.setColumnIdentifiers(columnas);
+        lista.forEach(datos -> {
+            Object[] nuevaFila= {
+                datos,
+                datos.getEmpleado().getTelefono().isEmpty() ? "No tiene" : datos.getEmpleado().getTelefono().get(0),
+                datos.getUsername()
+            };
+            if(datos.isEstado()){
+                modelo.addRow(nuevaFila);
+            }
+        });
+        jtUsuarios.setModel(modelo);
+    }
+    
+     private void buscarTXT(){
+        List<Usuario> encontrado = new ArrayList<>();
+        encontrado = usuarioList.stream().filter(
+                datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
+        ).collect(Collectors.toList());
+        cargarDatos(encontrado);
+    }
+    
+    private void changeText(){
+        txtBusqueda.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+        
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,12 +89,17 @@ public class frmAgregarVendedor extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtBusqueda = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtUsuarios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add16.png"))); // NOI18N
         jButton1.setText("Agregar");
@@ -44,7 +108,7 @@ public class frmAgregarVendedor extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null}
             },
@@ -52,7 +116,7 @@ public class frmAgregarVendedor extends javax.swing.JDialog {
                 "Código", "Nombre", "Tel/Cel"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtUsuarios);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -64,7 +128,7 @@ public class frmAgregarVendedor extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -75,7 +139,7 @@ public class frmAgregarVendedor extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
+                    .addComponent(txtBusqueda)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -102,6 +166,14 @@ public class frmAgregarVendedor extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        usuarioList = new ArrayList<>();
+        controlador = new Usuario_controlador();
+        usuarioList = controlador.Obtener();
+        cargarDatos(usuarioList);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -150,7 +222,7 @@ public class frmAgregarVendedor extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jtUsuarios;
+    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }

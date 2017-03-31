@@ -42,14 +42,14 @@ public class frmAgregarCliente extends javax.swing.JDialog {
     }
     
     private void cargarDatos(List<Cliente> lista){
-        String[] columnas = {"Nombre", "Telefono", "Direccion", "Eliminar"};
+        String[] columnas = {"Nombre", "Telefono", "Direccion"};
         ControlesGenerales.reiniciarJTable(jtClientes);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.forEach(datos -> {
             Object[] nuevaFila= {
                 datos,
-                datos.getTelefono().get(0),
+                datos.getTelefono().isEmpty() ? "No tiene" : datos.getTelefono().get(0),
                 datos.getDireccion()
             };
             if(datos.isEstado()){

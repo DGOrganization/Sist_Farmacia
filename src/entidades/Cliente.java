@@ -30,8 +30,8 @@ public class Cliente extends Persona{
         this._id = _id;
     }
 
-    public Cliente(int _id, String _nombre, String _apellidopaterno, String _apellidomaterno, String _dui, String _nit, String _sexo, Date _nacimiento, String _direccion, Municipio _municipio, List<Telefono> _telefono, String _movil, String _email, boolean _estado) {
-        super(_id, _nombre, _apellidopaterno, _apellidomaterno, _dui, _nit, _sexo, _nacimiento, _direccion, _municipio, _telefono, _movil, _email, _estado);
+    public Cliente(int _id, String _nombre, String _apellidopaterno, String _apellidomaterno, String _dui, String _nit, String _sexo, Date _nacimiento, String _direccion, Municipio _municipio, List<Telefono> _telefono, String _email, boolean _estado) {
+        super(_id, _nombre, _apellidopaterno, _apellidomaterno, _dui, _nit, _sexo, _nacimiento, _direccion, _municipio, _telefono, _email, _estado);
     }
     
     

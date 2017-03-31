@@ -24,7 +24,6 @@ public class Persona {
     private String _direccion;
     private Municipio _municipio;
     private List<Telefono> _telefono;
-    private String _movil;
     private String _email;
     private boolean _estado;
 
@@ -116,14 +115,6 @@ public class Persona {
         this._telefono = _telefono;
     }
 
-    public String getMovil() {
-        return _movil;
-    }
-
-    public void setMovil(String _movil) {
-        this._movil = _movil;
-    }
-
     public String getEmail() {
         return _email;
     }
@@ -147,7 +138,7 @@ public class Persona {
         this._idpersona = _id;
     }
 
-    public Persona(int _id, String _nombre, String _apellidopaterno, String _apellidomaterno, String _dui, String _nit, String _sexo, Date _nacimiento, String _direccion, Municipio _municipio, List<Telefono> _telefono, String _movil, String _email, boolean _estado) {
+    public Persona(int _id, String _nombre, String _apellidopaterno, String _apellidomaterno, String _dui, String _nit, String _sexo, Date _nacimiento, String _direccion, Municipio _municipio, List<Telefono> _telefono, String _email, boolean _estado) {
         this._idpersona = _id;
         this._nombre = _nombre;
         this._apellidopaterno = _apellidopaterno;
@@ -159,7 +150,6 @@ public class Persona {
         this._direccion = _direccion;
         this._municipio = _municipio;
         this._telefono = _telefono;
-        this._movil = _movil;
         this._email = _email;
         this._estado = _estado;
     }
