@@ -5,13 +5,15 @@
  */
 package entidades;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author dakrpastiursSennin
  */
-public class Categoria {
+public class Precio {
     private int _id;
-    private String _nombre;
+    private BigDecimal _cantidad;
     private boolean _estado;
 
     public int getId() {
@@ -22,12 +24,12 @@ public class Categoria {
         this._id = _id;
     }
 
-    public String getNombre() {
-        return _nombre;
+    public BigDecimal getCantidad() {
+        return _cantidad;
     }
 
-    public void setNombre(String _nombre) {
-        this._nombre = _nombre;
+    public void setCantidad(BigDecimal _cantidad) {
+        this._cantidad = _cantidad;
     }
 
     public boolean isEstado() {
@@ -38,22 +40,16 @@ public class Categoria {
         this._estado = _estado;
     }
 
-    public Categoria() {
+    public Precio() {
     }
 
-    public Categoria(int _id) {
+    public Precio(int _id) {
         this._id = _id;
     }
 
-    public Categoria(int _id, String _nombre, boolean _estado) {
+    public Precio(int _id, BigDecimal _cantidad, boolean _estado) {
         this._id = _id;
-        this._nombre = _nombre;
+        this._cantidad = _cantidad;
         this._estado = _estado;
     }
-
-    @Override
-    public String toString() {
-        return _nombre;
-    }
-    
 }

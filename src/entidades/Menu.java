@@ -9,10 +9,10 @@ package entidades;
  *
  * @author dakrpastiursSennin
  */
-public class Categoria {
+public class Menu {
     private int _id;
     private String _nombre;
-    private boolean _estado;
+    private boolean _permiso;
 
     public int getId() {
         return _id;
@@ -30,30 +30,31 @@ public class Categoria {
         this._nombre = _nombre;
     }
 
-    public boolean isEstado() {
-        return _estado;
+    public boolean isPermiso() {
+        return _permiso;
     }
 
-    public void setEstado(boolean _estado) {
-        this._estado = _estado;
+    public void setPermiso(boolean _permiso) {
+        this._permiso = _permiso;
     }
 
-    public Categoria() {
+    public Menu() {
     }
 
-    public Categoria(int _id) {
+    public Menu(int _id) {
         this._id = _id;
     }
 
-    public Categoria(int _id, String _nombre, boolean _estado) {
+    public Menu(int _id, String _nombre, boolean _permiso) {
         this._id = _id;
         this._nombre = _nombre;
-        this._estado = _estado;
+        this._permiso = _permiso;
     }
 
     @Override
     public String toString() {
         return _nombre;
     }
+    
     
 }

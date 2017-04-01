@@ -12,6 +12,7 @@ package modelo;
 
 import configuracion.Gestionar;
 import entidades.Empleado;
+import entidades.Nivel;
 import entidades.Usuario;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -94,6 +95,7 @@ public class Usuario_modelo {
                     while(resultado.next()){
                         usuario.setUsername(resultado.getString("nickname"));
                         usuario.setEmpleado(new Empleado_modelo().Empleado(new Empleado(resultado.getInt("idempleado"))));
+                        usuario.setNivel(new Nivel_modelo().ListarNivel(new Nivel(resultado.getInt("idnivel")), true));
                         usuario.setEstado(resultado.getBoolean("estado"));
                     }
                 }

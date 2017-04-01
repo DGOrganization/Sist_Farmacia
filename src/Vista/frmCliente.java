@@ -7,14 +7,10 @@ package Vista;
 
 import configuracion.Gestionar;
 import controlador.Cliente_controlador;
-import controlador.Departamento_controlador;
 import entidades.Cliente;
-import entidades.Departamento;
-import entidades.Municipio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -58,7 +54,7 @@ public class frmCliente extends javax.swing.JFrame {
         jtClientes.setModel(modelo);
     }
     
-     private void buscarTXT(){
+    private void buscarTXT(){
         List<Cliente> encontrado = new ArrayList<>();
         encontrado = clienteList.stream().filter(
                 datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())

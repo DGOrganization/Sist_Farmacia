@@ -9,7 +9,7 @@ import entidades.Bodega;
 import entidades.Categoria;
 import entidades.Inventario;
 import entidades.Marca;
-import entidades.Producto;
+import entidades.Articulo;
 import entidades.Unidad;
 import java.math.BigDecimal;
 
@@ -33,7 +33,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }
     
-    void editMode(){
+    /*void editMode(){
         txtProducto.setText(inventario.getProducto().toString());
         txtDescripcion.setText(inventario.getProducto().getDescripcion());
         txtMarca.setText(inventario.getMarca().toString());
@@ -44,7 +44,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         txtStockMin.setText(inventario.getStockMin().toString());
         txtStockMax.setText(inventario.getStockMax().toString());
         txtPrecio.setText(inventario.getPrecio().toString());
-    }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -299,15 +299,15 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        inventario.setProducto(new Producto(3, txtProducto.getText(), txtDescripcion.getText(), true));
-        inventario.setMarca(new Marca(3, txtMarca.getText(), true));
+        inventario.setProducto(new Articulo(3, txtProducto.getText(), txtDescripcion.getText(), true));
+        //inventario.setMarca(new Marca(3, txtMarca.getText(), true));
         inventario.setCategoria(new Categoria(3, txtCategoria.getText(), true));
         inventario.setBodega(new Bodega(3, txtBodega.getText(), "Chalatenango",true));
         inventario.setUnidad(new Unidad(3, txtUnidad.getText(), txtUnidad.getText().substring(1, 3) + ".", true));
         inventario.setStock(new BigDecimal(txtStock.getText()));
         inventario.setStockMin(new BigDecimal(txtStockMin.getText()));
         inventario.setStockMax(new BigDecimal(txtStockMax.getText()));
-        inventario.setPrecio(new BigDecimal(txtPrecio.getText()));
+        //inventario.setPrecio(new BigDecimal(txtPrecio.getText()));
         inventario.setEstado(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -320,7 +320,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         //System.out.println("Inventario \n"+inventario);
         if (isEditar()) {
-            editMode();
+            //editMode();
         } else {
             inventario = new Inventario();
         }

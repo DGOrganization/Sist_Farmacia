@@ -9,17 +9,17 @@ package entidades;
  *
  * @author dakrpastiursSennin
  */
-public class Producto {
-    private long _id;
+public class Articulo {
+    private int _id;
     private String _nombre;
     private String _descripcion;
     private boolean _estado;
 
-    public long getId() {
+    public int getId() {
         return _id;
     }
 
-    public void setId(long _id) {
+    public void setId(int _id) {
         this._id = _id;
     }
 
@@ -47,10 +47,14 @@ public class Producto {
         this._estado = _estado;
     }
 
-    public Producto() {
+    public Articulo() {
     }
 
-    public Producto(long _id, String _nombre, String _descripcion, boolean _estado) {
+    public Articulo(int _id) {
+        this._id = _id;
+    }
+    
+    public Articulo(int _id, String _nombre, String _descripcion, boolean _estado) {
         this._id = _id;
         this._nombre = _nombre;
         this._descripcion = _descripcion;

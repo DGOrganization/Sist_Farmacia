@@ -5,19 +5,82 @@
  */
 package Vista;
 
+import configuracion.Gestionar;
+import controlador.Inventario_controlador;
+import entidades.Cliente;
+import entidades.Inventario;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gerard
  */
 public class frmProductos extends javax.swing.JFrame {
-
+    private List<Inventario> inventarioList;
+    private Inventario_controlador controlador;
     /**
      * Creates new form frmProductos
      */
     public frmProductos() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        inventarioList = new ArrayList<>();
+        controlador = new Inventario_controlador();
+        inventarioList = controlador.Obtener();
+        cargarDatos(inventarioList);
+        changeText();
+        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
+    }
+    
+    private void cargarDatos(List<Inventario> lista){
+        String[] columnas = {"Nombre", "Telefono", "Direccion"};
+        ControlesGenerales.reiniciarJTable(jtProductos);
+        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        modelo.setColumnIdentifiers(columnas);
+        lista.forEach(datos -> {
+            Object[] nuevaFila= {
+                datos,
+                datos.getStock(),
+                datos.getBodega()
+            };
+            if(datos.isEstado()){
+                modelo.addRow(nuevaFila);
+            }
+        });
+        jtProductos.setModel(modelo);
     }
 
+    private void buscarTXT(){
+        List<Inventario> encontrado = new ArrayList<>();
+        encontrado = inventarioList.stream().filter(
+                datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
+        ).collect(Collectors.toList());
+        cargarDatos(encontrado);
+    }
+    
+    private void changeText(){
+        txtBusqueda.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+        
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,11 +92,11 @@ public class frmProductos extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtProductos = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -43,7 +106,7 @@ public class frmProductos extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -54,7 +117,7 @@ public class frmProductos extends javax.swing.JFrame {
                 "N°", "Nombre", "Tel/Cel"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtProductos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -64,7 +127,7 @@ public class frmProductos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1)
+                .addComponent(txtBusqueda)
                 .addContainerGap())
             .addComponent(jScrollPane1)
         );
@@ -74,7 +137,7 @@ public class frmProductos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -82,8 +145,13 @@ public class frmProductos extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add32.png"))); // NOI18N
-        jButton1.setText("Nuevo");
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add32.png"))); // NOI18N
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit32.png"))); // NOI18N
         jButton2.setText("Editar");
@@ -97,7 +165,7 @@ public class frmProductos extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addComponent(jButton1)
+                .addComponent(btnNuevo)
                 .addGap(50, 50, 50)
                 .addComponent(jButton2)
                 .addGap(50, 50, 50)
@@ -109,7 +177,7 @@ public class frmProductos extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnNuevo)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -135,6 +203,16 @@ public class frmProductos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        frmNuevoProducto frm = new frmNuevoProducto(this, true);
+        frm.setVisible(true);
+        if(!frm.isVisible()){
+            inventarioList = controlador.Obtener();
+            cargarDatos(inventarioList);
+        }
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,14 +253,14 @@ public class frmProductos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jtProductos;
+    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,6 +6,8 @@
 package entidades;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.List;
 
 /**
  *
@@ -13,40 +15,32 @@ import java.math.BigDecimal;
  */
 public class Inventario {
     
-    private long _id;
-    private Producto _producto;
-    private Marca _marca;
+    private int _id;
+    private Articulo _articulo;
     private Categoria _categoria;
     private Bodega _bodega;    
     private Unidad _unidad;
     private BigDecimal _stock;
     private BigDecimal _stockMin;
     private BigDecimal _stockMax;
-    private BigDecimal _precio;
+    private List<Precio> _precio;
+    private java.sql.Date _vencimiento;
     private boolean _estado;
 
-    public long getId() {
+    public int getId() {
         return _id;
     }
 
-    public void setId(long _id) {
+    public void setId(int _id) {
         this._id = _id;
     }
 
-    public Producto getProducto() {
-        return _producto;
+    public Articulo getProducto() {
+        return _articulo;
     }
 
-    public void setProducto(Producto _producto) {
-        this._producto = _producto;
-    }
-
-    public Marca getMarca() {
-        return _marca;
-    }
-
-    public void setMarca(Marca _marca) {
-        this._marca = _marca;
+    public void setProducto(Articulo _articulo) {
+        this._articulo = _articulo;
     }
 
     public Categoria getCategoria() {
@@ -97,14 +91,26 @@ public class Inventario {
         this._stockMax = _stockMax;
     }
 
-    public BigDecimal getPrecio() {
+    public List<Precio> getPrecio() {
         return _precio;
     }
 
-    public void setPrecio(BigDecimal _precio) {
+    public void setPrecio(List<Precio> _precio) {
         this._precio = _precio;
     }
 
+    public java.sql.Date getVencimiento() {
+        return _vencimiento;
+    }
+
+    public void setVencimiento(java.sql.Date _vencimiento) {
+        this._vencimiento = _vencimiento;
+    }
+    
+    public void setVencimiento(java.util.Date _vencimiento) {
+        this._vencimiento = new java.sql.Date(_vencimiento.getTime());
+    }
+    
     public boolean isEstado() {
         return _estado;
     }
@@ -116,10 +122,9 @@ public class Inventario {
     public Inventario() {
     }
 
-    public Inventario(long _id, Producto _producto, Marca _marca, Categoria _categoria, Bodega _bodega, Unidad _unidad, BigDecimal _stock, BigDecimal _stockMin, BigDecimal _stockMax, BigDecimal _precio, boolean _estado) {
+    public Inventario(int _id, Articulo _articulo, Categoria _categoria, Bodega _bodega, Unidad _unidad, BigDecimal _stock, BigDecimal _stockMin, BigDecimal _stockMax, List<Precio> _precio, Date _vencimiento, boolean _estado) {
         this._id = _id;
-        this._producto = _producto;
-        this._marca = _marca;
+        this._articulo = _articulo;
         this._categoria = _categoria;
         this._bodega = _bodega;
         this._unidad = _unidad;
@@ -127,12 +132,17 @@ public class Inventario {
         this._stockMin = _stockMin;
         this._stockMax = _stockMax;
         this._precio = _precio;
+        this._vencimiento = _vencimiento;
         this._estado = _estado;
+    }
+
+    public Inventario(int _id) {
+        this._id = _id;
     }
 
     @Override
     public String toString() {
-        return _producto + " " + _marca;
+        return _categoria + " " + _articulo;
     }
     
 }

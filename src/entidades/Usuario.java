@@ -13,6 +13,7 @@ public class Usuario {
     private String _username;
     private String _password;
     private Empleado _empleado;
+    private Nivel _nivel;
     private boolean _estado;
 
     public String getUsername() {
@@ -39,6 +40,14 @@ public class Usuario {
         this._empleado = _empleado;
     }
 
+    public Nivel getNivel() {
+        return _nivel;
+    }
+
+    public void setNivel(Nivel _nivel) {
+        this._nivel = _nivel;
+    }
+    
     public boolean isEstado() {
         return _estado;
     }

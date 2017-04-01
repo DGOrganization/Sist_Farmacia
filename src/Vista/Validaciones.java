@@ -8,6 +8,7 @@ package Vista;
 
 import com.toedter.calendar.JDateChooser;
 import entidades.Departamento;
+import entidades.Menu;
 import entidades.Municipio;
 import entidades.Usuario;
 import java.awt.Component;
@@ -43,7 +44,7 @@ import javax.swing.text.MaskFormatter;
  */
 public class Validaciones {
     
-    /*public void iniciarSesion(Usuario pUsuario, MenuElement[] menus){
+    public void iniciarSesion(Usuario pUsuario, MenuElement[] menus){
         if(pUsuario.getNivel().isEstado()){
             for (MenuElement menu : menus) {
                 if (menu.getSubElements().length > 0) {
@@ -52,7 +53,7 @@ public class Validaciones {
                             for (MenuElement submenu : menu.getSubElements()) {
                                 for (Menu permiso : pUsuario.getNivel().getMenus()) {
                                     String menuName = ((JMenuItem) submenu).getText();
-                                    if (menuName.equals(permiso.getNombre())) {
+                                    if (menuName.toUpperCase().equals(permiso.getNombre().toUpperCase())) {
                                         ((JMenuItem) submenu).setEnabled(permiso.isPermiso());
                                         break;
                                     }
@@ -89,7 +90,7 @@ public class Validaciones {
                 cerrarSesion(menu.getSubElements());
             }            
         }
-    }*/
+    }
     
     public void duiFormato(JFormattedTextField txt, Component ventana){
         try{

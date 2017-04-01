@@ -12,17 +12,17 @@ import java.util.List;
  * @author dakrpastiursSennin
  */
 public class Unidad {
-    private long _id;
+    private int _id;
     private String _nombre;
     private String _abreviado;
     private List<Unidad> _conversiones;
     private boolean _estado;
 
-    public long getId() {
+    public int getId() {
         return _id;
     }
 
-    public void setId(long _id) {
+    public void setId(int _id) {
         this._id = _id;
     }
 
@@ -61,14 +61,18 @@ public class Unidad {
     public Unidad() {
     }
 
-    public Unidad(long _id, String _nombre, String _abreviado, boolean _estado) {
+    public Unidad(int _id) {
+        this._id = _id;
+    }
+
+    public Unidad(int _id, String _nombre, String _abreviado, boolean _estado) {
         this._id = _id;
         this._nombre = _nombre;
         this._abreviado = _abreviado;
         this._estado = _estado;
     }
 
-    public Unidad(long _id, String _nombre, String _abreviado, List<Unidad> _conversiones, boolean _estado) {
+    public Unidad(int _id, String _nombre, String _abreviado, List<Unidad> _conversiones, boolean _estado) {
         this._id = _id;
         this._nombre = _nombre;
         this._abreviado = _abreviado;

@@ -10,16 +10,16 @@ package entidades;
  * @author dakrpastiursSennin
  */
 public class Bodega {
-    private long _id;
+    private int _id;
     private String _nombre;
     private String _direccion;
     private boolean _estado;
 
-    public long getId() {
+    public int getId() {
         return _id;
     }
 
-    public void setId(long _id) {
+    public void setId(int _id) {
         this._id = _id;
     }
 
@@ -50,7 +50,11 @@ public class Bodega {
     public Bodega() {
     }
 
-    public Bodega(long _id, String _nombre, String _direccion, boolean _estado) {
+    public Bodega(int _id) {
+        this._id = _id;
+    }
+
+    public Bodega(int _id, String _nombre, String _direccion, boolean _estado) {
         this._id = _id;
         this._nombre = _nombre;
         this._direccion = _direccion;
