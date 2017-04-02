@@ -51,40 +51,40 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         lblEmpleado = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         lblReloj = new javax.swing.JLabel();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jmbPrincipal = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuOperaciones = new javax.swing.JMenu();
         miProducto = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem28 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem21 = new javax.swing.JMenuItem();
-        jMenuItem25 = new javax.swing.JMenuItem();
-        jMenuItem26 = new javax.swing.JMenuItem();
-        jMenuItem27 = new javax.swing.JMenuItem();
-        jMenuItem20 = new javax.swing.JMenuItem();
-        jMenuItem22 = new javax.swing.JMenuItem();
-        jMenuItem23 = new javax.swing.JMenuItem();
+        smClientes = new javax.swing.JMenuItem();
+        smProveedores = new javax.swing.JMenuItem();
+        smCompras = new javax.swing.JMenuItem();
+        smVentas = new javax.swing.JMenuItem();
+        smInventario = new javax.swing.JMenuItem();
+        smCorteCaja = new javax.swing.JMenuItem();
+        menuConsultas = new javax.swing.JMenu();
+        smConsCompras = new javax.swing.JMenuItem();
+        smConsVentas = new javax.swing.JMenuItem();
+        smConsProveedores = new javax.swing.JMenuItem();
+        smConsClientes = new javax.swing.JMenuItem();
+        smConsArticulos = new javax.swing.JMenuItem();
+        menuProcesos = new javax.swing.JMenu();
+        smProcRespaldos = new javax.swing.JMenuItem();
+        smProcImportar = new javax.swing.JMenuItem();
+        menuReportes = new javax.swing.JMenu();
+        smReportVentas = new javax.swing.JMenuItem();
+        smReportCompras = new javax.swing.JMenuItem();
+        smReportProveedor = new javax.swing.JMenuItem();
+        smReportArticulos = new javax.swing.JMenuItem();
+        smReportClientes = new javax.swing.JMenuItem();
+        smReportFarmacias = new javax.swing.JMenuItem();
+        menuSistema = new javax.swing.JMenu();
+        smAdministrar = new javax.swing.JMenu();
+        smAdmEmpleado = new javax.swing.JMenuItem();
+        smAdmUsuarios = new javax.swing.JMenuItem();
+        smAdRoles = new javax.swing.JMenuItem();
+        smEmpresa = new javax.swing.JMenuItem();
+        smImpresora = new javax.swing.JMenuItem();
+        smUnidades = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -107,8 +107,20 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         lblReloj.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         tblSesion.add(lblReloj);
 
-        jMenu1.setText("Operaciones");
-        jMenu1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 367, Short.MAX_VALUE)
+        );
+
+        menuOperaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/operation.png"))); // NOI18N
+        menuOperaciones.setText("Operaciones");
+        menuOperaciones.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         miProducto.setText("Articulos");
         miProducto.setEnabled(false);
@@ -117,144 +129,149 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 miProductoActionPerformed(evt);
             }
         });
-        jMenu1.add(miProducto);
+        menuOperaciones.add(miProducto);
 
-        jMenuItem2.setText("Clientes");
-        jMenuItem2.setEnabled(false);
-        jMenu1.add(jMenuItem2);
-
-        jMenuItem3.setText("Proveedores");
-        jMenuItem3.setEnabled(false);
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        smClientes.setText("Clientes");
+        smClientes.setEnabled(false);
+        smClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                smClientesActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        menuOperaciones.add(smClientes);
 
-        jMenuItem4.setText("Compras");
-        jMenuItem4.setEnabled(false);
-        jMenu1.add(jMenuItem4);
+        smProveedores.setText("Proveedores");
+        smProveedores.setEnabled(false);
+        smProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smProveedoresActionPerformed(evt);
+            }
+        });
+        menuOperaciones.add(smProveedores);
 
-        jMenuItem6.setText("Ventas");
-        jMenuItem6.setEnabled(false);
-        jMenu1.add(jMenuItem6);
+        smCompras.setText("Compras");
+        smCompras.setEnabled(false);
+        menuOperaciones.add(smCompras);
 
-        jMenuItem7.setText("Inventario Inicial");
-        jMenuItem7.setEnabled(false);
-        jMenu1.add(jMenuItem7);
+        smVentas.setText("Ventas");
+        smVentas.setEnabled(false);
+        menuOperaciones.add(smVentas);
 
-        jMenuItem28.setText("Corte de Caja");
-        jMenuItem28.setEnabled(false);
-        jMenu1.add(jMenuItem28);
+        smInventario.setText("Inventario Inicial");
+        smInventario.setEnabled(false);
+        menuOperaciones.add(smInventario);
 
-        jmbPrincipal.add(jMenu1);
+        smCorteCaja.setText("Corte de Caja");
+        smCorteCaja.setEnabled(false);
+        menuOperaciones.add(smCorteCaja);
 
-        jMenu2.setText("Consultas");
-        jMenu2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jmbPrincipal.add(menuOperaciones);
 
-        jMenuItem5.setText("Compras");
-        jMenuItem5.setEnabled(false);
-        jMenu2.add(jMenuItem5);
+        menuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/consultas32.png"))); // NOI18N
+        menuConsultas.setText("Consultas");
+        menuConsultas.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
 
-        jMenuItem8.setText("Ventas");
-        jMenuItem8.setEnabled(false);
-        jMenu2.add(jMenuItem8);
+        smConsCompras.setText("Compras");
+        smConsCompras.setEnabled(false);
+        menuConsultas.add(smConsCompras);
 
-        jMenuItem9.setText("Proveedores");
-        jMenuItem9.setEnabled(false);
-        jMenu2.add(jMenuItem9);
+        smConsVentas.setText("Ventas");
+        smConsVentas.setEnabled(false);
+        menuConsultas.add(smConsVentas);
 
-        jMenuItem10.setText("Clientes");
-        jMenuItem10.setEnabled(false);
-        jMenu2.add(jMenuItem10);
+        smConsProveedores.setText("Proveedores");
+        smConsProveedores.setEnabled(false);
+        menuConsultas.add(smConsProveedores);
 
-        jMenuItem11.setText("Articulos");
-        jMenuItem11.setEnabled(false);
-        jMenu2.add(jMenuItem11);
+        smConsClientes.setText("Clientes");
+        smConsClientes.setEnabled(false);
+        menuConsultas.add(smConsClientes);
 
-        jmbPrincipal.add(jMenu2);
+        smConsArticulos.setText("Articulos");
+        smConsArticulos.setEnabled(false);
+        menuConsultas.add(smConsArticulos);
 
-        jMenu3.setText("Procesos");
-        jMenu3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jmbPrincipal.add(menuConsultas);
 
-        jMenuItem12.setText("Respaldos");
-        jMenuItem12.setEnabled(false);
-        jMenu3.add(jMenuItem12);
+        menuProcesos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/procesos.png"))); // NOI18N
+        menuProcesos.setText("Procesos");
+        menuProcesos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        jMenuItem13.setText("Importar de Excel");
-        jMenuItem13.setEnabled(false);
-        jMenu3.add(jMenuItem13);
+        smProcRespaldos.setText("Respaldos");
+        smProcRespaldos.setEnabled(false);
+        menuProcesos.add(smProcRespaldos);
 
-        jmbPrincipal.add(jMenu3);
+        smProcImportar.setText("Importar de Excel");
+        smProcImportar.setEnabled(false);
+        menuProcesos.add(smProcImportar);
 
-        jMenu4.setText("Reportes");
-        jMenu4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jmbPrincipal.add(menuProcesos);
 
-        jMenuItem14.setText("Ventas");
-        jMenuItem14.setEnabled(false);
-        jMenu4.add(jMenuItem14);
+        menuReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/report.png"))); // NOI18N
+        menuReportes.setText("Reportes");
+        menuReportes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        jMenuItem15.setText("Compras");
-        jMenuItem15.setEnabled(false);
-        jMenu4.add(jMenuItem15);
+        smReportVentas.setText("Ventas");
+        smReportVentas.setEnabled(false);
+        menuReportes.add(smReportVentas);
 
-        jMenuItem16.setText("Proveedores");
-        jMenuItem16.setEnabled(false);
-        jMenu4.add(jMenuItem16);
+        smReportCompras.setText("Compras");
+        smReportCompras.setEnabled(false);
+        menuReportes.add(smReportCompras);
 
-        jMenuItem17.setText("Articulos");
-        jMenuItem17.setEnabled(false);
-        jMenu4.add(jMenuItem17);
+        smReportProveedor.setText("Proveedores");
+        smReportProveedor.setEnabled(false);
+        menuReportes.add(smReportProveedor);
 
-        jMenuItem18.setText("Clientes");
-        jMenuItem18.setEnabled(false);
-        jMenu4.add(jMenuItem18);
+        smReportArticulos.setText("Articulos");
+        smReportArticulos.setEnabled(false);
+        menuReportes.add(smReportArticulos);
 
-        jMenuItem19.setText("Farmacias");
-        jMenuItem19.setEnabled(false);
-        jMenu4.add(jMenuItem19);
+        smReportClientes.setText("Clientes");
+        smReportClientes.setEnabled(false);
+        menuReportes.add(smReportClientes);
 
-        jmbPrincipal.add(jMenu4);
+        smReportFarmacias.setText("Farmacias");
+        smReportFarmacias.setEnabled(false);
+        menuReportes.add(smReportFarmacias);
 
-        jMenu5.setText("Sistema");
-        jMenu5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jmbPrincipal.add(menuReportes);
 
-        jMenu6.setText("Administrar");
-        jMenu6.setEnabled(false);
-        jMenu6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        menuSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/config32.png"))); // NOI18N
+        menuSistema.setText("Sistema");
+        menuSistema.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        jMenuItem21.setText("Empleados");
-        jMenuItem21.setEnabled(false);
-        jMenu6.add(jMenuItem21);
+        smAdministrar.setText("Administrar");
+        smAdministrar.setEnabled(false);
+        smAdministrar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        jMenuItem25.setText("Usuarios");
-        jMenuItem25.setEnabled(false);
-        jMenu6.add(jMenuItem25);
+        smAdmEmpleado.setText("Empleados");
+        smAdmEmpleado.setEnabled(false);
+        smAdministrar.add(smAdmEmpleado);
 
-        jMenuItem26.setText("Roles");
-        jMenuItem26.setEnabled(false);
-        jMenu6.add(jMenuItem26);
+        smAdmUsuarios.setText("Usuarios");
+        smAdmUsuarios.setEnabled(false);
+        smAdministrar.add(smAdmUsuarios);
 
-        jMenuItem27.setText("Operatividad");
-        jMenuItem27.setEnabled(false);
-        jMenu6.add(jMenuItem27);
+        smAdRoles.setText("Roles");
+        smAdRoles.setEnabled(false);
+        smAdministrar.add(smAdRoles);
 
-        jMenu5.add(jMenu6);
+        menuSistema.add(smAdministrar);
 
-        jMenuItem20.setText("Empresa");
-        jMenuItem20.setEnabled(false);
-        jMenu5.add(jMenuItem20);
+        smEmpresa.setText("Empresa");
+        smEmpresa.setEnabled(false);
+        menuSistema.add(smEmpresa);
 
-        jMenuItem22.setText("Impresora");
-        jMenuItem22.setEnabled(false);
-        jMenu5.add(jMenuItem22);
+        smImpresora.setText("Impresora");
+        smImpresora.setEnabled(false);
+        menuSistema.add(smImpresora);
 
-        jMenuItem23.setText("Unidades");
-        jMenuItem23.setEnabled(false);
-        jMenu5.add(jMenuItem23);
+        smUnidades.setText("Unidades");
+        smUnidades.setEnabled(false);
+        menuSistema.add(smUnidades);
 
-        jmbPrincipal.add(jMenu5);
+        jmbPrincipal.add(menuSistema);
 
         setJMenuBar(jmbPrincipal);
 
@@ -262,21 +279,23 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tblSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+            .addComponent(tblSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(251, Short.MAX_VALUE)
+                .addComponent(jDesktopPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void smProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smProveedoresActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_smProveedoresActionPerformed
 
     private void miProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miProductoActionPerformed
         // TODO add your handling code here:
@@ -288,6 +307,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         setExtendedState(MAXIMIZED_BOTH);
     }//GEN-LAST:event_formWindowOpened
+
+    private void smClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smClientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,43 +348,43 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
-    private javax.swing.JMenuItem jMenuItem22;
-    private javax.swing.JMenuItem jMenuItem23;
-    private javax.swing.JMenuItem jMenuItem25;
-    private javax.swing.JMenuItem jMenuItem26;
-    private javax.swing.JMenuItem jMenuItem27;
-    private javax.swing.JMenuItem jMenuItem28;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JMenuBar jmbPrincipal;
     private javax.swing.JLabel lblEmpleado;
     private javax.swing.JLabel lblReloj;
+    private javax.swing.JMenu menuConsultas;
+    private javax.swing.JMenu menuOperaciones;
+    private javax.swing.JMenu menuProcesos;
+    private javax.swing.JMenu menuReportes;
+    private javax.swing.JMenu menuSistema;
     private javax.swing.JMenuItem miProducto;
+    private javax.swing.JMenuItem smAdRoles;
+    private javax.swing.JMenuItem smAdmEmpleado;
+    private javax.swing.JMenuItem smAdmUsuarios;
+    private javax.swing.JMenu smAdministrar;
+    private javax.swing.JMenuItem smClientes;
+    private javax.swing.JMenuItem smCompras;
+    private javax.swing.JMenuItem smConsArticulos;
+    private javax.swing.JMenuItem smConsClientes;
+    private javax.swing.JMenuItem smConsCompras;
+    private javax.swing.JMenuItem smConsProveedores;
+    private javax.swing.JMenuItem smConsVentas;
+    private javax.swing.JMenuItem smCorteCaja;
+    private javax.swing.JMenuItem smEmpresa;
+    private javax.swing.JMenuItem smImpresora;
+    private javax.swing.JMenuItem smInventario;
+    private javax.swing.JMenuItem smProcImportar;
+    private javax.swing.JMenuItem smProcRespaldos;
+    private javax.swing.JMenuItem smProveedores;
+    private javax.swing.JMenuItem smReportArticulos;
+    private javax.swing.JMenuItem smReportClientes;
+    private javax.swing.JMenuItem smReportCompras;
+    private javax.swing.JMenuItem smReportFarmacias;
+    private javax.swing.JMenuItem smReportProveedor;
+    private javax.swing.JMenuItem smReportVentas;
+    private javax.swing.JMenuItem smUnidades;
+    private javax.swing.JMenuItem smVentas;
     private javax.swing.JToolBar tblSesion;
     // End of variables declaration//GEN-END:variables
 }

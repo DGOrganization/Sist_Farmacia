@@ -206,7 +206,7 @@ public class frmProductos extends javax.swing.JFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        frmNuevoProducto frm = new frmNuevoProducto(this, true);
+        frmNuevoArticulo frm = new frmNuevoArticulo(this, true);
         frm.setVisible(true);
         if(!frm.isVisible()){
             inventarioList = controlador.Obtener();

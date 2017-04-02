@@ -278,7 +278,7 @@ public class frmAgregarProductos extends javax.swing.JFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        frmNuevoProducto frm = new frmNuevoProducto(this, true);
+        frmNuevoArticulo frm = new frmNuevoArticulo(this, true);
         frm.setVisible(true);
         if(!frm.isVisible()){
             if (frm.getInventario().equals(new Inventario())) {
@@ -295,7 +295,7 @@ public class frmAgregarProductos extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         int fila = jtInventario.getSelectedRow();
-        frmNuevoProducto frm = new frmNuevoProducto(this, true);
+        frmNuevoArticulo frm = new frmNuevoArticulo(this, true);
         if (fila > -1) {
             if (jtInventario.getValueAt(fila, 0) instanceof Inventario) {
                 frm.setInventario(inventarioList.get(inventarioList.indexOf(jtInventario.getValueAt(fila, 0))));
