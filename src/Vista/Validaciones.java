@@ -7,12 +7,9 @@ package Vista;
 
 
 import com.toedter.calendar.JDateChooser;
-import entidades.Bodega;
-import entidades.Categoria;
 import entidades.Departamento;
 import entidades.Menu;
 import entidades.Municipio;
-import entidades.Unidad;
 import entidades.Usuario;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
@@ -265,24 +262,11 @@ public class Validaciones {
         });        
     }
     
-    public void cboBodega(JComboBox cbo, List<Bodega> pLista){
+    public void cboLoad(JComboBox cbo, List<Object> pLista){
         pLista.stream().forEach(datos -> {
             cbo.addItem(datos);
         });
     }
-    
-    public void cboCategoria(JComboBox cbo, List<Categoria> pLista){
-        pLista.stream().forEach(datos -> {
-            cbo.addItem(datos);
-        });
-    }
-    
-    public void cboUnidad(JComboBox cbo, List<Unidad> pLista){
-        pLista.stream().forEach(datos -> {
-            cbo.addItem(datos);
-        });
-    }
-    
     public boolean validarCamposTexto(JTextField text){
         if(!text.getText().trim().equals("")){
             return true;

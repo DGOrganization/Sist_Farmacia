@@ -9,7 +9,6 @@ import configuracion.Gestionar;
 import controlador.Inventario_controlador;
 import controlador.Categoria_controlador;
 import controlador.Bodega_controlador;
-import controlador.Unidad_controlador;
 import entidades.Inventario;
 import entidades.Articulo;
 import entidades.Bodega;
@@ -66,7 +65,6 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         int ventana = fc.showDialog(this, "Seleccionar");
         if(ventana == JFileChooser.APPROVE_OPTION){
             File archivo = fc.getSelectedFile();
-            imagenURL = archivo.getPath();
             setImagen(archivo.getPath());
         }
     }
@@ -172,11 +170,6 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         jpAcciones.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -266,9 +259,13 @@ public class frmNuevoProducto extends javax.swing.JDialog {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
+        cboUnidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Caja", "KG", "LT", "PZA" }));
+
         jLabel20.setText("Nombre:");
 
         jLabel4.setText("Localizacion:");
+
+        cboBodega.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Farmacia 1", "Farmacia 2" }));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Fecha de Vencimiento:");
@@ -705,19 +702,14 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         lblImagen.setText("Presiona Editar para buscar una imagen...");
         lblImagen.setIcon(null);
     }//GEN-LAST:event_lblBorrarMouseClicked
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {                                  
         // TODO add your handling code here:
-        validar.cboBodega(cboBodega, new Bodega_controlador().Obtener());
-        validar.cboCategoria(cboCategoria, new Categoria_controlador().Obtener());
-        validar.cboUnidad(cboUnidad, new Unidad_controlador().Obtener());
         if (isEditar()) {
             //editMode();
         } else {
             inventario = new Inventario();
         }
-    }//GEN-LAST:event_formWindowOpened
-   
+    }
     /**
      * @param args the command line arguments
      */
