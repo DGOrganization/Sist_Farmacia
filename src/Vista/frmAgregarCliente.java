@@ -7,6 +7,7 @@
 package Vista;
 
 import configuracion.Gestionar;
+import Vista.Search;
 import controlador.Cliente_controlador;
 import entidades.Cliente;
 import java.util.ArrayList;

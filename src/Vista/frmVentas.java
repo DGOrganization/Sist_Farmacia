@@ -66,6 +66,11 @@ public class frmVentas extends javax.swing.JInternalFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jLabel14 = new javax.swing.JLabel();
 
+        setClosable(true);
+        setMaximizable(true);
+        setTitle("Punto de Venta");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/inventario16.png"))); // NOI18N
+
         jPanel2.setBackground(new java.awt.Color(0, 153, 204));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
@@ -438,17 +443,13 @@ public class frmVentas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -458,7 +459,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTableDetalleVenta;
-    private javax.swing.JLabel lblNombreProv1;
     private javax.swing.JLabel lblNombreProv2;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblcodigo;

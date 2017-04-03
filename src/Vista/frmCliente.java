@@ -172,13 +172,13 @@ public class frmCliente extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap(50, Short.MAX_VALUE)
                 .addComponent(btnNuevo)
                 .addGap(50, 50, 50)
                 .addComponent(btnEditar)
                 .addGap(50, 50, 50)
                 .addComponent(btnEliminar)
-                .addContainerGap(259, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -6,11 +6,21 @@
 package Vista;
 
 import entidades.Usuario;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.Timer;
 
 /**
@@ -24,6 +34,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form frmMenuPrincipal
      */
+
     public frmMenuPrincipal() {
         initComponents();
         lblEmpleado.setText(usuarioActual.getEmpleado().toString()); 
@@ -51,7 +62,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         lblEmpleado = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         lblReloj = new javax.swing.JLabel();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        desktop = new javax.swing.JDesktopPane();
         jmbPrincipal = new javax.swing.JMenuBar();
         menuOperaciones = new javax.swing.JMenu();
         miProducto = new javax.swing.JMenuItem();
@@ -108,14 +119,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         lblReloj.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         tblSesion.add(lblReloj);
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout desktopLayout = new javax.swing.GroupLayout(desktop);
+        desktop.setLayout(desktopLayout);
+        desktopLayout.setHorizontalGroup(
+            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        desktopLayout.setVerticalGroup(
+            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 367, Short.MAX_VALUE)
         );
 
@@ -152,6 +163,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         smCompras.setText("Compras");
         smCompras.setEnabled(false);
+        smCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smComprasActionPerformed(evt);
+            }
+        });
         menuOperaciones.add(smCompras);
 
         smVentas.setText("Ventas");
@@ -169,6 +185,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         smCorteCaja.setText("Corte de Caja");
         smCorteCaja.setEnabled(false);
+        smCorteCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smCorteCajaActionPerformed(evt);
+            }
+        });
         menuOperaciones.add(smCorteCaja);
 
         jmbPrincipal.add(menuOperaciones);
@@ -179,14 +200,29 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         smConsCompras.setText("Compras");
         smConsCompras.setEnabled(false);
+        smConsCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smConsComprasActionPerformed(evt);
+            }
+        });
         menuConsultas.add(smConsCompras);
 
         smConsVentas.setText("Ventas");
         smConsVentas.setEnabled(false);
+        smConsVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smConsVentasActionPerformed(evt);
+            }
+        });
         menuConsultas.add(smConsVentas);
 
         smConsProveedores.setText("Proveedores");
         smConsProveedores.setEnabled(false);
+        smConsProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smConsProveedoresActionPerformed(evt);
+            }
+        });
         menuConsultas.add(smConsProveedores);
 
         smConsClientes.setText("Clientes");
@@ -261,6 +297,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         smAdRoles.setText("Roles");
         smAdRoles.setEnabled(false);
+        smAdRoles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smAdRolesActionPerformed(evt);
+            }
+        });
         smAdministrar.add(smAdRoles);
 
         menuSistema.add(smAdministrar);
@@ -275,10 +316,20 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         smUnidades.setText("Unidades");
         smUnidades.setEnabled(false);
+        smUnidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smUnidadesActionPerformed(evt);
+            }
+        });
         menuSistema.add(smUnidades);
 
         smCaja.setText("Caja");
         smCaja.setEnabled(false);
+        smCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smCajaActionPerformed(evt);
+            }
+        });
         menuSistema.add(smCaja);
 
         jmbPrincipal.add(menuSistema);
@@ -290,12 +341,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(tblSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
-            .addComponent(jDesktopPane1)
+            .addComponent(desktop)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jDesktopPane1)
+                .addComponent(desktop)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tblSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -305,11 +356,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void smProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smProveedoresActionPerformed
         // TODO add your handling code here:
+        frmProveedor frm = new frmProveedor();
+        frm.setVisible(true);
     }//GEN-LAST:event_smProveedoresActionPerformed
 
     private void miProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miProductoActionPerformed
         // TODO add your handling code here:
-        frmAgregarProductos frm = new frmAgregarProductos();
+        frmProducto frm = new frmProducto();
         frm.setVisible(true);
     }//GEN-LAST:event_miProductoActionPerformed
 
@@ -320,13 +373,70 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void smClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smClientesActionPerformed
         // TODO add your handling code here:
+        frmCliente frmC = new frmCliente();
+        frmC.setVisible(true);
     }//GEN-LAST:event_smClientesActionPerformed
 
     private void smVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smVentasActionPerformed
-        // TODO add your handling code here:
-        frmVentas frmV = new frmVentas();
-        frmV.setVisible(true);
+        // TODO add your handling code here:      
+        frmVentas internalFrame = new frmVentas();      
+////        desktop.add(internalFrame);
+////        internalFrame.setVisible(true);
+        if( internalFrame.isVisible()){
+            internalFrame.toFront();
+            internalFrame.requestFocus();
+            }else{
+                desktop.add(internalFrame);
+                internalFrame.setVisible(true);
+        }
+        try {
+            internalFrame.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_smVentasActionPerformed
+
+    private void smComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smComprasActionPerformed
+        // TODO add your handling code here:
+        frmCompra frmC = new frmCompra();
+        frmC.setVisible(true);
+    }//GEN-LAST:event_smComprasActionPerformed
+
+    private void smCorteCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smCorteCajaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smCorteCajaActionPerformed
+
+    private void smConsComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smConsComprasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smConsComprasActionPerformed
+
+    private void smConsVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smConsVentasActionPerformed
+        // TODO add your handling code here:
+        frmConsultarVentas frmCV = new frmConsultarVentas();
+        frmCV.setVisible(true);
+    }//GEN-LAST:event_smConsVentasActionPerformed
+
+    private void smConsProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smConsProveedoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smConsProveedoresActionPerformed
+
+    private void smUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smUnidadesActionPerformed
+        // TODO add your handling code here:
+        frmUnidades frmU = new frmUnidades();
+        frmU.setVisible(true);
+    }//GEN-LAST:event_smUnidadesActionPerformed
+
+    private void smCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smCajaActionPerformed
+        // TODO add your handling code here:
+        frmCaja frmC = new frmCaja();
+        frmC.setVisible(true);
+    }//GEN-LAST:event_smCajaActionPerformed
+
+    private void smAdRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smAdRolesActionPerformed
+        // TODO add your handling code here:
+//        frmRoles frmR = new frmRoles();
+//        frmR.setVisible(true);
+    }//GEN-LAST:event_smAdRolesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,7 +474,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JDesktopPane desktop;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JMenuBar jmbPrincipal;
     private javax.swing.JLabel lblEmpleado;
