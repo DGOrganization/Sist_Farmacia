@@ -53,6 +53,9 @@
                 <Property name="text" type="java.lang.String" value="Ventas"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="smVentasActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="smInventario">
               <Properties>
@@ -240,6 +243,12 @@
             <MenuItem class="javax.swing.JMenuItem" name="smUnidades">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Unidades"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="smCaja">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Caja"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>

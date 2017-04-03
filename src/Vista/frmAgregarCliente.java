@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -210,7 +209,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        frmRegistrarCliente frm = new frmRegistrarCliente(this, true);
+        frmNuevoCliente frm = new frmNuevoCliente(this, true);
         frm.setVisible(true);
         if(frm.isVisible() == false){
             if(!frm.getCliente().equals(new Cliente())){
@@ -223,7 +222,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        frmRegistrarCliente frm = new frmRegistrarCliente(this, true);
+        frmNuevoCliente frm = new frmNuevoCliente(this, true);
         int fila = jtClientes.getSelectedRow();
         if (fila > -1) {
             frm.setCliente(clienteList.get(clienteList.indexOf(jtClientes.getValueAt(fila, 0))));

@@ -127,8 +127,7 @@ public class frmProductos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtBusqueda)
-                .addContainerGap())
+                .addComponent(txtBusqueda))
             .addComponent(jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(

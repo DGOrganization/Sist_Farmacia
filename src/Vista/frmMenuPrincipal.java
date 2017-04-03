@@ -85,6 +85,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         smEmpresa = new javax.swing.JMenuItem();
         smImpresora = new javax.swing.JMenuItem();
         smUnidades = new javax.swing.JMenuItem();
+        smCaja = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -155,6 +156,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         smVentas.setText("Ventas");
         smVentas.setEnabled(false);
+        smVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smVentasActionPerformed(evt);
+            }
+        });
         menuOperaciones.add(smVentas);
 
         smInventario.setText("Inventario Inicial");
@@ -271,6 +277,10 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         smUnidades.setEnabled(false);
         menuSistema.add(smUnidades);
 
+        smCaja.setText("Caja");
+        smCaja.setEnabled(false);
+        menuSistema.add(smCaja);
+
         jmbPrincipal.add(menuSistema);
 
         setJMenuBar(jmbPrincipal);
@@ -311,6 +321,12 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void smClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smClientesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_smClientesActionPerformed
+
+    private void smVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smVentasActionPerformed
+        // TODO add your handling code here:
+        frmVentas frmV = new frmVentas();
+        frmV.setVisible(true);
+    }//GEN-LAST:event_smVentasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -363,6 +379,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem smAdmEmpleado;
     private javax.swing.JMenuItem smAdmUsuarios;
     private javax.swing.JMenu smAdministrar;
+    private javax.swing.JMenuItem smCaja;
     private javax.swing.JMenuItem smClientes;
     private javax.swing.JMenuItem smCompras;
     private javax.swing.JMenuItem smConsArticulos;
