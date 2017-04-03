@@ -28,7 +28,7 @@ public class Articulo_modelo {
                 if(cmd.execute()){
                     ResultSet resultado = cmd.getResultSet();
                     while(resultado.next()){
-                        articulo.setId(resultado.getInt("codigo"));
+                        articulo.setId(resultado.getInt("cod"));
                         articulo.setNombre(resultado.getString("prod"));
                         articulo.setEstado(resultado.getBoolean("estado"));
                     }
@@ -39,7 +39,7 @@ public class Articulo_modelo {
                     null, 
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
                             + "\nFavor contacte al desarrollador",
-                    new Gestionar().Leer("Empresa", "nombre"),
+                    new Gestionar().Leer("Empresa", "nombre") + " - " + this.getClass().getName(),
                     JOptionPane.ERROR_MESSAGE
             );
         } finally {

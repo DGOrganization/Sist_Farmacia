@@ -262,6 +262,11 @@ public class Validaciones {
         });        
     }
     
+    public void cboLoad(JComboBox cbo, List<Object> pLista){
+        pLista.stream().forEach(datos -> {
+            cbo.addItem(datos);
+        });
+    }
     public boolean validarCamposTexto(JTextField text){
         if(!text.getText().trim().equals("")){
             return true;

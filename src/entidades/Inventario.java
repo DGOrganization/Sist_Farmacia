@@ -21,10 +21,11 @@ public class Inventario {
     private Bodega _bodega;    
     private Unidad _unidad;
     private BigDecimal _stock;
-    private BigDecimal _stockMin;
-    private BigDecimal _stockMax;
+    private int _stockMin;
+    private int _stockMax;
     private List<Precio> _precio;
     private java.sql.Date _vencimiento;
+    private Imagen _imagen;
     private boolean _estado;
 
     public int getId() {
@@ -35,11 +36,11 @@ public class Inventario {
         this._id = _id;
     }
 
-    public Articulo getProducto() {
+    public Articulo getArticulo() {
         return _articulo;
     }
 
-    public void setProducto(Articulo _articulo) {
+    public void setArticulo(Articulo _articulo) {
         this._articulo = _articulo;
     }
 
@@ -75,19 +76,19 @@ public class Inventario {
         this._stock = _stock;
     }
 
-    public BigDecimal getStockMin() {
+    public int getStockMin() {
         return _stockMin;
     }
 
-    public void setStockMin(BigDecimal _stockMin) {
+    public void setStockMin(int _stockMin) {
         this._stockMin = _stockMin;
     }
 
-    public BigDecimal getStockMax() {
+    public int getStockMax() {
         return _stockMax;
     }
 
-    public void setStockMax(BigDecimal _stockMax) {
+    public void setStockMax(int _stockMax) {
         this._stockMax = _stockMax;
     }
 
@@ -103,6 +104,14 @@ public class Inventario {
         return _vencimiento;
     }
 
+    public Imagen getImagen() {
+        return _imagen;
+    }
+
+    public void setImagen(Imagen _imagen) {
+        this._imagen = _imagen;
+    }
+    
     public void setVencimiento(java.sql.Date _vencimiento) {
         this._vencimiento = _vencimiento;
     }
@@ -122,7 +131,11 @@ public class Inventario {
     public Inventario() {
     }
 
-    public Inventario(int _id, Articulo _articulo, Categoria _categoria, Bodega _bodega, Unidad _unidad, BigDecimal _stock, BigDecimal _stockMin, BigDecimal _stockMax, List<Precio> _precio, Date _vencimiento, boolean _estado) {
+    public Inventario(int _id) {
+        this._id = _id;
+    }
+
+    public Inventario(int _id, Articulo _articulo, Categoria _categoria, Bodega _bodega, Unidad _unidad, BigDecimal _stock, int _stockMin, int _stockMax, List<Precio> _precio, Date _vencimiento, Imagen _imagen, boolean _estado) {
         this._id = _id;
         this._articulo = _articulo;
         this._categoria = _categoria;
@@ -133,13 +146,10 @@ public class Inventario {
         this._stockMax = _stockMax;
         this._precio = _precio;
         this._vencimiento = _vencimiento;
+        this._imagen = _imagen;
         this._estado = _estado;
     }
-
-    public Inventario(int _id) {
-        this._id = _id;
-    }
-
+    
     @Override
     public String toString() {
         return _categoria + " " + _articulo;

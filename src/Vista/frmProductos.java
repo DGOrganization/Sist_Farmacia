@@ -38,12 +38,12 @@ public class frmProductos extends javax.swing.JFrame {
     }
     
     private void cargarDatos(List<Inventario> lista){
-        String[] columnas = {"Nombre", "Telefono", "Direccion"};
+        String[] columnas = {"Producto", "Stock Actual", "Ubicacion"};
         ControlesGenerales.reiniciarJTable(jtProductos);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
-        lista.forEach(datos -> {
-            Object[] nuevaFila= {
+        lista.stream().forEach(datos -> {
+            Object[] nuevaFila = {
                 datos,
                 datos.getStock(),
                 datos.getBodega()
@@ -206,7 +206,7 @@ public class frmProductos extends javax.swing.JFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        frmNuevoArticulo frm = new frmNuevoArticulo(this, true);
+        frmNuevoProducto frm = new frmNuevoProducto(this, true);
         frm.setVisible(true);
         if(!frm.isVisible()){
             inventarioList = controlador.Obtener();
