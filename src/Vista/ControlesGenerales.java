@@ -5,14 +5,7 @@
  */
 package Vista;
 
-import entidades.Categoria;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**

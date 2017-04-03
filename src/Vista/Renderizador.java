@@ -7,6 +7,7 @@ package Vista;
 
 import java.awt.Component;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -23,6 +24,9 @@ public class Renderizador extends DefaultTableCellRenderer {
         }
         return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); //To change body of generated methods, choose Tools | Templates.
     }
+    private static JDesktopPane jDesktopPane;
+//    public
+    
     /*@Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         // Va a mostrar el botón solo en la última fila.
