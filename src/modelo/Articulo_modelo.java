@@ -30,6 +30,7 @@ public class Articulo_modelo {
                     while(resultado.next()){
                         articulo.setId(resultado.getInt("cod"));
                         articulo.setNombre(resultado.getString("prod"));
+                        articulo.setDescripcion(resultado.getString("descrip"));
                         articulo.setEstado(resultado.getBoolean("estado"));
                     }
                 }

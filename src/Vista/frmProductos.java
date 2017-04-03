@@ -12,6 +12,7 @@ import entidades.Inventario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -48,6 +49,9 @@ public class frmProductos extends javax.swing.JFrame {
                 datos.getStock(),
                 datos.getBodega()
             };
+            System.out.println("Categoria " + datos.getCategoria());
+            System.out.println("Bodega " + datos.getBodega());
+            System.out.println("Unidad " + datos.getUnidad());
             if(datos.isEstado()){
                 modelo.addRow(nuevaFila);
             }
@@ -97,7 +101,7 @@ public class frmProductos extends javax.swing.JFrame {
         jtProductos = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -152,8 +156,13 @@ public class frmProductos extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit32.png"))); // NOI18N
-        jButton2.setText("Editar");
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit32.png"))); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete32.png"))); // NOI18N
         jButton3.setText("Borrar");
@@ -166,7 +175,7 @@ public class frmProductos extends javax.swing.JFrame {
                 .addGap(50, 50, 50)
                 .addComponent(btnNuevo)
                 .addGap(50, 50, 50)
-                .addComponent(jButton2)
+                .addComponent(btnEditar)
                 .addGap(50, 50, 50)
                 .addComponent(jButton3)
                 .addGap(111, 111, 111))
@@ -177,7 +186,7 @@ public class frmProductos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevo)
-                    .addComponent(jButton2)
+                    .addComponent(btnEditar)
                     .addComponent(jButton3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -210,8 +219,31 @@ public class frmProductos extends javax.swing.JFrame {
         if(!frm.isVisible()){
             inventarioList = controlador.Obtener();
             cargarDatos(inventarioList);
+            frm.dispose();
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        frmNuevoProducto frm = new frmNuevoProducto(this, true);
+        int fila = jtProductos.getSelectedRow();
+        if(fila > -1){
+            frm.setInventario(inventarioList.get(inventarioList.indexOf(jtProductos.getValueAt(fila, 0))));
+            frm.setEditar(true);
+            frm.setVisible(true);
+            if (!frm.isVisible()) {
+                inventarioList = controlador.Obtener();
+                cargarDatos(inventarioList);
+                frm.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Selecciona primero",
+                        new Gestionar().Leer("Empresa", "nombre"),
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -252,8 +284,8 @@ public class frmProductos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
