@@ -72,6 +72,7 @@ public class frmNuevoNivel extends javax.swing.JDialog {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jCheckBox1.setText("Operaciones");
+        jCheckBox1.setOpaque(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -94,6 +95,7 @@ public class frmNuevoNivel extends javax.swing.JDialog {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jCheckBox2.setText("Articulos");
+        jCheckBox2.setOpaque(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -116,12 +118,16 @@ public class frmNuevoNivel extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jCheckBox3.setText("Agregar");
+        jCheckBox3.setOpaque(false);
 
         jCheckBox4.setText("Editar");
+        jCheckBox4.setOpaque(false);
 
         jCheckBox5.setText("Eliminar");
+        jCheckBox5.setOpaque(false);
 
         jCheckBox6.setText("Etc (de cada uno)");
+        jCheckBox6.setOpaque(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);

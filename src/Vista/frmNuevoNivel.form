@@ -187,6 +187,7 @@
             <Component class="javax.swing.JCheckBox" name="jCheckBox1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Operaciones"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -227,6 +228,7 @@
             <Component class="javax.swing.JCheckBox" name="jCheckBox2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Articulos"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -282,21 +284,25 @@
             <Component class="javax.swing.JCheckBox" name="jCheckBox3">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Agregar"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="jCheckBox4">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Editar"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="jCheckBox5">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="jCheckBox6">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Etc (de cada uno)"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>

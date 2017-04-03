@@ -33,8 +33,7 @@ public class frmAgregarProductos extends javax.swing.JFrame {
         inventarioList = controlador.Obtener();
         cargarDatos(inventarioList);
         changeText();
-    }  
-    
+    }    
     
     private void cargarDatos(List<Inventario> lista){
         String[] columnas = {"Producto", "Descripcion", "Existencia", "Precio", "Bodega"};
@@ -82,8 +81,6 @@ public class frmAgregarProductos extends javax.swing.JFrame {
         
         });
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
