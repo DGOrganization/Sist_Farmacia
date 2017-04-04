@@ -24,7 +24,7 @@ public class Precio_modelo {
     
     public List<Precio> ListarPrecioInv(Inventario pInventario){
         List<Precio> lista = new ArrayList<>();
-        Conexion conn = new Conexion();        
+        Conexion conn = new Conexion();
         try{
             if(conn.Conectar()){
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerprecioinv(?) }");
@@ -35,6 +35,7 @@ public class Precio_modelo {
                         Precio precio = new Precio();
                         precio.setId(resultado.getInt("codigo"));
                         precio.setCantidad(resultado.getBigDecimal("cant"));
+                        lista.add(precio);
                     }
                 }
             }

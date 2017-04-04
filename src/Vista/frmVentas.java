@@ -6,6 +6,16 @@
 
 package Vista;
 
+import Vista.ControlesGenerales.DefaultTableModelImpl;
+import configuracion.Gestionar;
+import entidades.Inventario;
+import java.awt.Frame;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gerard
@@ -15,6 +25,57 @@ public class frmVentas extends javax.swing.JInternalFrame {
     /** Creates new form frmVentas */
     public frmVentas() {
         initComponents();
+        jTableDetalleVenta.setDefaultRenderer(Object.class, new Renderizador());
+        jTableDetalleVenta.setRowHeight(25);
+        Object[] columnas = {"Producto", "Cant", "Desc", "Precio", "Importe", "¿Quitar?"};
+        DefaultTableModel modelo = new DefaultTableModelImpl();
+        modelo.setColumnIdentifiers(columnas);
+        jTableDetalleVenta.setModel(modelo);
+    }
+    
+    private void AñadirDetalle(Inventario inventarioActual){
+        DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
+        if(inventarioActual.getId() != 0){
+            boolean encontrado = false;
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                Inventario comparador = (Inventario) (modelo.getValueAt(i, 0));
+                if(comparador.getId() == inventarioActual.getId()){
+                    encontrado = true;
+                    break;
+                }
+            }
+            if(encontrado){
+                JOptionPane.showMessageDialog(this, "Ya se agrego este producto","Sistemas de Compras y Ventas - Compras", JOptionPane.WARNING_MESSAGE);
+            } else {
+                
+                Object[] nuevaFila = {
+                        inventarioActual,
+                        1,
+                        0,
+                        inventarioActual.getPrecio().get(0).getCantidad(),
+                        new BigDecimal("1").multiply(inventarioActual.getPrecio().get(0).getCantidad()),
+                        new JButton("¿Quitar?")
+                }; 
+                modelo.addRow(nuevaFila);
+                jTableDetalleVenta.setModel(modelo);
+                lblProducto.setText("<Producto>");
+                calcularTotal();
+                System.out.println("Llegue");
+            }            
+        }
+    }
+    
+    private void calcularTotal(){
+        double subtotal = 0;
+        double iva = 0;
+        double total = 0;
+        for (int i = 0; i < jTableDetalleVenta.getRowCount(); i++) {
+            subtotal += Double.parseDouble(jTableDetalleVenta.getValueAt(i, 3).toString());
+        }
+        iva = subtotal * 0.13;
+        //txtIVA.setText(new BigDecimal(iva).setScale(2, RoundingMode.HALF_UP).toString());
+        total = subtotal + iva;
+        lblTotal.setText(new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).toString());
     }
 
     /** This method is called from within the constructor to
@@ -64,7 +125,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         txtDescuento = new javax.swing.JTextField();
         txtComentarios = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabel14 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -126,6 +187,11 @@ public class frmVentas extends javax.swing.JInternalFrame {
         btnGuardarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cerrarventa24.png"))); // NOI18N
         btnGuardarVenta.setText("Guardar");
         btnGuardarVenta.setToolTipText("Cerrar Venta");
+        btnGuardarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarVentaActionPerformed(evt);
+            }
+        });
 
         btnSeleccionarPrecio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/numberp24.png"))); // NOI18N
         btnSeleccionarPrecio.setText("Precio");
@@ -151,6 +217,11 @@ public class frmVentas extends javax.swing.JInternalFrame {
         btnChekarPrec.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/checador24.png"))); // NOI18N
         btnChekarPrec.setText("Check");
         btnChekarPrec.setToolTipText("Checkeador de Precios");
+        btnChekarPrec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChekarPrecActionPerformed(evt);
+            }
+        });
 
         btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/client24.png"))); // NOI18N
         btnBuscarCliente.setText("Cliente");
@@ -248,6 +319,11 @@ public class frmVentas extends javax.swing.JInternalFrame {
                 "Descripcion", "Cant", "Desc", "PrecioU", "Importe"
             }
         ));
+        jTableDetalleVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDetalleVentaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableDetalleVenta);
 
         jLabel10.setText("Empleado:");
@@ -272,8 +348,8 @@ public class frmVentas extends javax.swing.JInternalFrame {
         txtDescuento.setToolTipText("Total Descontado");
         txtDescuento.setEnabled(false);
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel14.setText("lblTotal");
+        lblTotal.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblTotal.setText("lblTotal");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -332,7 +408,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -378,7 +454,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15))
         );
 
@@ -409,9 +485,11 @@ public class frmVentas extends javax.swing.JInternalFrame {
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         // TODO add your handling code here:
-        frmAgregarProductos frm = new frmAgregarProductos();
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmAgregarProducto frm = new frmAgregarProducto(f, true);
         frm.setVisible(true);
         if(frm.isVisible() == false){
+            AñadirDetalle(frm.getInv_seleccion());
             frm.dispose();
         }
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
@@ -424,6 +502,37 @@ public class frmVentas extends javax.swing.JInternalFrame {
 //            frm.dispose();
 //        }
     }//GEN-LAST:event_btnSeleccionarPrecioActionPerformed
+
+    private void btnChekarPrecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChekarPrecActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnChekarPrecActionPerformed
+
+    private void btnGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarVentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarVentaActionPerformed
+
+    private void jTableDetalleVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDetalleVentaMouseClicked
+        // TODO add your handling code here:
+         int fila = jTableDetalleVenta.getSelectedRow();
+        if (fila > -1) {
+            int columna = jTableDetalleVenta.getSelectedColumn();
+            if (jTableDetalleVenta.getValueAt(fila, columna) instanceof JButton) {
+                int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
+                        JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
+                    modelo.removeRow(fila);
+                    jTableDetalleVenta.setModel(modelo);
+                    calcularTotal();
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jTableDetalleVentaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -442,7 +551,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel4;
@@ -461,6 +569,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTableDetalleVenta;
     private javax.swing.JLabel lblNombreProv2;
     private javax.swing.JLabel lblProducto;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblcodigo;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtComentarios;

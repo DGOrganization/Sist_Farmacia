@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,12 +41,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class frmNuevoProducto extends javax.swing.JDialog {
     private Inventario inventario;
     private boolean editar = false;
-    private Inventario_controlador controlador;
-    private Validaciones validar;
+    private final Inventario_controlador controlador;
+    private final Validaciones validar;
     private String imagenURL;
     
     /**
      * Creates new form frmNuevoArticulo
+     * @param parent
+     * @param modal
      */
     public frmNuevoProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -54,12 +57,24 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         controlador = new Inventario_controlador();
         validar = new Validaciones();
         jTabbedPane1.remove(3);
+        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
     }
+    public frmNuevoProducto(javax.swing.JDialog parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(null);
+        controlador = new Inventario_controlador();
+        validar = new Validaciones();
+        jTabbedPane1.remove(3);
+        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
+    }
+    
     
     private void ObtenerImagen() throws FileNotFoundException, IOException{
         JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fc.setCurrentDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Pictures"));
+        fc.setAcceptAllFileFilterUsed(false);
         fc.addChoosableFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "jpge"));
         int ventana = fc.showDialog(this, "Seleccionar");
         if(ventana == JFileChooser.APPROVE_OPTION){
@@ -79,8 +94,10 @@ public class frmNuevoProducto extends javax.swing.JDialog {
     private String CopiarImagen() throws IOException {        
         String urlSalida = System.getProperty("user.dir") + "\\Recursos\\Productos";
         File dir = new File(urlSalida);
-        if (dir.mkdirs()) {
-            System.out.println("Si funciona");
+        if(!dir.exists()){            
+            if (dir.mkdirs()) {
+                System.out.println("Si funciona");
+            }
         }
         File archivo = new File(imagenURL);
         InputStream in = new FileInputStream(archivo);
@@ -656,37 +673,56 @@ public class frmNuevoProducto extends javax.swing.JDialog {
             inventario.setCategoria((Categoria) cboCategoria.getSelectedItem());
             inventario.setBodega((Bodega) cboBodega.getSelectedItem());
             inventario.setUnidad((Unidad) cboUnidad.getSelectedItem());
-            List<Precio> precios = new ArrayList<>();
-            precios.add(new Precio(0, new BigDecimal(txtPrecio1.getText()), true));
-            precios.add(new Precio(0, new BigDecimal(txtPrecio2.getText()), true));
-            precios.add(new Precio(0, new BigDecimal(txtPrecio3.getText()), true));
-            precios.add(new Precio(0, new BigDecimal(txtMayoreo1.getText()), true));
-            precios.add(new Precio(0, new BigDecimal(txtMayoreo2.getText()), true));
-            precios.add(new Precio(0, new BigDecimal(txtMayoreo3.getText()), true));
-            inventario.setPrecio(precios);
             inventario.setStockMin(Integer.parseInt(txtStockMin.getText()));
-            inventario.setStockMin(Integer.parseInt(txtStockMax.getText()));
+            inventario.setStockMax(Integer.parseInt(txtStockMax.getText()));
             inventario.setVencimiento(jdcVencimiento.getDate());
-            if(!imagenURL.isEmpty()){                
+            if(imagenURL != null || !imagenURL.isEmpty()){                
                 try {
                     inventario.setImagen(new Imagen(0, CopiarImagen()));
                 } catch (IOException ex) {
                     Logger.getLogger(frmNuevoProducto.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            if(!isEditar()){
-                if(controlador.Registrar(inventario)){
+            if (!isEditar()) {
+                List<Precio> precios = new ArrayList<>();
+                precios.add(new Precio(0, new BigDecimal(txtPrecio1.getText()).setScale(2, BigDecimal.ROUND_DOWN), true));
+                precios.add(new Precio(0, new BigDecimal(txtPrecio2.getText()).setScale(2, BigDecimal.ROUND_DOWN), true));
+                precios.add(new Precio(0, new BigDecimal(txtPrecio3.getText()).setScale(2, BigDecimal.ROUND_DOWN), true));
+                precios.add(new Precio(0, new BigDecimal(txtMayoreo1.getText()).setScale(2, BigDecimal.ROUND_DOWN), true));
+                precios.add(new Precio(0, new BigDecimal(txtMayoreo2.getText()).setScale(2, BigDecimal.ROUND_DOWN), true));
+                precios.add(new Precio(0, new BigDecimal(txtMayoreo3.getText()).setScale(2, BigDecimal.ROUND_DOWN), true));
+                inventario.setPrecio(precios);
+                if (controlador.Registrar(inventario)) {
                     JOptionPane.showMessageDialog(this,
-                        "El registro ha sido ingresado exitosamente",
-                        new Gestionar().Leer("Empresa", "nombre"),
-                        JOptionPane.INFORMATION_MESSAGE);
+                            "El registro ha sido ingresado exitosamente",
+                            new Gestionar().Leer("Empresa", "nombre"),
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                inventario.getPrecio().get(0).setCantidad(new BigDecimal(txtPrecio1.getText()).setScale(2));
+                inventario.getPrecio().get(1).setCantidad(new BigDecimal(txtPrecio2.getText()).setScale(2));
+                inventario.getPrecio().get(2).setCantidad(new BigDecimal(txtPrecio3.getText()).setScale(2));
+                inventario.getPrecio().get(3).setCantidad(new BigDecimal(txtMayoreo1.getText()).setScale(2));
+                inventario.getPrecio().get(4).setCantidad(new BigDecimal(txtMayoreo2.getText()).setScale(2));
+                inventario.getPrecio().get(5).setCantidad(new BigDecimal(txtMayoreo3.getText()).setScale(2));
+                int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de editar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    if (controlador.Editar(inventario)) {
+                        JOptionPane.showMessageDialog(this,
+                            "El registro ha sido actualizado exitosamente",
+                            new Gestionar().Leer("Empresa", "nombre"),
+                            JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
             }
+            this.setVisible(false);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void lblSeleccionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSeleccionarMouseClicked
@@ -707,17 +743,26 @@ public class frmNuevoProducto extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         new Validaciones().cboCategoria(cboCategoria, new Categoria_controlador().Obtener());
-       // new Validaciones().cboBodega(cboBodega, new Bodega_controlador().Obtener());
-       // new Validaciones().cboUnidades(cboUnidad, new Unidad_controlador().Obtener());
+        new Validaciones().cboBodega(cboBodega, new Bodega_controlador().Obtener());
+        new Validaciones().cboUnidades(cboUnidad, new Unidad_controlador().Obtener());
         if (isEditar()) {
             txtProducto.setText(inventario.getArticulo().getNombre());
             txtDescripcion.setText(inventario.getArticulo().getDescripcion());
-            System.out.println("Categoria " + inventario.getCategoria());
-            System.out.println("Bodega " + inventario.getBodega());
-            System.out.println("Unidad " + inventario.getUnidad());
-            cboCategoria.setSelectedItem(inventario.getCategoria());
-            //cboBodega.setSelectedItem(inventario.getBodega());
-            //cboUnidad.setSelectedItem(inventario.getUnidad());
+            cboCategoria.getModel().setSelectedItem(inventario.getCategoria());
+            cboBodega.getModel().setSelectedItem(inventario.getBodega());
+            cboUnidad.getModel().setSelectedItem(inventario.getUnidad());
+            jdcVencimiento.setDate(new Date(inventario.getVencimiento().getTime()));
+            txtStockMin.setText(String.valueOf(inventario.getStockMin()));
+            txtStockMax.setText(String.valueOf(inventario.getStockMax()));
+            txtPrecio1.setText(inventario.getPrecio().get(0).getCantidad().toString());
+            txtPrecio2.setText(inventario.getPrecio().get(1).getCantidad().toString());
+            txtPrecio3.setText(inventario.getPrecio().get(2).getCantidad().toString());
+            txtMayoreo1.setText(inventario.getPrecio().get(3).getCantidad().toString());
+            txtMayoreo2.setText(inventario.getPrecio().get(4).getCantidad().toString());
+            txtMayoreo3.setText(inventario.getPrecio().get(5).getCantidad().toString());
+            setImagen(inventario.getImagen().getUrl());
+            imagenURL = inventario.getImagen().getUrl();
+            System.out.println("Imagen = " + inventario.getImagen().getUrl());
         } else {
             inventario = new Inventario();
         }

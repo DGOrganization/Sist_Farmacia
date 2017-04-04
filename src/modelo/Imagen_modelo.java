@@ -32,7 +32,6 @@ public class Imagen_modelo {
                     while(resultado.next()){
                         imagen.setId(resultado.getInt("codigo"));
                         imagen.setUrl(resultado.getString("url"));
-                        System.out.println("Imagen = " + imagen);
                     }
                 }
             }

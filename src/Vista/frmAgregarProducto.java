@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import configuracion.Gestionar;
 import controlador.Inventario_controlador;
 import entidades.Inventario;
 import java.util.ArrayList;
@@ -17,26 +18,30 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Gerard
+ * @author dakrpastiursSennin
  */
-public class frmAgregarProductos extends javax.swing.JFrame {
+public class frmAgregarProducto extends javax.swing.JDialog {
     private List<Inventario> inventarioList;
     private final Inventario_controlador controlador;
     private Inventario inv_seleccion;
     
     /**
-     * Creates new form frmProductos
+     * Creates new form frmAgregarProducto
+     * @param parent
+     * @param modal
      */
-    public frmAgregarProductos() {
+    public frmAgregarProducto(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
-        setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         inventarioList = new ArrayList<>();
         controlador = new Inventario_controlador();
         inventarioList = controlador.Obtener();
         inv_seleccion = new Inventario();
         cargarDatos(inventarioList);
         changeText();
-    }    
+        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
+    }
     
     private void cargarDatos(List<Inventario> lista){
         String[] columnas = {"Producto", "Descripcion", "Existencia", "Precio", "Bodega"};
@@ -114,7 +119,7 @@ public class frmAgregarProductos extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
@@ -323,7 +328,7 @@ public class frmAgregarProductos extends javax.swing.JFrame {
                 this.setVisible(false);
             }
         }
-        
+
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     /**
@@ -343,27 +348,27 @@ public class frmAgregarProductos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmAgregarProductos().setVisible(true);
+                frmAgregarProducto dialog = new frmAgregarProducto(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

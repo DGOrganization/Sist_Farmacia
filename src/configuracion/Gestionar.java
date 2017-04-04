@@ -8,7 +8,6 @@ package configuracion;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,7 +22,7 @@ public class Gestionar {
     protected InputStream _input = null;
     protected OutputStream _output = null;
     protected final Properties propiedades = new Properties();
-
+    
     public String Leer(String archivo, String propiedad) {
         try {
             _input = new FileInputStream(archivo + ".properties");

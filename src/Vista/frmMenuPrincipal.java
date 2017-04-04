@@ -6,10 +6,6 @@
 package Vista;
 
 import entidades.Usuario;
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -18,9 +14,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
 import javax.swing.Timer;
 
 /**
@@ -104,8 +97,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
-
-        tblSesion.setRollover(true);
 
         lblEmpleado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblEmpleado.setText("jLabel1");
@@ -379,15 +370,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void smVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smVentasActionPerformed
         // TODO add your handling code here:      
-        frmVentas internalFrame = new frmVentas();      
+        frmVentas internalFrame = new frmVentas();
 ////        desktop.add(internalFrame);
 ////        internalFrame.setVisible(true);
-        if( internalFrame.isVisible()){
-            internalFrame.toFront();
-            internalFrame.requestFocus();
-            }else{
-                desktop.add(internalFrame);
-                internalFrame.setVisible(true);
+        if (internalFrame.isShowing()) {
+            System.out.println("No se va abrir dos veces");
+        } else {
+            desktop.add(internalFrame);
+            internalFrame.setVisible(true);
         }
         try {
             internalFrame.setMaximum(true);

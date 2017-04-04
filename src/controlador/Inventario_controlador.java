@@ -27,4 +27,12 @@ public class Inventario_controlador {
     public boolean Registrar(Inventario pInventario){
         return new Inventario_modelo().Registrar(pInventario);
     }
+    
+    public boolean Editar(Inventario pInventario){
+        return new Inventario_modelo().Editar(pInventario);
+    }
+    
+    public boolean Eliminar(Inventario pInventario){
+        return new Inventario_modelo().Eliminar(pInventario);
+    }
 }

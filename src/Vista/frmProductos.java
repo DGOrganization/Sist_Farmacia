@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmProductos extends javax.swing.JFrame {
     private List<Inventario> inventarioList;
-    private Inventario_controlador controlador;
+    private final Inventario_controlador controlador;
     /**
      * Creates new form frmProductos
      */
@@ -49,9 +49,6 @@ public class frmProductos extends javax.swing.JFrame {
                 datos.getStock(),
                 datos.getBodega()
             };
-            System.out.println("Categoria " + datos.getCategoria());
-            System.out.println("Bodega " + datos.getBodega());
-            System.out.println("Unidad " + datos.getUnidad());
             if(datos.isEstado()){
                 modelo.addRow(nuevaFila);
             }
@@ -60,8 +57,7 @@ public class frmProductos extends javax.swing.JFrame {
     }
 
     private void buscarTXT(){
-        List<Inventario> encontrado = new ArrayList<>();
-        encontrado = inventarioList.stream().filter(
+        List<Inventario> encontrado = inventarioList.stream().filter(
                 datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
         ).collect(Collectors.toList());
         cargarDatos(encontrado);
@@ -82,7 +78,6 @@ public class frmProductos extends javax.swing.JFrame {
             public void changedUpdate(DocumentEvent de) {
                 buscarTXT();
             }
-        
         });
     }
     /**
@@ -102,7 +97,7 @@ public class frmProductos extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -164,8 +159,13 @@ public class frmProductos extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete32.png"))); // NOI18N
-        jButton3.setText("Borrar");
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete32.png"))); // NOI18N
+        btnEliminar.setText("Borrar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -177,7 +177,7 @@ public class frmProductos extends javax.swing.JFrame {
                 .addGap(50, 50, 50)
                 .addComponent(btnEditar)
                 .addGap(50, 50, 50)
-                .addComponent(jButton3)
+                .addComponent(btnEliminar)
                 .addGap(111, 111, 111))
         );
         jPanel2Layout.setVerticalGroup(
@@ -187,7 +187,7 @@ public class frmProductos extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevo)
                     .addComponent(btnEditar)
-                    .addComponent(jButton3))
+                    .addComponent(btnEliminar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -245,6 +245,32 @@ public class frmProductos extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int fila = jtProductos.getSelectedRow();
+        if (fila > -1) {
+            if (jtProductos.getValueAt(fila, 0) instanceof Inventario) {
+                int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
+                        JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    if (controlador.Eliminar(inventarioList.get(inventarioList.indexOf(jtProductos.getValueAt(fila, 0))))) {
+                        JOptionPane.showMessageDialog(this,
+                                "El registro ha sido eliminado exitosamente",
+                                "Sistema de Compras y Ventas - Categoria",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        inventarioList = controlador.Obtener();
+                        cargarDatos(inventarioList);
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -285,8 +311,8 @@ public class frmProductos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

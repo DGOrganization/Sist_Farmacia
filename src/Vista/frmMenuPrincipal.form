@@ -323,9 +323,6 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JToolBar" name="tblSesion">
-      <Properties>
-        <Property name="rollover" type="boolean" value="true"/>
-      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
       <SubComponents>
