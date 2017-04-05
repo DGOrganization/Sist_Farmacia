@@ -5,18 +5,59 @@
  */
 package Vista;
 
+import configuracion.Gestionar;
+import entidades.Cliente;
+import entidades.Venta;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 /**
  *
  * @author Gerard
  */
 public class frmPagoVenta extends javax.swing.JDialog {
-
+    private Venta ventaActual;
+    
     /**
      * Creates new form frmPagoVenta
      */
     public frmPagoVenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ventaActual = new Venta();
+        setLocationRelativeTo(null);
+        setTitle(new Gestionar().Leer("Empresa", "nombre"));
+        changeText();
+    }
+    
+    private void CalcularCambio(){
+        BigDecimal total = new BigDecimal(lblTotal.getText());
+        BigDecimal cambio = new BigDecimal(txtPago.getText()).subtract(total);
+        lblCambio.setText(cambio.toString());
+        lblLetrasC.setText(new Validaciones().Convertir(lblCambio.getText(), true));
+    }
+    
+    private void changeText(){
+        txtPago.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                CalcularCambio();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                CalcularCambio();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                CalcularCambio();
+            }
+        
+        });
     }
 
     /**
@@ -36,16 +77,16 @@ public class frmPagoVenta extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         txtPago = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
+        lblLetrasT = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lblCambio = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
-        jLabel9 = new javax.swing.JLabel();
+        lblLetrasC = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -53,6 +94,11 @@ public class frmPagoVenta extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTree1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Efectivo:");
@@ -64,23 +110,23 @@ public class frmPagoVenta extends javax.swing.JDialog {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Monto a Pagar");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel4.setText("jLabel4");
+        lblTotal.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(0, 51, 153));
+        lblTotal.setText("jLabel4");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 102, 153));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("lblEnletras");
+        lblLetrasT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblLetrasT.setForeground(new java.awt.Color(0, 102, 153));
+        lblLetrasT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLetrasT.setText("lblEnletras");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 153, 102));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Cambio que recibe el Cliente");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 153, 102));
-        jLabel8.setText("jLabel8");
+        lblCambio.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
+        lblCambio.setForeground(new java.awt.Color(0, 153, 102));
+        lblCambio.setText("jLabel8");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/okay16.png"))); // NOI18N
         jButton1.setText("Aceptar");
@@ -90,10 +136,10 @@ public class frmPagoVenta extends javax.swing.JDialog {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 153, 102));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("lblEnletras");
+        lblLetrasC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblLetrasC.setForeground(new java.awt.Color(0, 153, 102));
+        lblLetrasC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLetrasC.setText("lblEnletras");
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -127,13 +173,13 @@ public class frmPagoVenta extends javax.swing.JDialog {
             .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8)
+                .addComponent(lblCambio)
                 .addGap(195, 195, 195))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(189, 189, 189)
-                        .addComponent(jLabel4))
+                        .addComponent(lblTotal))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(203, 203, 203)
                         .addComponent(jButton1))
@@ -151,10 +197,10 @@ public class frmPagoVenta extends javax.swing.JDialog {
                     .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator5)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblLetrasT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 11, Short.MAX_VALUE)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblLetrasC, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator8)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -176,17 +222,17 @@ public class frmPagoVenta extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addComponent(jLabel4)
+                .addComponent(lblTotal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
+                .addComponent(lblLetrasT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addComponent(lblCambio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
+                .addComponent(lblLetrasC)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -210,7 +256,15 @@ public class frmPagoVenta extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:        
+        lblTotal.setText(ventaActual.getTotal().toString());
+        lblLetrasT.setText(new Validaciones().Convertir(lblTotal.getText(), true));
+        lblCambio.setText("-" + lblTotal.getText());
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -259,11 +313,7 @@ public class frmPagoVenta extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
@@ -275,6 +325,14 @@ public class frmPagoVenta extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JTree jTree1;
+    private javax.swing.JLabel lblCambio;
+    private javax.swing.JLabel lblLetrasC;
+    private javax.swing.JLabel lblLetrasT;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JTextField txtPago;
     // End of variables declaration//GEN-END:variables
+
+    public void setVentaActual(Venta ventaActual) {
+        this.ventaActual = ventaActual;
+    }
 }

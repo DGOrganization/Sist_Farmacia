@@ -7,7 +7,6 @@
 package Vista;
 
 import configuracion.Gestionar;
-import Vista.Search;
 import controlador.Cliente_controlador;
 import entidades.Cliente;
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class frmAgregarCliente extends javax.swing.JDialog {
     private List<Cliente> clienteList;
     private final Cliente_controlador controlador;
+    private Cliente cli_seleccion;
     /** Creates new form frmAgregarCliente
      * @param parent
      * @param modal 
@@ -39,6 +39,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         cargarDatos(clienteList);
         changeText();
         this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
+        cli_seleccion = new Cliente();
     }
     
     private void cargarDatos(List<Cliente> lista){
@@ -59,7 +60,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         jtClientes.setModel(modelo);
     }
     
-     private void buscarTXT(){
+    private void buscarTXT(){
         List<Cliente> encontrado = new ArrayList<>();
         encontrado = clienteList.stream().filter(
                 datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
@@ -144,6 +145,11 @@ public class frmAgregarCliente extends javax.swing.JDialog {
 
         btnSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/okay16.png"))); // NOI18N
         btnSeleccionar.setText("Seleccionar");
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -269,6 +275,20 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jtClientesMouseClicked
 
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+        // TODO add your handling code here:
+        int fila = jtClientes.getSelectedRow();
+        if (fila > -1) {
+           cli_seleccion = clienteList.get(clienteList.indexOf(jtClientes.getValueAt(fila, 0)));
+           this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -322,5 +342,9 @@ public class frmAgregarCliente extends javax.swing.JDialog {
     private javax.swing.JTable jtClientes;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
+
+    public Cliente getCliente() {
+        return cli_seleccion;
+    }
 
 }

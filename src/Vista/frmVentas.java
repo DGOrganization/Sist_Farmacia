@@ -3,17 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vista;
 
 import Vista.ControlesGenerales.DefaultTableModelImpl;
+import static Vista.ControlesGenerales.reiniciarJTable;
 import configuracion.Gestionar;
+import entidades.Cliente;
+import entidades.DetalleVenta;
 import entidades.Inventario;
+import entidades.Venta;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,7 +36,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmVentas extends javax.swing.JInternalFrame {
 
-    /** Creates new form frmVentas */
+    private Cliente clienteActual;
+
+    /**
+     * Creates new form frmVentas
+     */
     public frmVentas() {
         initComponents();
         jTableDetalleVenta.setDefaultRenderer(Object.class, new Renderizador());
@@ -31,46 +49,54 @@ public class frmVentas extends javax.swing.JInternalFrame {
         DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         jTableDetalleVenta.setModel(modelo);
+        txtEmpleado.setText(frmMenuPrincipal.usuarioActual.getEmpleado().toString());
+        ActionListener updateClockAction = (ActionEvent e) -> {
+            Locale local = new Locale("es", "SV");
+            SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy - hh:mm:ss a", local);
+            lblReloj.setText(formateador.format(new Date()).trim()); 
+        };
+        Timer t = new Timer(100, updateClockAction);
+        t.start();
     }
     
-    private void AñadirDetalle(Inventario inventarioActual){
+
+    private void AñadirDetalle(Inventario inventarioActual) {
         DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
-        if(inventarioActual.getId() != 0){
+        if (inventarioActual.getId() != 0) {
             boolean encontrado = false;
             for (int i = 0; i < modelo.getRowCount(); i++) {
                 Inventario comparador = (Inventario) (modelo.getValueAt(i, 0));
-                if(comparador.getId() == inventarioActual.getId()){
+                if (comparador.getId() == inventarioActual.getId()) {
                     encontrado = true;
                     break;
                 }
             }
-            if(encontrado){
-                JOptionPane.showMessageDialog(this, "Ya se agrego este producto","Sistemas de Compras y Ventas - Compras", JOptionPane.WARNING_MESSAGE);
+            if (encontrado) {
+                JOptionPane.showMessageDialog(this, "Ya se agrego este producto", "Sistemas de Compras y Ventas - Compras", JOptionPane.WARNING_MESSAGE);
             } else {
-                
+
                 Object[] nuevaFila = {
-                        inventarioActual,
-                        1,
-                        0,
-                        inventarioActual.getPrecio().get(0).getCantidad(),
-                        new BigDecimal("1").multiply(inventarioActual.getPrecio().get(0).getCantidad()),
-                        new JButton("¿Quitar?")
-                }; 
+                    inventarioActual,
+                    1,
+                    0,
+                    inventarioActual.getPrecio().get(0).getCantidad(),
+                    new BigDecimal("1").multiply(inventarioActual.getPrecio().get(0).getCantidad()),
+                    new JButton("¿Quitar?")
+                };
                 modelo.addRow(nuevaFila);
                 jTableDetalleVenta.setModel(modelo);
                 lblProducto.setText("<Producto>");
                 calcularTotal();
-                System.out.println("Llegue");
-            }            
+            }
         }
     }
-    
-    private void calcularTotal(){
+
+    private void calcularTotal() {
         double subtotal = 0;
         double iva = 0;
         double total = 0;
         for (int i = 0; i < jTableDetalleVenta.getRowCount(); i++) {
-            subtotal += Double.parseDouble(jTableDetalleVenta.getValueAt(i, 3).toString());
+            subtotal += Double.parseDouble(jTableDetalleVenta.getValueAt(i, 4).toString());
         }
         iva = subtotal * 0.13;
         //txtIVA.setText(new BigDecimal(iva).setScale(2, RoundingMode.HALF_UP).toString());
@@ -78,10 +104,17 @@ public class frmVentas extends javax.swing.JInternalFrame {
         lblTotal.setText(new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).toString());
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    private void setImagen(String url) {
+        ImageIcon imagen = new ImageIcon(url);
+        ImageIcon icono = new ImageIcon(imagen.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), 0));
+        lblImagen.setText("");
+        lblImagen.setIcon(icono);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -91,7 +124,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         jLabel20 = new javax.swing.JLabel();
         lblNombreProv2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblReloj = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnBuscarProducto = new javax.swing.JButton();
         btnGuardarVenta = new javax.swing.JButton();
@@ -103,7 +136,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         btnBuscarCliente = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -144,21 +177,21 @@ public class frmVentas extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("REGISTRAR DE VENTA");
 
-        jLabel6.setText("<Hora y Fecha>");
+        lblReloj.setText("<Hora y Fecha>");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(148, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblNombreProv2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblReloj, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -169,7 +202,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
                     .addComponent(jLabel20)
                     .addComponent(lblNombreProv2)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel6))
+                    .addComponent(lblReloj))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -205,6 +238,11 @@ public class frmVentas extends javax.swing.JInternalFrame {
         btnCambiarCant.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cantidad24.png"))); // NOI18N
         btnCambiarCant.setText("Cantidad");
         btnCambiarCant.setToolTipText("Modificar Cantidad");
+        btnCambiarCant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCambiarCantActionPerformed(evt);
+            }
+        });
 
         btnQuitarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/del24.png"))); // NOI18N
         btnQuitarProducto.setText("Quitar");
@@ -213,6 +251,11 @@ public class frmVentas extends javax.swing.JInternalFrame {
         btnHacerDescuento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/percent24.png"))); // NOI18N
         btnHacerDescuento.setText("Descuento");
         btnHacerDescuento.setToolTipText("Aplicar Descuento");
+        btnHacerDescuento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHacerDescuentoActionPerformed(evt);
+            }
+        });
 
         btnChekarPrec.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/checador24.png"))); // NOI18N
         btnChekarPrec.setText("Check");
@@ -225,6 +268,11 @@ public class frmVentas extends javax.swing.JInternalFrame {
 
         btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/client24.png"))); // NOI18N
         btnBuscarCliente.setText("Cliente");
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -267,9 +315,9 @@ public class frmVentas extends javax.swing.JInternalFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("lblImagen");
-        jLabel1.setToolTipText("Imagen del Producto");
+        lblImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImagen.setText("Selecciona un producto");
+        lblImagen.setToolTipText("Imagen del Producto");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -277,14 +325,14 @@ public class frmVentas extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -330,6 +378,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
 
         txtEmpleado.setEditable(false);
         txtEmpleado.setText("-");
+        txtEmpleado.setEnabled(false);
 
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/del16.png"))); // NOI18N
         jButton9.setToolTipText("Remover Vendedor");
@@ -349,7 +398,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         txtDescuento.setEnabled(false);
 
         lblTotal.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblTotal.setText("lblTotal");
+        lblTotal.setText("0.00");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -488,7 +537,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         Frame f = JOptionPane.getFrameForComponent(this);
         frmAgregarProducto frm = new frmAgregarProducto(f, true);
         frm.setVisible(true);
-        if(frm.isVisible() == false){
+        if (frm.isVisible() == false) {
             AñadirDetalle(frm.getInv_seleccion());
             frm.dispose();
         }
@@ -496,11 +545,26 @@ public class frmVentas extends javax.swing.JInternalFrame {
 
     private void btnSeleccionarPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarPrecioActionPerformed
         // TODO add your handling code here:
-//        Precios frm = new Precios(this, true);
-//        frm.setVisible(true);
-//        if(frm.isVisible() == false){
-//            frm.dispose();
-//        }
+        int fila = jTableDetalleVenta.getSelectedRow();
+        if (fila > -1) {
+            DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
+            BigDecimal cantidad = new BigDecimal(modelo.getValueAt(fila, 1).toString());
+            BigDecimal importe = new BigDecimal(0);
+            BigDecimal descuento = new BigDecimal(modelo.getValueAt(fila, 2).toString());
+            Inventario inv = (Inventario) modelo.getValueAt(fila, 0);
+            JComboBox jcboDialog = new JComboBox(inv.getPrecio().toArray());
+            JOptionPane.showMessageDialog(this, jcboDialog, "Selecciona el precio con el cual se vendera", JOptionPane.INFORMATION_MESSAGE);
+            BigDecimal precio = new BigDecimal(jcboDialog.getSelectedItem().toString());
+            modelo.setValueAt(precio, fila, 3);
+            BigDecimal subtotal = precio.multiply(cantidad);
+            descuento = descuento.divide(new BigDecimal(100));
+            descuento = descuento.multiply(precio);
+            importe = importe.add(subtotal);
+            importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
+            modelo.setValueAt(importe, fila, 4);
+            jTableDetalleVenta.setModel(modelo);
+            calcularTotal();
+        }
     }//GEN-LAST:event_btnSeleccionarPrecioActionPerformed
 
     private void btnChekarPrecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChekarPrecActionPerformed
@@ -509,12 +573,54 @@ public class frmVentas extends javax.swing.JInternalFrame {
 
     private void btnGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarVentaActionPerformed
         // TODO add your handling code here:
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmPagoVenta frm = new frmPagoVenta(f, true);
+        Venta venta = new Venta();
+        venta.setCliente(clienteActual);
+        venta.setEmpleado(frmMenuPrincipal.usuarioActual.getEmpleado());
+        venta.setObservacion(txtComentarios.getText());
+        venta.setFecha(new Date());
+        venta.setTotal(new BigDecimal(lblTotal.getText()));
+        venta.setLetras(new Validaciones().Convertir(lblTotal.getText(), true));
+        List<DetalleVenta> detalles = new ArrayList<>();
+        for (int i = 0; i < jTableDetalleVenta.getRowCount(); i++) {
+            DetalleVenta detalle = new DetalleVenta();
+            Inventario extraer = (Inventario) jTableDetalleVenta.getValueAt(i, 0);
+            detalle.setInventario(extraer);
+            detalle.setCantidad(new BigDecimal(jTableDetalleVenta.getValueAt(i, 1).toString()));
+            detalle.setDescuento(Integer.parseInt(jTableDetalleVenta.getValueAt(i, 2).toString()));
+            detalle.setPrecio(new BigDecimal(jTableDetalleVenta.getValueAt(i, 3).toString()));
+            detalle.setImporte(new BigDecimal(jTableDetalleVenta.getValueAt(i, 4).toString()));
+            detalles.add(detalle);
+        }
+        venta.setDetalle(detalles);
+        if (jTableDetalleVenta.getRowCount() > 0) {
+            frm.setVentaActual(venta);
+            frm.setVisible(true);
+            if (frm.isVisible() == false) {
+                JOptionPane.showMessageDialog(this, "Venta registrada", this.title, JOptionPane.INFORMATION_MESSAGE);
+                reiniciarJTable(jTableDetalleVenta);
+                txtCliente.setText("");
+                txtComentarios.setText("");
+                lblTotal.setText("0.00");
+                lblImagen.setIcon(null);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Agrega Productos primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnGuardarVentaActionPerformed
 
     private void jTableDetalleVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDetalleVentaMouseClicked
         // TODO add your handling code here:
-         int fila = jTableDetalleVenta.getSelectedRow();
+        int fila = jTableDetalleVenta.getSelectedRow();
         if (fila > -1) {
+            Inventario inv = (Inventario) jTableDetalleVenta.getValueAt(fila, 0);
+            setImagen(inv.getImagen().getUrl());
+            lblProducto.setText(inv.getArticulo().toString());
             int columna = jTableDetalleVenta.getSelectedColumn();
             if (jTableDetalleVenta.getValueAt(fila, columna) instanceof JButton) {
                 int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
@@ -534,6 +640,60 @@ public class frmVentas extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTableDetalleVentaMouseClicked
 
+    private void btnCambiarCantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarCantActionPerformed
+        // TODO add your handling code here:
+        int fila = jTableDetalleVenta.getSelectedRow();
+        if (fila > -1) {
+            DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
+            BigDecimal cantidad = new BigDecimal(JOptionPane.showInputDialog(this, "Digita la nueva cantidad a vender"));
+            modelo.setValueAt(cantidad, fila, 1);
+            BigDecimal importe = new BigDecimal(0);
+            BigDecimal descuento = new BigDecimal(modelo.getValueAt(fila, 2).toString());
+            BigDecimal precio = new BigDecimal(modelo.getValueAt(fila, 3).toString());
+            BigDecimal subtotal = precio.multiply(cantidad);
+            descuento = descuento.divide(new BigDecimal(100));
+            descuento = descuento.multiply(precio);
+            importe = importe.add(subtotal);
+            importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
+            modelo.setValueAt(importe, fila, 4);
+            jTableDetalleVenta.setModel(modelo);
+            calcularTotal();
+        }
+    }//GEN-LAST:event_btnCambiarCantActionPerformed
+
+    private void btnHacerDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHacerDescuentoActionPerformed
+        // TODO add your handling code here:
+        int fila = jTableDetalleVenta.getSelectedRow();
+        if (fila > -1) {
+            DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
+            BigDecimal cantidad = new BigDecimal(modelo.getValueAt(fila, 1).toString());
+            BigDecimal importe = new BigDecimal(0);
+            BigDecimal descuento = new BigDecimal(JOptionPane.showInputDialog(this, "Digita el descuento a otorgar en el producto \n Usa cantidades entre 0 y 100"));
+            modelo.setValueAt(descuento, fila, 2);
+            BigDecimal precio = new BigDecimal(modelo.getValueAt(fila, 3).toString());
+            BigDecimal subtotal = precio.multiply(cantidad);
+            descuento = descuento.divide(new BigDecimal(100));
+            descuento = descuento.multiply(precio);
+            importe = importe.add(subtotal);
+            importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
+            modelo.setValueAt(importe, fila, 4);
+            jTableDetalleVenta.setModel(modelo);
+            calcularTotal();
+        }
+    }//GEN-LAST:event_btnHacerDescuentoActionPerformed
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        // TODO add your handling code here:
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmAgregarCliente frm = new frmAgregarCliente(f, true);
+        frm.setVisible(true);
+        if (frm.isVisible() == false) {
+            clienteActual = frm.getCliente();
+            txtCliente.setText(clienteActual.toString());
+            frm.dispose();
+        }
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarCliente;
@@ -546,7 +706,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSeleccionarPrecio;
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -554,7 +713,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -567,8 +725,10 @@ public class frmVentas extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTableDetalleVenta;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNombreProv2;
     private javax.swing.JLabel lblProducto;
+    private javax.swing.JLabel lblReloj;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblcodigo;
     private javax.swing.JTextField txtCliente;

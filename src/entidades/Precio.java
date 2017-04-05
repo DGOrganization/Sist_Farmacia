@@ -52,4 +52,11 @@ public class Precio {
         this._cantidad = _cantidad;
         this._estado = _estado;
     }
+
+    @Override
+    public String toString() {
+        return _cantidad.toString();
+    }
+    
+    
 }

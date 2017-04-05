@@ -53,7 +53,7 @@ public class frmAgregarProducto extends javax.swing.JDialog {
                 datos,
                 datos.getArticulo().getDescripcion(),
                 datos.getStock(),
-                datos.getPrecio().get(0),
+                datos.getPrecio().get(0).getCantidad(),
                 datos.getBodega()
             };
             if(datos.isEstado()){
