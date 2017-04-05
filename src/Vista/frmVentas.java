@@ -100,7 +100,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         }
         iva = subtotal * 0.13;
         //txtIVA.setText(new BigDecimal(iva).setScale(2, RoundingMode.HALF_UP).toString());
-        total = subtotal + iva;
+        total = subtotal;
         lblTotal.setText(new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).toString());
     }
 
@@ -605,6 +605,11 @@ public class frmVentas extends javax.swing.JInternalFrame {
                 lblTotal.setText("0.00");
                 lblImagen.setIcon(null);
             }
+        } else if(clienteActual == null){
+            JOptionPane.showMessageDialog(this,
+                    "Agrega al cliente",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this,
                     "Agrega Productos primero",
@@ -676,6 +681,8 @@ public class frmVentas extends javax.swing.JInternalFrame {
             descuento = descuento.multiply(precio);
             importe = importe.add(subtotal);
             importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal descuentoTotal = new BigDecimal(txtDescuento.getText()).add(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
+            txtDescuento.setText(descuentoTotal.toString());
             modelo.setValueAt(importe, fila, 4);
             jTableDetalleVenta.setModel(modelo);
             calcularTotal();
