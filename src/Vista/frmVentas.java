@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -35,7 +34,6 @@ import javax.swing.table.DefaultTableModel;
  * @author Gerard
  */
 public class frmVentas extends javax.swing.JInternalFrame {
-
     private Cliente clienteActual;
 
     /**
@@ -45,7 +43,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         initComponents();
         jTableDetalleVenta.setDefaultRenderer(Object.class, new Renderizador());
         jTableDetalleVenta.setRowHeight(25);
-        Object[] columnas = {"Producto", "Cant", "Desc", "Precio", "Importe", "¿Quitar?"};
+        Object[] columnas = {"Producto", "Cantidad", "Descuento (%)", "Precio ($)", "Importe", "¿Quitar?"};
         DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         jTableDetalleVenta.setModel(modelo);
@@ -164,6 +162,23 @@ public class frmVentas extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Punto de Venta");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/inventario16.png"))); // NOI18N
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 204));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -325,14 +340,14 @@ public class frmVentas extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblImagen)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -558,8 +573,8 @@ public class frmVentas extends javax.swing.JInternalFrame {
             modelo.setValueAt(precio, fila, 3);
             BigDecimal subtotal = precio.multiply(cantidad);
             descuento = descuento.divide(new BigDecimal(100));
-            descuento = descuento.multiply(precio);
             importe = importe.add(subtotal);
+            descuento = descuento.multiply(importe);
             importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
             modelo.setValueAt(importe, fila, 4);
             jTableDetalleVenta.setModel(modelo);
@@ -598,6 +613,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
             frm.setVentaActual(venta);
             frm.setVisible(true);
             if (frm.isVisible() == false) {
+                venta.setCambio(frm.getVentaActual().getCambio());
                 JOptionPane.showMessageDialog(this, "Venta registrada", this.title, JOptionPane.INFORMATION_MESSAGE);
                 reiniciarJTable(jTableDetalleVenta);
                 txtCliente.setText("");
@@ -657,8 +673,8 @@ public class frmVentas extends javax.swing.JInternalFrame {
             BigDecimal precio = new BigDecimal(modelo.getValueAt(fila, 3).toString());
             BigDecimal subtotal = precio.multiply(cantidad);
             descuento = descuento.divide(new BigDecimal(100));
-            descuento = descuento.multiply(precio);
             importe = importe.add(subtotal);
+            descuento = descuento.multiply(importe);
             importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
             modelo.setValueAt(importe, fila, 4);
             jTableDetalleVenta.setModel(modelo);
@@ -678,8 +694,8 @@ public class frmVentas extends javax.swing.JInternalFrame {
             BigDecimal precio = new BigDecimal(modelo.getValueAt(fila, 3).toString());
             BigDecimal subtotal = precio.multiply(cantidad);
             descuento = descuento.divide(new BigDecimal(100));
-            descuento = descuento.multiply(precio);
             importe = importe.add(subtotal);
+            descuento = descuento.multiply(importe);
             importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
             BigDecimal descuentoTotal = new BigDecimal(txtDescuento.getText()).add(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
             txtDescuento.setText(descuentoTotal.toString());
@@ -700,6 +716,10 @@ public class frmVentas extends javax.swing.JInternalFrame {
             frm.dispose();
         }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formInternalFrameOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -743,5 +763,4 @@ public class frmVentas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDescuento;
     private javax.swing.JTextField txtEmpleado;
     // End of variables declaration//GEN-END:variables
-
 }

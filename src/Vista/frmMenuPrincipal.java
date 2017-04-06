@@ -22,13 +22,14 @@ import javax.swing.Timer;
  */
 public class frmMenuPrincipal extends javax.swing.JFrame {
     public static Usuario usuarioActual;
-    private Validaciones validar = new Validaciones();
+    private Validaciones validar;
     
     /**
      * Creates new form frmMenuPrincipal
      */
 
     public frmMenuPrincipal() {
+        this.validar = new Validaciones();
         initComponents();
         lblEmpleado.setText(usuarioActual.getEmpleado().toString()); 
         setTitle(new configuracion.Gestionar().Leer("Empresa","nombre"));
@@ -353,7 +354,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void miProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miProductoActionPerformed
         // TODO add your handling code here:
-        frmProducto frm = new frmProducto();
+        frmProductos frm = new frmProductos();
         frm.setVisible(true);
     }//GEN-LAST:event_miProductoActionPerformed
 
@@ -371,12 +372,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void smVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smVentasActionPerformed
         // TODO add your handling code here:      
         frmVentas internalFrame = new frmVentas();
-////        desktop.add(internalFrame);
-////        internalFrame.setVisible(true);
-        if (internalFrame.isShowing()) {
-            System.out.println("No se va abrir dos veces");
-        } else {
-            desktop.add(internalFrame);
+        internalFrame.pack();
+        desktop.add(internalFrame);
+        if(internalFrame.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
             internalFrame.setVisible(true);
         }
         try {

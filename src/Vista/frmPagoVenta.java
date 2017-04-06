@@ -6,12 +6,8 @@
 package Vista;
 
 import configuracion.Gestionar;
-import entidades.Cliente;
 import entidades.Venta;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -24,6 +20,8 @@ public class frmPagoVenta extends javax.swing.JDialog {
     
     /**
      * Creates new form frmPagoVenta
+     * @param parent
+     * @param modal
      */
     public frmPagoVenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -36,9 +34,10 @@ public class frmPagoVenta extends javax.swing.JDialog {
     
     private void CalcularCambio(){
         BigDecimal total = new BigDecimal(lblTotal.getText());
-        BigDecimal cambio = new BigDecimal(txtPago.getText()).subtract(total);
+        BigDecimal cambio = new BigDecimal(txtPago.getText()).subtract(total).setScale(2, BigDecimal.ROUND_HALF_UP);
         lblCambio.setText(cambio.toString());
         lblLetrasC.setText(new Validaciones().Convertir(lblCambio.getText(), true));
+        ventaActual.setCambio(cambio);
     }
     
     private void changeText(){
@@ -334,5 +333,9 @@ public class frmPagoVenta extends javax.swing.JDialog {
 
     public void setVentaActual(Venta ventaActual) {
         this.ventaActual = ventaActual;
+    }
+
+    public Venta getVentaActual() {
+        return ventaActual;
     }
 }
