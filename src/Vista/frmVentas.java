@@ -8,6 +8,7 @@ package Vista;
 import Vista.ControlesGenerales.DefaultTableModelImpl;
 import static Vista.ControlesGenerales.reiniciarJTable;
 import configuracion.Gestionar;
+import controlador.Venta_controlador;
 import entidades.Cliente;
 import entidades.DetalleVenta;
 import entidades.Inventario;
@@ -35,6 +36,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmVentas extends javax.swing.JInternalFrame {
     private Cliente clienteActual;
+    private Venta_controlador controlador;
 
     /**
      * Creates new form frmVentas
@@ -48,6 +50,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         modelo.setColumnIdentifiers(columnas);
         jTableDetalleVenta.setModel(modelo);
         txtEmpleado.setText(frmMenuPrincipal.usuarioActual.getEmpleado().toString());
+        controlador = new Venta_controlador();
         ActionListener updateClockAction = (ActionEvent e) -> {
             Locale local = new Locale("es", "SV");
             SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy - hh:mm:ss a", local);
@@ -91,15 +94,18 @@ public class frmVentas extends javax.swing.JInternalFrame {
 
     private void calcularTotal() {
         double subtotal = 0;
-        double iva = 0;
+       // double iva = 0;
         double total = 0;
+        double descuentoTotal = 0;
         for (int i = 0; i < jTableDetalleVenta.getRowCount(); i++) {
             subtotal += Double.parseDouble(jTableDetalleVenta.getValueAt(i, 4).toString());
+            descuentoTotal += (subtotal * Double.parseDouble(jTableDetalleVenta.getValueAt(i, 2).toString()));
         }
-        iva = subtotal * 0.13;
+        //iva = subtotal * 0.13;
         //txtIVA.setText(new BigDecimal(iva).setScale(2, RoundingMode.HALF_UP).toString());
         total = subtotal;
         lblTotal.setText(new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).toString());
+        txtDescuento.setText(new BigDecimal(descuentoTotal).setScale(2, RoundingMode.HALF_UP).toString());
     }
 
     private void setImagen(String url) {
@@ -614,12 +620,14 @@ public class frmVentas extends javax.swing.JInternalFrame {
             frm.setVisible(true);
             if (frm.isVisible() == false) {
                 venta.setCambio(frm.getVentaActual().getCambio());
-                JOptionPane.showMessageDialog(this, "Venta registrada", this.title, JOptionPane.INFORMATION_MESSAGE);
-                reiniciarJTable(jTableDetalleVenta);
-                txtCliente.setText("");
-                txtComentarios.setText("");
-                lblTotal.setText("0.00");
-                lblImagen.setIcon(null);
+                if(controlador.Registrar(venta)){                    
+                    JOptionPane.showMessageDialog(this, "Venta registrada", this.title, JOptionPane.INFORMATION_MESSAGE);
+                    reiniciarJTable(jTableDetalleVenta);
+                    txtCliente.setText("");
+                    txtComentarios.setText("");
+                    lblTotal.setText("0.00");
+                    lblImagen.setIcon(null);
+                }
             }
         } else if(clienteActual == null){
             JOptionPane.showMessageDialog(this,
@@ -697,8 +705,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
             importe = importe.add(subtotal);
             descuento = descuento.multiply(importe);
             importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
-            BigDecimal descuentoTotal = new BigDecimal(txtDescuento.getText()).add(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
-            txtDescuento.setText(descuentoTotal.toString());
             modelo.setValueAt(importe, fila, 4);
             jTableDetalleVenta.setModel(modelo);
             calcularTotal();
