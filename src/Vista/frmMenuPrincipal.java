@@ -173,6 +173,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         smInventario.setText("Inventario Inicial");
         smInventario.setEnabled(false);
+        smInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smInventarioActionPerformed(evt);
+            }
+        });
         menuOperaciones.add(smInventario);
 
         smCorteCaja.setText("Corte de Caja");
@@ -285,6 +290,11 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
         smAdmUsuarios.setText("Usuarios");
         smAdmUsuarios.setEnabled(false);
+        smAdmUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smAdmUsuariosActionPerformed(evt);
+            }
+        });
         smAdministrar.add(smAdmUsuarios);
 
         smAdRoles.setText("Roles");
@@ -348,8 +358,19 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void smProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smProveedoresActionPerformed
         // TODO add your handling code here:
-        frmProveedor frm = new frmProveedor();
-        frm.setVisible(true);
+        frmProveedor frmPr = new frmProveedor();
+        frmPr.pack();
+        desktop.add(frmPr);
+        if(frmPr.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmPr.setVisible(true);
+        }
+        try {
+            frmPr.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_smProveedoresActionPerformed
 
     private void miProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miProductoActionPerformed
@@ -436,7 +457,18 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void smConsVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smConsVentasActionPerformed
         // TODO add your handling code here:
         frmConsultarVentas frmCV = new frmConsultarVentas();
-        frmCV.setVisible(true);
+        frmCV.pack();
+        desktop.add(frmCV);
+                if(frmCV.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmCV.setVisible(true);
+        }
+        try {
+            frmCV.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_smConsVentasActionPerformed
 
     private void smConsProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smConsProveedoresActionPerformed
@@ -446,13 +478,35 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void smUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smUnidadesActionPerformed
         // TODO add your handling code here:
         frmUnidades frmU = new frmUnidades();
-        frmU.setVisible(true);
+                frmU.pack();
+        desktop.add(frmU);
+                if(frmU.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmU.setVisible(true);
+        }
+        try {
+            frmU.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_smUnidadesActionPerformed
 
     private void smCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smCajaActionPerformed
         // TODO add your handling code here:
-        frmCaja frmC = new frmCaja();
-        frmC.setVisible(true);
+        frmCaja frmCa = new frmCaja();
+        frmCa.pack();
+        desktop.add(frmCa);
+                if(frmCa.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmCa.setVisible(true);
+        }
+        try {
+            frmCa.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_smCajaActionPerformed
 
     private void smAdRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smAdRolesActionPerformed
@@ -460,6 +514,14 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 //        frmRoles frmR = new frmRoles();
 //        frmR.setVisible(true);
     }//GEN-LAST:event_smAdRolesActionPerformed
+
+    private void smInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smInventarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smInventarioActionPerformed
+
+    private void smAdmUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smAdmUsuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smAdmUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
