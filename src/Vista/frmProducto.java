@@ -36,12 +36,12 @@ public class frmProducto extends javax.swing.JInternalFrame {
     }
     
     private void cargarDatos(List<Inventario> lista){
-        String[] columnas = {"Nombre", "Telefono", "Direccion"};
+        String[] columnas = {"Producto", "Stock Actual", "Ubicacion"};
         ControlesGenerales.reiniciarJTable(jtProductos);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
-        lista.forEach(datos -> {
-            Object[] nuevaFila= {
+        lista.stream().forEach(datos -> {
+            Object[] nuevaFila = {
                 datos,
                 datos.getStock(),
                 datos.getBodega()
@@ -54,8 +54,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
     }
 
     private void buscarTXT(){
-        List<Inventario> encontrado = new ArrayList<>();
-        encontrado = inventarioList.stream().filter(
+        List<Inventario> encontrado = inventarioList.stream().filter(
                 datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
         ).collect(Collectors.toList());
         cargarDatos(encontrado);
@@ -76,7 +75,6 @@ public class frmProducto extends javax.swing.JInternalFrame {
             public void changedUpdate(DocumentEvent de) {
                 buscarTXT();
             }
-        
         });
     }
 
@@ -91,15 +89,17 @@ public class frmProducto extends javax.swing.JInternalFrame {
 
         jPanel2 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtProductos = new javax.swing.JTable();
 
+        setClosable(true);
         setMaximizable(true);
+        setTitle("Productos");
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -111,11 +111,21 @@ public class frmProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit32.png"))); // NOI18N
-        jButton2.setText("Editar");
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit32.png"))); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete32.png"))); // NOI18N
-        jButton3.setText("Borrar");
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete32.png"))); // NOI18N
+        btnEliminar.setText("Borrar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -125,9 +135,9 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 .addGap(100, 100, 100)
                 .addComponent(btnNuevo)
                 .addGap(50, 50, 50)
-                .addComponent(jButton2)
+                .addComponent(btnEditar)
                 .addGap(50, 50, 50)
-                .addComponent(jButton3)
+                .addComponent(btnEliminar)
                 .addContainerGap(111, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -136,8 +146,8 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevo)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnEditar)
+                    .addComponent(btnEliminar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -147,9 +157,6 @@ public class frmProducto extends javax.swing.JInternalFrame {
 
         jtProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
                 {null, null, null}
             },
             new String [] {
@@ -206,7 +213,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         Frame frmP = JOptionPane.getFrameForComponent(this);
-        frmNuevaCaja dialog = new frmNuevaCaja(frmP, true);
+        frmNuevoProducto dialog = new frmNuevoProducto(frmP, true);
         dialog.show();
         if(!frmP.isVisible()){
             inventarioList = controlador.Obtener();
@@ -214,11 +221,59 @@ public class frmProducto extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int fila = jtProductos.getSelectedRow();
+        if (fila > -1) {
+            if (jtProductos.getValueAt(fila, 0) instanceof Inventario) {
+                int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
+                        JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    if (controlador.Eliminar(inventarioList.get(inventarioList.indexOf(jtProductos.getValueAt(fila, 0))))) {
+                        JOptionPane.showMessageDialog(this,
+                                "El registro ha sido eliminado exitosamente",
+                                "Sistema de Ventas - Categoria",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        inventarioList = controlador.Obtener();
+                        cargarDatos(inventarioList);
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmNuevoProducto frm = new frmNuevoProducto(f, true);
+        int fila = jtProductos.getSelectedRow();
+        if(fila > -1){
+            frm.setInventario(inventarioList.get(inventarioList.indexOf(jtProductos.getValueAt(fila, 0))));
+            frm.setEditar(true);
+            frm.setVisible(true);
+            if (!frm.isVisible()) {
+                inventarioList = controlador.Obtener();
+                cargarDatos(inventarioList);
+                frm.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

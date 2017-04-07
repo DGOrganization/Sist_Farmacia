@@ -354,8 +354,19 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void miProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miProductoActionPerformed
         // TODO add your handling code here:
-        frmProductos frm = new frmProductos();
-        frm.setVisible(true);
+        frmProducto frmP = new frmProducto();
+        frmP.pack();
+        desktop.add(frmP);
+        if(frmP.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmP.setVisible(true);
+        }
+        try {
+            frmP.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_miProductoActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -365,8 +376,19 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void smClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smClientesActionPerformed
         // TODO add your handling code here:
-        frmCliente frmC = new frmCliente();
-        frmC.setVisible(true);
+        frmClientes frmC = new frmClientes();
+        frmC.pack();
+        desktop.add(frmC);
+        if(frmC.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmC.setVisible(true);
+        }
+        try {
+            frmC.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_smClientesActionPerformed
 
     private void smVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smVentasActionPerformed
@@ -389,7 +411,18 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private void smComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smComprasActionPerformed
         // TODO add your handling code here:
         frmCompra frmC = new frmCompra();
-        frmC.setVisible(true);
+        frmC.pack();
+        desktop.add(frmC);
+                if(frmC.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmC.setVisible(true);
+        }
+        try {
+            frmC.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_smComprasActionPerformed
 
     private void smCorteCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smCorteCajaActionPerformed

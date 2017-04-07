@@ -48,7 +48,7 @@ public class frmAgregarProductos extends javax.swing.JFrame {
                 datos,
                 datos.getArticulo().getDescripcion(),
                 datos.getStock(),
-                datos.getPrecio().get(0),
+                datos.getPrecio().get(0).getCantidad(),
                 datos.getBodega()
             };
             if(datos.isEstado()){

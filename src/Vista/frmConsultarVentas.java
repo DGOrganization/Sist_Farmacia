@@ -43,6 +43,9 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        setClosable(true);
+        setResizable(true);
+
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/show32.png"))); // NOI18N

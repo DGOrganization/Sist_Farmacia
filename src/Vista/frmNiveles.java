@@ -42,6 +42,10 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         btnAnterior1 = new javax.swing.JButton();
         btnSiguiente1 = new javax.swing.JButton();
 
+        setClosable(true);
+        setMaximizable(true);
+        setTitle("Roles");
+
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add32.png"))); // NOI18N

@@ -82,7 +82,7 @@ public class Sesion extends javax.swing.JFrame {
 
         txtUsuario.setBackground(new java.awt.Color(204, 204, 204));
         txtUsuario.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
-        txtUsuario.setText("gerard");
+        txtUsuario.setText("darkps");
 
         txtPassword.setBackground(new java.awt.Color(204, 204, 204));
         txtPassword.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N

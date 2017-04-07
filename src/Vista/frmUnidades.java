@@ -5,6 +5,9 @@
  */
 package Vista;
 
+import java.awt.Frame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gerard
@@ -37,6 +40,10 @@ public class frmUnidades extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        setClosable(true);
+        setMaximizable(true);
+        setTitle("Unidad");
+
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add32.png"))); // NOI18N
@@ -49,6 +56,11 @@ public class frmUnidades extends javax.swing.JInternalFrame {
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit32.png"))); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete32.png"))); // NOI18N
         jButton3.setText("Borrar");
@@ -138,10 +150,14 @@ public class frmUnidades extends javax.swing.JInternalFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-//        Frame f = JOptionPane.getFrameForComponent(this);
-//        frmNuevaCaja dialog = new frmNuevaCaja(f, true);
-//        dialog.show();
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmNuevaCaja dialog = new frmNuevaCaja(f, true);
+        dialog.show();
     }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

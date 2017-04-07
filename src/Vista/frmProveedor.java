@@ -37,6 +37,10 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        setClosable(true);
+        setMaximizable(true);
+        setTitle("Proveedor");
+
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add24.png"))); // NOI18N
