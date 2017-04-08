@@ -39,7 +39,7 @@ public class Venta_modelo {
                     detalle_v.put("cant", detalle.getCantidad());
                     detalle_v.put("unidad", detalle.getInventario().getUnidad().getId());
                     detalle_v.put("precio", detalle.getPrecio());
-                    detalle_v.put("importe", detalle.getImporte());
+                    detalle_v.put("imp", detalle.getImporte());
                     detalle_v.put("descpor", detalle.getDescuento());
                     detalles_v.put(detalle_v);
                 });

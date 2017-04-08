@@ -7,7 +7,6 @@ package Vista;
 
 import configuracion.Gestionar;
 import controlador.Usuario_controlador;
-import entidades.Empleado;
 import entidades.Usuario;
 import javax.swing.JOptionPane;
 

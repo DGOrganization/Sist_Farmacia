@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 /**
@@ -22,7 +24,7 @@ import javax.swing.Timer;
  */
 public class frmMenuPrincipal extends javax.swing.JFrame {
     public static Usuario usuarioActual;
-    private Validaciones validar;
+    private final Validaciones validar;
     
     /**
      * Creates new form frmMenuPrincipal
@@ -361,10 +363,15 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         frmProveedor frmPr = new frmProveedor();
         frmPr.pack();
         desktop.add(frmPr);
-        if(frmPr.isVisible()){
-            System.out.println("Esta abierto");
-        } else {            
-            frmPr.setVisible(true);
+        for (JInternalFrame allFrame : desktop.getAllFrames()) {
+            if (allFrame.getTitle().equalsIgnoreCase(frmPr.getTitle())) {
+                if (allFrame.isVisible()) {
+                    JOptionPane.showMessageDialog(this, "Este formulario ya esta abierto", new configuracion.Gestionar().Leer("Empresa", "Nombre"), JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    frmPr.setVisible(true);
+                }
+                break;
+            }
         }
         try {
             frmPr.setMaximum(true);
@@ -378,10 +385,15 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         frmProducto frmP = new frmProducto();
         frmP.pack();
         desktop.add(frmP);
-        if(frmP.isVisible()){
-            System.out.println("Esta abierto");
-        } else {            
-            frmP.setVisible(true);
+        for (JInternalFrame allFrame : desktop.getAllFrames()) {
+            if (allFrame.getTitle().equalsIgnoreCase(frmP.getTitle())) {
+                if (allFrame.isVisible()) {
+                    JOptionPane.showMessageDialog(this, "Este formulario ya esta abierto", new configuracion.Gestionar().Leer("Empresa", "Nombre"), JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    frmP.setVisible(true);
+                }
+                break;
+            }
         }
         try {
             frmP.setMaximum(true);
@@ -400,10 +412,15 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         frmClientes frmC = new frmClientes();
         frmC.pack();
         desktop.add(frmC);
-        if(frmC.isVisible()){
-            System.out.println("Esta abierto");
-        } else {            
-            frmC.setVisible(true);
+        for (JInternalFrame allFrame : desktop.getAllFrames()) {
+            if (allFrame.getTitle().equalsIgnoreCase(frmC.getTitle())) {
+                if (allFrame.isVisible()) {
+                    JOptionPane.showMessageDialog(this, "Este formulario ya esta abierto", new configuracion.Gestionar().Leer("Empresa", "Nombre"), JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    frmC.setVisible(true);
+                }
+                break;
+            }
         }
         try {
             frmC.setMaximum(true);
@@ -417,10 +434,15 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         frmVentas internalFrame = new frmVentas();
         internalFrame.pack();
         desktop.add(internalFrame);
-        if(internalFrame.isVisible()){
-            System.out.println("Esta abierto");
-        } else {            
-            internalFrame.setVisible(true);
+        for (JInternalFrame allFrame : desktop.getAllFrames()) {
+            if (allFrame.getTitle().equalsIgnoreCase(internalFrame.getTitle())) {
+                if (allFrame.isVisible()) {
+                    JOptionPane.showMessageDialog(this, "Este formulario ya esta abierto", new configuracion.Gestionar().Leer("Empresa", "Nombre"), JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    internalFrame.setVisible(true);
+                }
+                break;
+            }
         }
         try {
             internalFrame.setMaximum(true);
@@ -431,16 +453,21 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     private void smComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smComprasActionPerformed
         // TODO add your handling code here:
-        frmCompra frmC = new frmCompra();
-        frmC.pack();
-        desktop.add(frmC);
-                if(frmC.isVisible()){
-            System.out.println("Esta abierto");
-        } else {            
-            frmC.setVisible(true);
+        frmCompra frmCr = new frmCompra();
+        frmCr.pack();
+        desktop.add(frmCr);
+        for (JInternalFrame allFrame : desktop.getAllFrames()) {
+            if (allFrame.getTitle().equalsIgnoreCase(frmCr.getTitle())) {
+                if (allFrame.isVisible()) {
+                    JOptionPane.showMessageDialog(this, "Este formulario ya esta abierto", new configuracion.Gestionar().Leer("Empresa", "Nombre"), JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    frmCr.setVisible(true);
+                }
+                break;
+            }
         }
         try {
-            frmC.setMaximum(true);
+            frmCr.setMaximum(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }

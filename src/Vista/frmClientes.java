@@ -32,7 +32,6 @@ public class frmClientes extends javax.swing.JInternalFrame {
         clienteList = controlador.Obtener();
         cargarDatos(clienteList);
         changeText();
-        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
     }
     private void cargarDatos(List<Cliente> lista){
         String[] columnas = {"Nombre", "Telefono", "Direccion"};

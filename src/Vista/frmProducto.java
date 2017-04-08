@@ -32,7 +32,6 @@ public class frmProducto extends javax.swing.JInternalFrame {
         inventarioList = controlador.Obtener();
         cargarDatos(inventarioList);
         changeText();
-        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
     }
     
     private void cargarDatos(List<Inventario> lista){

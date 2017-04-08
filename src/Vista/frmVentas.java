@@ -98,8 +98,11 @@ public class frmVentas extends javax.swing.JInternalFrame {
         double total = 0;
         double descuentoTotal = 0;
         for (int i = 0; i < jTableDetalleVenta.getRowCount(); i++) {
+            double cantidad = Double.parseDouble(jTableDetalleVenta.getValueAt(i, 1).toString());
+            double precio = Double.parseDouble(jTableDetalleVenta.getValueAt(i, 3).toString());
+            double descuento = Double.parseDouble(jTableDetalleVenta.getValueAt(i, 2).toString());
             subtotal += Double.parseDouble(jTableDetalleVenta.getValueAt(i, 4).toString());
-            descuentoTotal += (subtotal * Double.parseDouble(jTableDetalleVenta.getValueAt(i, 2).toString()));
+            descuentoTotal += ((cantidad * precio) * (descuento/100));
         }
         //iva = subtotal * 0.13;
         //txtIVA.setText(new BigDecimal(iva).setScale(2, RoundingMode.HALF_UP).toString());
@@ -615,7 +618,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
             detalles.add(detalle);
         }
         venta.setDetalle(detalles);
-        if (jTableDetalleVenta.getRowCount() > 0) {
+        if (jTableDetalleVenta.getRowCount() > 0 || clienteActual != null) {
             frm.setVentaActual(venta);
             frm.setVisible(true);
             if (frm.isVisible() == false) {

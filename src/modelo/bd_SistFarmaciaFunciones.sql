@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE FUNCTION obtenertelefonos(cod int) RETURNS TABLE (codigo int, num varchar, tip varchar, est boolean) AS
+CREATE OR REPLACE FUNCTION obtenertelefonos(cod int) RETURNS TABLE (codigo int, num varchar, tip varchar, est boolean) AS
 $BODY$
 	BEGIN
 		RETURN QUERY
@@ -332,14 +332,14 @@ $BODY$
 
 select * from obtenerusuarios();
 
-DROP FUNCTION obtenerproducto(integer);
+DROP FUNCTION obtenerarticulo(integer);
 CREATE OR REPLACE FUNCTION public.obtenerarticulo(IN id int)
-  RETURNS TABLE(cod int, prod character varying, estado boolean) AS
+  RETURNS TABLE(cod int, prod character varying, descrip text, estado boolean) AS
 $BODY$
 	BEGIN
 		RETURN QUERY
 			SELECT 
-				a.id, a.nombre, a.estado
+				a.id, a.nombre, a.descripcion, a.estado
 			FROM
 				articulos as a
 			WHERE
@@ -348,7 +348,7 @@ $BODY$
 $BODY$
   LANGUAGE plpgsql;
 
-select * from obtenerarticulo(1);
+select * from obtenerarticulo(3);
 
 DROP FUNCTION public.obtenercategoria(int);
 
@@ -497,7 +497,9 @@ $BODY$
 	END
 $BODY$
   LANGUAGE plpgsql;
-  
+
+select * from obtenerprecioinv(4);
+
 CREATE OR REPLACE FUNCTION public.obtenerimagen(inventario int)
   RETURNS TABLE(codigo int, url text) AS
 $BODY$
@@ -550,7 +552,7 @@ $BODY$
 			*, idinv
 		FROM
 			json_to_recordset(invprecios) 
-			as tbl(cant numeric);
+			as tbl(cant numeric(20,2));
 
 		IF $10 IS NOT NULL || trim($10) <> '' THEN
 			INSERT INTO
@@ -598,5 +600,175 @@ begin
 		FROM
 			categorias as c;
 end
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION public.obtenerunidades()
+  RETURNS TABLE(codigo integer, unidad character varying, abrev character varying) AS
+$BODY$
+begin
+	return QUERY
+		SELECT 
+			u.id, u.nombre, u.abreviado
+		FROM
+			unidades as u;
+end
+$BODY$
+  LANGUAGE plpgsql;
+
+select * from obtenerunidades();
+
+CREATE OR REPLACE FUNCTION public.editarinventario( 
+	articulo varchar,
+	decrip text, 
+	unidad int, 
+	categoria int, 
+	bodega int,
+	stckmin int, 
+	stckmax int, 
+	vencimiento date,
+	invprecios json,
+	imagen text,
+	codinv int) RETURNS void AS
+$BODY$
+	DECLARE 
+		idatr int;
+		imgcount int = 0;
+	BEGIN
+
+		UPDATE
+			inventario
+		SET
+			idunidad = $3, idcategoria = $4, idbodega = $5, stockmin = $6, stockmax = $7, fechavencimiento = $8
+		WHERE
+			id = $11
+		RETURNING idarticulo INTO idatr;
+
+		
+		UPDATE
+			articulos a
+		SET
+			nombre = $1, descripcion = $2
+		WHERE
+			id = idatr;
+
+		UPDATE
+			precios p
+		SET
+			cantidad = tbl.cant
+		FROM
+			json_to_recordset(invprecios) 
+			as tbl(idp int, cant numeric(20,2))
+		WHERE
+			id = tbl.idp AND idinventario = $11;
+			
+		SELECT COUNT(*) INTO imgcount FROM imagenes WHERE idinventario = $11;
+		
+		IF $10 IS NOT NULL AND imgcount > 0 THEN
+			UPDATE
+				imagenes
+			SET
+				url = $10
+			WHERE
+				idinventario = $11;
+		ELSIF $10 IS NOT NULL AND imgcount = 0 THEN
+			INSERT INTO
+				imagenes(url, idinventario)
+			VALUES
+				($10, $11);
+		END IF;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+  
+ SELECT editarinventario(
+	'Metocarbamol 500mg',
+	'Para los dolores muculares recurrentes',
+	1,
+	7,
+	2,
+	52,
+	5000,
+	'2018-07-27 -06',
+	'[{"idp":7,"cant":2.51},{"idp":8,"cant":3.51},{"idp":9,"cant":4.51},{"idp":10,"cant":5.51},{"idp":11,"cant":6.51},{"idp":12,"cant":7.51}]',
+	'C:\Users\dakrpastiursSennin\Documents\NetBeansProjects\Sist_Farmacia\Recursos\Productos\metocarbamol_750_mg_mk_tabs_-_caja_x_20_-_mckesson.jpg',
+	3
+ );
+
+ 
+CREATE OR REPLACE FUNCTION public.eliminarinventario( 
+	codinv int) RETURNS void AS
+$BODY$
+	DECLARE 
+		idatr int;
+	BEGIN
+
+		UPDATE
+			inventario
+		SET
+			estado = false
+		WHERE
+			id = $1
+		RETURNING idarticulo INTO idatr;
+
+		
+		UPDATE
+			articulos a
+		SET
+			estado = false
+		WHERE
+			id = idatr;
+
+		UPDATE
+			precios p
+		SET
+			estado = false
+		WHERE
+			idinventario = $1;		
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION public.registrarventa(
+	cliente int,
+	empleado int,
+	tot numeric,
+	camb numeric,
+	comentario text,
+	ltr text,
+	detalles json
+    )
+  RETURNS void AS
+$BODY$
+	DECLARE
+		codventa bigint;
+	BEGIN
+		INSERT INTO
+			ventas(fecha, total, cambio, observacion, letra, idempleado, idcliente)
+		VALUES
+			(NOW(), $3, $4, $5, $6, $2, $1)
+		RETURNING
+			id INTO codventa;
+		
+		INSERT INTO
+			detalleventas(idventa, idinventario, cantidad, idunidad, preciounitario, importe, descporcentaje)			
+		SELECT
+			codventa, *
+		FROM
+			json_to_recordset($7) 
+			as tbl(idinv int, cant numeric, unidad int, precio numeric, imp numeric, descpor numeric);
+
+		UPDATE
+			inventario i
+		SET
+			stock = stock - tbl.cant
+		FROM
+			json_to_recordset($7) 
+			as tbl(idinv int, cant numeric)
+		WHERE
+			id = tbl.idinv;
+		
+	END
+
 $BODY$
   LANGUAGE plpgsql;
