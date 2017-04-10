@@ -5,11 +5,15 @@
  */
 package Vista;
 
+import configuracion.Gestionar;
 import entidades.Inventario;
+import entidades.Proveedor;
 import java.awt.Frame;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,16 +22,23 @@ import javax.swing.table.DefaultTableModel;
  * @author Gerard
  */
 public class frmCompra extends javax.swing.JInternalFrame {
-
+    private Proveedor prov_actual;
     /**
      * Creates new form frmCompras
      */
     public frmCompra() {
         initComponents();
+        prov_actual = new Proveedor();
+        jTableDetalleCompra.setDefaultRenderer(Object.class, new Renderizador());
+        jTableDetalleCompra.setRowHeight(25);
+        Object[] columnas = {"Producto", "Cantidad", "Precio ($)", "Importe", "¿Quitar?"};
+        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        modelo.setColumnIdentifiers(columnas);
+        jTableDetalleCompra.setModel(modelo);
     }
     private void AñadirDetalle(Inventario inventarioActual) {
-        DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
-        if (inventarioActual.getId() != 0) {
+        DefaultTableModel modelo = (DefaultTableModel) jTableDetalleCompra.getModel();
+        if (!inventarioActual.equals(new Inventario())) {
             boolean encontrado = false;
             for (int i = 0; i < modelo.getRowCount(); i++) {
                 Inventario comparador = (Inventario) (modelo.getValueAt(i, 0));
@@ -39,17 +50,15 @@ public class frmCompra extends javax.swing.JInternalFrame {
             if (encontrado) {
                 JOptionPane.showMessageDialog(this, "Ya se agrego este producto", "Sistemas de Compras y Ventas - Compras", JOptionPane.WARNING_MESSAGE);
             } else {
-
                 Object[] nuevaFila = {
                     inventarioActual,
                     1,
-                    0,
                     inventarioActual.getPrecio().get(0).getCantidad(),
                     new BigDecimal("1").multiply(inventarioActual.getPrecio().get(0).getCantidad()),
                     new JButton("¿Quitar?")
                 };
                 modelo.addRow(nuevaFila);
-                jTableDetalleVenta.setModel(modelo);
+                jTableDetalleCompra.setModel(modelo);
                 lblProducto.setText("<Producto>");
                 calcularTotal();
             }
@@ -59,8 +68,8 @@ public class frmCompra extends javax.swing.JInternalFrame {
         double subtotal = 0;
         double iva = 0;
         double total = 0;
-        for (int i = 0; i < jTableDetalleVenta.getRowCount(); i++) {
-            subtotal += Double.parseDouble(jTableDetalleVenta.getValueAt(i, 4).toString());
+        for (int i = 0; i < jTableDetalleCompra.getRowCount(); i++) {
+            subtotal += Double.parseDouble(jTableDetalleCompra.getValueAt(i, 3).toString());
         }
         iva = subtotal * 0.13;
         //txtIVA.setText(new BigDecimal(iva).setScale(2, RoundingMode.HALF_UP).toString());
@@ -96,7 +105,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
         cboUnidadConversion = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableDetalleVenta = new javax.swing.JTable();
+        jTableDetalleCompra = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -119,6 +128,11 @@ public class frmCompra extends javax.swing.JInternalFrame {
 
         btnQuitarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/del24.png"))); // NOI18N
         btnQuitarProducto.setText("Quitar");
+        btnQuitarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarProductoActionPerformed(evt);
+            }
+        });
 
         btnBuscarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search32.png"))); // NOI18N
         btnBuscarProducto.setText("Buscar");
@@ -130,6 +144,11 @@ public class frmCompra extends javax.swing.JInternalFrame {
 
         btnSeleccionarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/provider24.png"))); // NOI18N
         btnSeleccionarProveedor.setText("Proveedor");
+        btnSeleccionarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarProveedorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -233,7 +252,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTableDetalleVenta.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDetalleCompra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
             },
@@ -241,7 +260,12 @@ public class frmCompra extends javax.swing.JInternalFrame {
                 "Descripcion", "Cantidad", "Precio", "Importe"
             }
         ));
-        jScrollPane2.setViewportView(jTableDetalleVenta);
+        jTableDetalleCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDetalleCompraMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableDetalleCompra);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel3.setText("Total:");
@@ -342,14 +366,79 @@ public class frmCompra extends javax.swing.JInternalFrame {
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         // TODO add your handling code here:
-                Frame f = JOptionPane.getFrameForComponent(this);
-        frmAgregarProducto frm = new frmAgregarProducto(f, true);
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmAgregarProducto frm = new frmAgregarProducto((JFrame) f, true);
         frm.setVisible(true);
         if (frm.isVisible() == false) {
             AñadirDetalle(frm.getInv_seleccion());
             frm.dispose();
         }
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
+
+    private void btnSeleccionarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarProveedorActionPerformed
+        // TODO add your handling code here:
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmAgregarProveedor frm = new frmAgregarProveedor((JFrame) f, true);
+        frm.setVisible(true);
+        if(!frm.isVisible()){
+            if(!frm.getProveedor_sel().equals(new Proveedor())){                
+                prov_actual = frm.getProveedor_sel();
+                frm.dispose();
+                txtProveedor.setText(prov_actual.getNombre() + " - " + prov_actual.getRespresentante());
+            }
+        }
+    }//GEN-LAST:event_btnSeleccionarProveedorActionPerformed
+
+    private void jTableDetalleCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDetalleCompraMouseClicked
+        // TODO add your handling code here:
+        int fila = jTableDetalleCompra.getSelectedRow();
+        if(fila > -1){
+            DefaultTableModel modelo = (DefaultTableModel) jTableDetalleCompra.getModel();
+            int columna = jTableDetalleCompra.getSelectedColumn();
+            switch (columna) {
+                case 1:
+                    {
+                        BigDecimal cantidad = new BigDecimal(JOptionPane.showInputDialog(this, "Digita la nueva cantidad a comprar"));
+                        modelo.setValueAt(cantidad, fila, columna);
+                        BigDecimal importe = cantidad.multiply(new BigDecimal(modelo.getValueAt(fila, 2).toString()));
+                        modelo.setValueAt(importe, fila, 3);
+                        break;
+                    }
+                case 2:
+                    {
+                        Inventario inv = (Inventario) modelo.getValueAt(fila, 0);
+                        JComboBox cbo = new JComboBox(inv.getPrecio().toArray());
+                        JOptionPane.showMessageDialog(this, cbo, "Selecciona el precio con el cual se comprara", JOptionPane.INFORMATION_MESSAGE);
+                        BigDecimal precio = new BigDecimal(cbo.getSelectedItem().toString());
+                        modelo.setValueAt(precio, fila, columna);
+                        BigDecimal importe = precio.multiply(new BigDecimal(modelo.getValueAt(fila, 1).toString()));
+                        modelo.setValueAt(importe, fila, 3);
+                        break;
+                    }
+                case 4:{
+                    if (jTableDetalleCompra.getValueAt(fila, columna) instanceof JButton) {
+                        int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
+                                JOptionPane.YES_NO_OPTION);
+                        if (respuesta == JOptionPane.YES_OPTION) {
+                            modelo.removeRow(fila);
+                            jTableDetalleCompra.setModel(modelo);
+                            calcularTotal();
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+            jTableDetalleCompra.setModel(modelo);
+            calcularTotal();
+        }
+    }//GEN-LAST:event_jTableDetalleCompraMouseClicked
+
+    private void btnQuitarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarProductoActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnQuitarProductoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -374,7 +463,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTableDetalleVenta;
+    private javax.swing.JTable jTableDetalleCompra;
     private javax.swing.JPanel jpProducto;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblTotal;

@@ -5,18 +5,85 @@
  */
 package Vista;
 
+import configuracion.Gestionar;
+import controlador.Proveedor_controlador;
+import entidades.Proveedor;
+import java.awt.Frame;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gerard
  */
 public class frmAgregarProveedor extends javax.swing.JDialog {
-
+    private Proveedor_controlador controlador;
+    private List<Proveedor> proveedorList;
+    private Proveedor proveedor_sel;
     /**
      * Creates new form frmAgregarProveedor
      */
     public frmAgregarProveedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        controlador = new Proveedor_controlador();
+        proveedorList = new ArrayList<>();
+        proveedorList = controlador.Obtener();
+        cargarDatos(proveedorList);
+        changeText();
+        this.setLocationRelativeTo(null);
+        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
+    }
+    
+    private void cargarDatos(List<Proveedor> lista){
+        String[] columnas = {"Nombre", "Telefono", "Direccion"};
+        ControlesGenerales.reiniciarJTable(jtProveedores);
+        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        modelo.setColumnIdentifiers(columnas);
+        lista.forEach(datos -> {
+            Object[] nuevaFila= {
+                datos,
+                datos.getTelefono(),
+                datos.getDomicilio()
+            };
+            if(datos.isEstado()){
+                modelo.addRow(nuevaFila);
+            }
+        });
+        jtProveedores.setModel(modelo);
+    }
+    
+     private void buscarTXT(){
+        List<Proveedor> encontrado = new ArrayList<>();
+        encontrado = proveedorList.stream().filter(
+                datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
+        ).collect(Collectors.toList());
+        cargarDatos(encontrado);
+    }
+    
+    private void changeText(){
+        txtBusqueda.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+        
+        });
     }
 
     /**
@@ -30,10 +97,11 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtBusqueda = new javax.swing.JTextField();
+        btnNuevo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtProveedores = new javax.swing.JTable();
+        btnSelecciona = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -41,11 +109,16 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add16.png"))); // NOI18N
-        jButton1.setText("Agregar");
-        jButton1.setToolTipText("Nuevo Proveedor");
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add16.png"))); // NOI18N
+        btnNuevo.setText("Agregar");
+        btnNuevo.setToolTipText("Nuevo Proveedor");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
             },
@@ -53,7 +126,14 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
                 "Código", "Nombre", "Tel/Cel", "Direccion"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtProveedores);
+
+        btnSelecciona.setText("Seleccionar");
+        btnSelecciona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -66,9 +146,12 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)))
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSelecciona)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -77,11 +160,13 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNuevo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSelecciona)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -103,6 +188,28 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmNuevoProveedor frm = new frmNuevoProveedor((JFrame) f, true);
+        frm.setVisible(true);
+        if(!frm.isVisible()){
+            proveedorList = controlador.Obtener();
+            cargarDatos(proveedorList);
+            frm.dispose();
+        }
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnSeleccionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionaActionPerformed
+        // TODO add your handling code here:
+        int fila = jtProveedores.getSelectedRow();
+        if(fila > -1){
+            proveedor_sel = proveedorList.get(proveedorList.indexOf((Proveedor) jtProveedores.getValueAt(fila, 0)));
+            System.out.println("Proveedor seleccionado = " + proveedor_sel);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_btnSeleccionaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,11 +254,16 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnSelecciona;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jtProveedores;
+    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
+
+    public Proveedor getProveedor_sel() {
+        return proveedor_sel;
+    }
 }
