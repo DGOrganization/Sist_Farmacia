@@ -52,6 +52,10 @@ public class Departamento {
     public Departamento() {
     }
 
+    public Departamento(int _id) {
+        this._id = _id;
+    }
+
     public Departamento(int _id, String _nombre, List<Municipio> _municipios, boolean _estado) {
         this._id = _id;
         this._nombre = _nombre;

@@ -5,18 +5,37 @@
  */
 package Vista;
 
+import configuracion.Gestionar;
+import controlador.Departamento_controlador;
+import controlador.Proveedor_controlador;
+import entidades.Departamento;
+import entidades.Proveedor;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gerard
  */
 public class frmNuevoProveedor extends javax.swing.JDialog {
-
+    private Proveedor proveedor;
+    private boolean editar;
+    private final Validaciones validar;
+    private Proveedor_controlador controlador;
     /**
      * Creates new form frmNuevoProveedor
+     * @param parent
+     * @param modal
      */
     public frmNuevoProveedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.validar = new Validaciones();
         initComponents();
+        setLocationRelativeTo(null);
+        controlador = new Proveedor_controlador();
+        validar.cboDepto(cboDepartamento, new Departamento_controlador().Obtener());
+        validar.telefonoFormato(txtTelefono, this);
+        validar.telefonoFormato(txtCelular, this);
+        setTitle(new Gestionar().Leer("Empresa", "Nombre"));
     }
 
     /**
@@ -29,7 +48,6 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -40,8 +58,6 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        txtCodProv = new javax.swing.JTextField();
-        txtPersonaRepresentante = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtNRC = new javax.swing.JFormattedTextField();
         txtDireccion = new javax.swing.JTextField();
@@ -52,13 +68,17 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         txtWeb = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+        txtRepresentante = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jLabel1.setText("Código:");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel2.setText("Representante:");
 
@@ -77,8 +97,6 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         jLabel9.setText("Email:");
 
         jLabel10.setText("Sitio Web:");
-
-        txtCodProv.setEditable(false);
 
         cboDepartamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,7 +128,7 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,24 +156,19 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
                             .addComponent(txtDireccion)))
                     .addComponent(jSeparator1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtCodProv, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 23, Short.MAX_VALUE))
-                            .addComponent(txtNombre))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPersonaRepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNRC, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                                .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNRC, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtRepresentante))))
+                .addGap(20, 20, 20))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -164,10 +177,8 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(txtCodProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPersonaRepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNRC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,10 +221,20 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save32.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setToolTipText("Almacenar Proveedor");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel24.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setToolTipText("");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -258,6 +279,72 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_cboDepartamentoActionPerformed
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        boolean valido = validar.validarCamposTexto(txtRepresentante) && validar.validarCamposTexto(txtNombre) 
+                && validar.validarCamposTexto(txtNRC) && validar.validarCamposTexto(txtDireccion) && validar.validarCamposTexto(txtTelefono)
+                && validar.validarCamposTexto(txtCelular);
+        if(valido == true){
+            proveedor.setRespresentante(txtRepresentante.getText());
+            proveedor.setNombre(txtNombre.getText());
+            proveedor.setNRC(txtNRC.getText());
+            proveedor.setDomicilio(txtDireccion.getText());
+            proveedor.setDepartamento((Departamento) cboDepartamento.getSelectedItem());
+            proveedor.setTelefono(txtTelefono.getText());
+            proveedor.setCelular(txtCelular.getText());
+            if(!txtEmail.getText().isEmpty()){
+                if(validar.validarEmail(txtEmail.getText(), this)){
+                    proveedor.setEmail(txtEmail.getText());
+                }
+            }
+            if(!txtWeb.getText().isEmpty()){
+                if(validar.validarURL(txtWeb.getText(), this)){
+                    proveedor.setWebsite(txtWeb.getText());
+                }
+            }
+            if(editar == false){
+                if(controlador.Registrar(proveedor)){
+                    JOptionPane.showMessageDialog(this,
+                        "El registro ha sido ingresado exitosamente",
+                        new Gestionar().Leer("Empresa", "nombre"),
+                        JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de editar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    if (controlador.Editar(proveedor)) {
+                        JOptionPane.showMessageDialog(this,
+                            "El registro ha sido actualizado exitosamente",
+                            new Gestionar().Leer("Empresa", "nombre"),
+                            JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        if(isEditar()){
+            txtRepresentante.setText(proveedor.getRespresentante());
+            txtNombre.setText(proveedor.getNombre());
+            txtNRC.setText(proveedor.getNRC());
+            txtDireccion.setText(proveedor.getDomicilio());
+            cboDepartamento.setSelectedItem(proveedor.getDepartamento());
+            txtTelefono.setText(proveedor.getTelefono());
+            txtCelular.setText(proveedor.getCelular());
+            txtEmail.setText(proveedor.getEmail());
+            txtWeb.setText(proveedor.getWebsite());
+        }
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -286,17 +373,15 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                frmNuevoProveedor dialog = new frmNuevoProveedor(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            frmNuevoProveedor dialog = new frmNuevoProveedor(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 
@@ -304,7 +389,6 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cboDepartamento;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -320,13 +404,28 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JFormattedTextField txtCelular;
-    private javax.swing.JTextField txtCodProv;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JFormattedTextField txtNRC;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPersonaRepresentante;
+    private javax.swing.JTextField txtRepresentante;
     private javax.swing.JFormattedTextField txtTelefono;
     private javax.swing.JTextField txtWeb;
     // End of variables declaration//GEN-END:variables
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public boolean isEditar() {
+        return editar;
+    }
+
+    public void setEditar(boolean editar) {
+        this.editar = editar;
+    }
 }

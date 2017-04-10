@@ -772,3 +772,140 @@ $BODY$
 
 $BODY$
   LANGUAGE plpgsql;
+
+DROP FUNCTION public.obtenerproveedores();
+CREATE OR REPLACE FUNCTION public.obtenerproveedores()
+  RETURNS TABLE(cod int, nombre character varying, represent varchar, nrc varchar, direccion text, depto int, telefono varchar, celular varchar, email character varying, website character varying, est boolean) AS
+$BODY$
+	BEGIN
+		RETURN QUERY
+			SELECT
+				prov.id, prov.nombre, prov.representante, prov.rfc, prov.direccion,
+				prov.iddepartamento, prov.telefono, prov.celular, prov.email, prov.sitioweb, prov.estado
+			FROM
+				proveedores as prov;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION public.obtenerdepartamento(cod int)
+  RETURNS TABLE(codigo integer, nom character varying, est boolean) AS
+$BODY$
+	BEGIN
+		RETURN QUERY
+			SELECT
+				id, nombre, estado
+			FROM
+				departamentos
+			WHERE
+				id = $1;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+select * from obtenerdepartamento(1);
+
+CREATE OR REPLACE FUNCTION public.obtenerproveedor(codigo int)
+  RETURNS TABLE(cod int, nombre character varying, represent varchar, nrc varchar, direccion text, depto int, telefono varchar, celular varchar, email character varying, website character varying, est boolean) AS
+$BODY$
+	BEGIN
+		RETURN QUERY
+			SELECT
+				prov.id, prov.nombre, prov.representante, prov.rfc, prov.direccion,
+				prov.iddepartamento, prov.telefono, prov.celular, prov.email, prov.sitioweb, prov.estado
+			FROM
+				proveedores as prov
+			WHERE
+				id = $1;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+select * from obtenerproveedor(1);
+
+CREATE OR REPLACE FUNCTION public.registrarproveedor(
+	nombre character varying, 
+	represent varchar, 
+	nrc varchar, 
+	direccion text, 
+	depto int, 
+	telefono varchar, 
+	celular varchar, 
+	email character varying, 
+	website character varying)
+  RETURNS void AS 
+$BODY$
+	BEGIN
+		INSERT INTO
+			proveedores(nombre, representante, rfc, direccion, iddepartamento, telefono, celular, email, sitioweb)
+		VALUES
+			($1, $2, $3, $4, $5, $6, $7, $8, $9);
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+select registrarproveedor(
+	'Bayer',
+	'Juan Perez',
+	'11',
+	'Por ahi',
+	2,
+	'1234-6789',
+	'7235-7896',
+	null,
+	null
+);
+
+CREATE OR REPLACE FUNCTION public.editarproveedor(
+	nombre character varying, 
+	represent varchar, 
+	nrc varchar, 
+	direccion text, 
+	depto int, 
+	telefono varchar, 
+	celular varchar, 
+	email character varying, 
+	website character varying,
+	cod int)
+  RETURNS void AS 
+$BODY$
+	BEGIN
+		UPDATE
+			proveedores p
+		SET
+			nombre = $1, representante = $2, rfc = $3, direccion = $4, iddepartamento = $5, 
+			telefono = $6, celular = $7, email = $8, sitioweb = $9
+		WHERE
+			id = $10;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+select editarproveedor(
+	'Bayer',
+	'Juan Perez',
+	'11',
+	'Por ahi',
+	2,
+	'1234-6789',
+	'7235-7896',
+	'bayer@organizacion.com',
+	'www.bayer.com',
+	1
+);
+
+CREATE OR REPLACE FUNCTION public.eliminarproveedor(cod int)
+  RETURNS void AS 
+$BODY$
+	BEGIN
+		UPDATE
+			proveedores
+		SET
+			estado = false
+		WHERE
+			id = $1;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+select eliminarproveedor(1);

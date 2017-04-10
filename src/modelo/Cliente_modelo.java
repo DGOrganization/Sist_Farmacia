@@ -9,7 +9,6 @@ package modelo;
  *
  * @author dakrpastiursSennin
  */
-
 import configuracion.Gestionar;
 import entidades.Cliente;
 import entidades.Persona;
@@ -24,15 +23,16 @@ import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
 public class Cliente_modelo {
-     public List<Cliente> ListarClientes(){
+
+    public List<Cliente> ListarClientes() {
         List<Cliente> lista = new ArrayList<>();
         Conexion conn = new Conexion();
-        try{
-            if(conn.Conectar()){
+        try {
+            if (conn.Conectar()) {
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerclientes() }");
-                if(cmd.execute()){
+                if (cmd.execute()) {
                     ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
+                    while (resultado.next()) {
                         Cliente cliente = new Cliente();
                         cliente.setId(resultado.getInt("codigo"));
                         cliente.setNombre(resultado.getString("nombre"));
@@ -51,11 +51,11 @@ public class Cliente_modelo {
                     }
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
-                    null, 
+                    null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
-                            + "\nFavor contacte al desarrollador",
+                    + "\nFavor contacte al desarrollador",
                     new Gestionar().Leer("Empresa", "nombre") + " - " + this.getClass().getName(),
                     JOptionPane.ERROR_MESSAGE
             );
@@ -64,17 +64,17 @@ public class Cliente_modelo {
         }
         return lista;
     }
-    
-    public Cliente ListarCliente(Cliente pCliente){
+
+    public Cliente ListarCliente(Cliente pCliente) {
         Cliente cliente = new Cliente();
         Conexion conn = new Conexion();
-        try{
-            if(conn.Conectar()){
+        try {
+            if (conn.Conectar()) {
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenercliente(?) }");
                 cmd.setLong(1, pCliente.getId());
-                if(cmd.execute()){
+                if (cmd.execute()) {
                     ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
+                    while (resultado.next()) {
                         cliente.setId(resultado.getInt("codigo"));
                         cliente.setNombre(resultado.getString("nombre"));
                         cliente.setApellidoPaterno(resultado.getString("apellido1"));
@@ -91,11 +91,11 @@ public class Cliente_modelo {
                     }
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
-                    null, 
+                    null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
-                            + "\nFavor contacte al desarrollador",
+                    + "\nFavor contacte al desarrollador",
                     new Gestionar().Leer("Empresa", "nombre") + " - " + this.getClass().getName(),
                     JOptionPane.ERROR_MESSAGE
             );
@@ -104,11 +104,11 @@ public class Cliente_modelo {
         }
         return cliente;
     }
-    
-    public boolean Registrar(Cliente pCliente){
+
+    public boolean Registrar(Cliente pCliente) {
         boolean exito = false;
         Conexion conn = new Conexion();
-        try{
+        try {
             if (conn.Conectar()) {
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call registrarcliente(?,?,?,?,?,?,?,?,?,?,?) }");
                 cmd.setString(1, pCliente.getNombre());
@@ -134,7 +134,7 @@ public class Cliente_modelo {
                 cmd.setObject(11, telefonos);
                 exito = cmd.execute();
             }
-        } catch(Exception ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
@@ -147,11 +147,11 @@ public class Cliente_modelo {
         }
         return exito;
     }
-    
-    public boolean Editar(Cliente pCliente){
+
+    public boolean Editar(Cliente pCliente) {
         boolean exito = false;
         Conexion conn = new Conexion();
-        try{
+        try {
             if (conn.Conectar()) {
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call editarcliente(?,?,?,?,?,?,?,?,?,?,?,?) }");
                 cmd.setInt(1, pCliente.getId());
@@ -178,7 +178,7 @@ public class Cliente_modelo {
                 cmd.setObject(12, telefonos);
                 exito = cmd.execute();
             }
-        } catch(Exception ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
@@ -191,17 +191,17 @@ public class Cliente_modelo {
         }
         return exito;
     }
-    
-    public boolean Eliminar(Cliente pCliente){
+
+    public boolean Eliminar(Cliente pCliente) {
         boolean exito = false;
         Conexion conn = new Conexion();
-        try{
+        try {
             if (conn.Conectar()) {
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call eliminarcliente(?) }");
                 cmd.setInt(1, pCliente.getId());
                 exito = cmd.execute();
             }
-        } catch(Exception ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()

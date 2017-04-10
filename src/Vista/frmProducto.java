@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmProducto extends javax.swing.JInternalFrame {
    private List<Inventario> inventarioList;
-    private Inventario_controlador controlador;
+    private final Inventario_controlador controlador;
     /**
      * Creates new form frmProductos
      */
