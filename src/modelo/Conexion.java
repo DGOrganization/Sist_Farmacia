@@ -8,6 +8,7 @@ package modelo;
 import configuracion.Gestionar;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,7 +20,7 @@ public class Conexion {
     protected final String contraseña = "adminroot";
     protected final String servidor = "localhost";
     protected final String puerto = "5432";
-    protected final String base = "db_farmacia";
+    protected final String base = "bd_farmacia";
     protected String url = "";
     private Connection conn;
     
@@ -39,7 +40,7 @@ public class Conexion {
             conn = DriverManager.getConnection(url, usuario, contraseña);
             System.out.println("Conexion con la base de datos " + base + " ha sido exitosa");
             exito = true;
-        }catch(Exception ex){
+        }catch(ClassNotFoundException | SQLException ex){
               JOptionPane.showMessageDialog(null, 
                     "Ha ocurrido un error al conectar a la base de datos: \n" + ex.getMessage() + "\n, Por favor contacte al desarrollador", 
                     new Gestionar().Leer("Empresa", "nombre"),
