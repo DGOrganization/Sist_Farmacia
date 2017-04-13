@@ -92,7 +92,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         smEmpresa = new javax.swing.JMenuItem();
         smImpresora = new javax.swing.JMenuItem();
         smUnidades = new javax.swing.JMenuItem();
-        smCaja = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -327,15 +326,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         });
         menuSistema.add(smUnidades);
 
-        smCaja.setText("Caja");
-        smCaja.setEnabled(false);
-        smCaja.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                smCajaActionPerformed(evt);
-            }
-        });
-        menuSistema.add(smCaja);
-
         jmbPrincipal.add(menuSistema);
 
         setJMenuBar(jmbPrincipal);
@@ -519,23 +509,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_smUnidadesActionPerformed
 
-    private void smCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smCajaActionPerformed
-        // TODO add your handling code here:
-        frmCaja frmCa = new frmCaja();
-        frmCa.pack();
-        desktop.add(frmCa);
-                if(frmCa.isVisible()){
-            System.out.println("Esta abierto");
-        } else {            
-            frmCa.setVisible(true);
-        }
-        try {
-            frmCa.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(frmMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_smCajaActionPerformed
-
     private void smAdRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smAdRolesActionPerformed
         // TODO add your handling code here:
 //        frmRoles frmR = new frmRoles();
@@ -601,7 +574,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem smAdmEmpleado;
     private javax.swing.JMenuItem smAdmUsuarios;
     private javax.swing.JMenu smAdministrar;
-    private javax.swing.JMenuItem smCaja;
     private javax.swing.JMenuItem smClientes;
     private javax.swing.JMenuItem smCompras;
     private javax.swing.JMenuItem smConsArticulos;
