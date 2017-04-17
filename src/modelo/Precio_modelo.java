@@ -35,6 +35,8 @@ public class Precio_modelo {
                         Precio precio = new Precio();
                         precio.setId(resultado.getInt("codigo"));
                         precio.setCantidad(resultado.getBigDecimal("cant"));
+                        precio.setTipo(resultado.getString("tipo"));
+                        precio.setEstado(resultado.getBoolean("est"));
                         lista.add(precio);
                     }
                 }

@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 public class Precio {
     private int _id;
     private BigDecimal _cantidad;
+    private String _tipo;
     private boolean _estado;
 
     public int getId() {
@@ -32,6 +33,14 @@ public class Precio {
         this._cantidad = _cantidad;
     }
 
+    public String getTipo() {
+        return _tipo;
+    }
+
+    public void setTipo(String _tipo) {
+        this._tipo = _tipo;
+    }
+    
     public boolean isEstado() {
         return _estado;
     }
@@ -47,16 +56,16 @@ public class Precio {
         this._id = _id;
     }
 
-    public Precio(int _id, BigDecimal _cantidad, boolean _estado) {
+    public Precio(int _id, BigDecimal _cantidad, String _tipo, boolean _estado) {
         this._id = _id;
         this._cantidad = _cantidad;
+        this._tipo = _tipo;
         this._estado = _estado;
     }
 
     @Override
     public String toString() {
-        return _cantidad.toString();
+        return _tipo + " " +_cantidad.toString();
     }
-    
     
 }

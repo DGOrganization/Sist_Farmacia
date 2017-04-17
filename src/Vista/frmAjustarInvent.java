@@ -5,19 +5,37 @@
  */
 package Vista;
 
+import configuracion.Gestionar;
+import controlador.Inventario_controlador;
+import entidades.Inventario;
+import java.math.BigDecimal;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gerard
  */
 public class frmAjustarInvent extends javax.swing.JDialog {
+    private Inventario inv;
+    private Inventario_controlador controlador;
 
+    public Inventario getInv() {
+        return inv;
+    }
+
+    public void setInv(Inventario inv) {
+        this.inv = inv;
+    }
     /**
      * Creates new form frmAjustarInvent
      */
     public frmAjustarInvent(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.controlador = new Inventario_controlador();
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
+        inv = new Inventario();
     }
 
     /**
@@ -34,12 +52,17 @@ public class frmAjustarInvent extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtExistencia = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         btnAplicar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lblProducto.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblProducto.setForeground(new java.awt.Color(0, 102, 51));
@@ -50,14 +73,19 @@ public class frmAjustarInvent extends javax.swing.JDialog {
 
         jLabel3.setText("Comentario:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtExistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtExistenciaActionPerformed(evt);
             }
         });
 
         btnAplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/okay16.png"))); // NOI18N
         btnAplicar.setText("Aplicar");
+        btnAplicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAplicarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -81,7 +109,7 @@ public class frmAjustarInvent extends javax.swing.JDialog {
                                         .addComponent(jLabel2)
                                         .addGap(17, 17, 17)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+                                    .addComponent(txtExistencia, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
                                     .addComponent(jTextField2)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(271, 271, 271)
@@ -99,7 +127,7 @@ public class frmAjustarInvent extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -123,9 +151,36 @@ public class frmAjustarInvent extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtExistenciaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtExistenciaActionPerformed
+
+    private void btnAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAplicarActionPerformed
+        // TODO add your handling code here:
+        if(txtExistencia.getText().isEmpty()){
+            JOptionPane.showMessageDialog(
+                        this, 
+                        "Digita la existencia a modificar", 
+                        new Gestionar().Leer("Empresa", "nombre"), 
+                        JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            inv.setStock(new BigDecimal(txtExistencia.getText()));
+            if(controlador.EditarStock(inv)){
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Se ha modificado la existencia", 
+                        new Gestionar().Leer("Empresa", "nombre"), 
+                        JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_btnAplicarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        lblProducto.setText(inv.toString());
+        txtExistencia.setText(inv.getStock().toString());
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -175,8 +230,8 @@ public class frmAjustarInvent extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblProducto;
+    private javax.swing.JTextField txtExistencia;
     // End of variables declaration//GEN-END:variables
 }

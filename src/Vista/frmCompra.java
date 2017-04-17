@@ -5,16 +5,28 @@
  */
 package Vista;
 
+import static Vista.ControlesGenerales.reiniciarJTable;
 import configuracion.Gestionar;
+import controlador.Compra_controlador;
+import entidades.Compra;
+import entidades.DetalleCompra;
 import entidades.Inventario;
 import entidades.Proveedor;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmCompra extends javax.swing.JInternalFrame {
     private Proveedor prov_actual;
+    private Compra_controlador controlador;
     /**
      * Creates new form frmCompras
      */
@@ -31,10 +44,18 @@ public class frmCompra extends javax.swing.JInternalFrame {
         prov_actual = new Proveedor();
         jTableDetalleCompra.setDefaultRenderer(Object.class, new Renderizador());
         jTableDetalleCompra.setRowHeight(25);
+        controlador = new Compra_controlador();
         Object[] columnas = {"Producto", "Cantidad", "Precio ($)", "Importe", "¿Quitar?"};
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         jTableDetalleCompra.setModel(modelo);
+        ActionListener updateClockAction = (ActionEvent e) -> {
+            Locale local = new Locale("es", "SV");
+            SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy - hh:mm:ss a", local);
+            txtFecha.setText(formateador.format(new Date()).trim()); 
+        };
+        Timer t = new Timer(100, updateClockAction);
+        t.start();
     }
     private void AñadirDetalle(Inventario inventarioActual) {
         DefaultTableModel modelo = (DefaultTableModel) jTableDetalleCompra.getModel();
@@ -109,7 +130,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        txtFecha = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         txtNFactura = new javax.swing.JTextField();
         txtProveedor = new javax.swing.JTextField();
@@ -122,6 +143,11 @@ public class frmCompra extends javax.swing.JInternalFrame {
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save32.png"))); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnEditarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit32.png"))); // NOI18N
         btnEditarProducto.setText("Editar");
@@ -274,7 +300,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
         lblTotal.setForeground(new java.awt.Color(0, 102, 255));
         lblTotal.setText("<total>");
 
-        jFormattedTextField1.setEditable(false);
+        txtFecha.setEditable(false);
 
         jLabel5.setText("N° de Comprobante:");
 
@@ -307,7 +333,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -327,7 +353,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel5)
                                 .addComponent(txtNFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -428,6 +454,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
                     break;
                 }
                 default:
+                    lblProducto.setText(jTableDetalleCompra.getValueAt(fila, 0).toString());
                     break;
             }
             jTableDetalleCompra.setModel(modelo);
@@ -440,6 +467,51 @@ public class frmCompra extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btnQuitarProductoActionPerformed
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        Compra compra = new Compra();
+        if(jTableDetalleCompra.getRowCount() > 0 && prov_actual != null && !txtNFactura.getText().isEmpty()){
+            compra.setNumFactura(txtNFactura.getText());
+            compra.setDescripcion("Nada");
+            compra.setTotal(new BigDecimal(lblTotal.getText()));
+            compra.setEmpleado(frmMenuPrincipal.usuarioActual.getEmpleado());
+            compra.setProveedor(prov_actual);
+            List<DetalleCompra> detalles = new ArrayList<>();
+            for (int i = 0; i < jTableDetalleCompra.getRowCount(); i++) {
+                DetalleCompra detalle = new DetalleCompra();
+                detalle.setInventario((Inventario) jTableDetalleCompra.getValueAt(i, 0));
+                detalle.setCantidad(new BigDecimal(jTableDetalleCompra.getValueAt(i, 1).toString()));
+                detalle.setPrecio(new BigDecimal(jTableDetalleCompra.getValueAt(i, 2).toString()));
+                detalle.setImporte(new BigDecimal(jTableDetalleCompra.getValueAt(i, 3).toString()));
+                detalles.add(detalle);
+            }
+            compra.setDetalle(detalles);
+            if(controlador.Registrar(compra)){
+                JOptionPane.showMessageDialog(this, "Compra registrada", this.title, JOptionPane.INFORMATION_MESSAGE);
+                    reiniciarJTable(jTableDetalleCompra);
+                    txtProveedor.setText("");
+                    txtNFactura.setText("");
+                    lblTotal.setText("0.00");
+                    prov_actual = new Proveedor();
+            }
+        } else if(prov_actual == null){
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona proveedor",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        } else if(prov_actual == null){
+            JOptionPane.showMessageDialog(this,
+                    "Ingresa el numero de factura entregada por el proveedor",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }else {
+            JOptionPane.showMessageDialog(this,
+                    "Agrega Productos primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarProducto;
@@ -449,7 +521,6 @@ public class frmCompra extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSeleccionarProveedor;
     private javax.swing.JComboBox<String> cboUnidadConversion;
     private javax.swing.JComboBox<String> cboUnidadMedida;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -468,6 +539,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblcodigo;
+    private javax.swing.JFormattedTextField txtFecha;
     private javax.swing.JTextField txtNFactura;
     private javax.swing.JTextField txtProveedor;
     // End of variables declaration//GEN-END:variables

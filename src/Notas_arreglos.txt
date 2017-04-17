@@ -1,21 +1,21 @@
 Formulario Productos
 ---------
-1.)Mejorar el tiempo de carga en formulario Producto.
+1.)Mejorar el tiempo de carga en formulario Producto. pendiente
 2.)Los unicos campos obligatorios en Registro de Productos son:
-	-Nombre y Fecha de Vencimiento.
+	-Nombre y Fecha de Vencimiento. ok
 El margen de utilidad es opcional dejarlo, pueden colocarse los precios manuales.
-3.)Habilitar la opcion Compatibles
-4.)Al dar editar sino está seleccionado un producto que mande un mensaje.
-5.)En la tabla donde se muestran los productos, habilitar el campo stock y Precio.
-6.)Funcion de los cheks de filtro
+3.)Habilitar la opcion Compatibles ok
+4.)Al dar editar sino estï¿½ seleccionado un producto que mande un mensaje. ok
+5.)En la tabla donde se muestran los productos, habilitar el campo stock y Precio. ok
+6.)Funcion de los cheks de filtro Â¿pero los filtros no tienen subfiltro para su funcionamiento?
 Formulario Clientes
-7.)Generar un código para cada producto
+7.)Generar un cï¿½digo para cada producto Â¿En cliente codigo de producto?
 ---------
-1.)Agregué el campo de NRC.
+1.)Agreguï¿½ el campo de NRC. ok
 
 Formulario Ventas
 ---------
-1.) Al seleccionar Ticket desabilitar el campo N° de Factura
-2.) Al seleccionar Credito fiscal se debe calcular el iva que se ha aplicado y mostrarlo en el textbox.
-3.) En el precio mostrar si es Normal o Mayoreo(mas detallado)
-4.) Validar, sólo numeros donde se requiera
+1.) Al seleccionar Ticket desabilitar el campo Nï¿½ de Factura okj
+2.) Al seleccionar Credito fiscal se debe calcular el iva que se ha aplicado y mostrarlo en el textbox. ok
+3.) En el precio mostrar si es Normal o Mayoreo(mas detallado) ok
+4.) Validar, sï¿½lo numeros donde se requiera 

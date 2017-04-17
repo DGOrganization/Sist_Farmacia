@@ -16,7 +16,7 @@ public class Proveedor {
     private String _nombre;
     private String _NRC;
     private String _domicilio;
-    private Departamento _departamento;
+    private String _NIT;
     private String _telefono;
     private String _celular;
     private String _email;
@@ -63,12 +63,12 @@ public class Proveedor {
         this._domicilio = _domicilio;
     }
 
-    public Departamento getDepartamento() {
-        return _departamento;
+    public String getNIT() {
+        return _NIT;
     }
 
-    public void setDepartamento(Departamento _departamento) {
-        this._departamento = _departamento;
+    public void setNIT(String _NIT) {
+        this._NIT = _NIT;
     }
 
     public String getTelefono() {
@@ -114,13 +114,13 @@ public class Proveedor {
     public Proveedor() {
     }
 
-    public Proveedor(int _id, String _respresentante, String _nombre, String _NRC, String _domicilio, Departamento _departamento, String _telefono, String _celular, String _email, String _website) {
+    public Proveedor(int _id, String _respresentante, String _nombre, String _NRC, String _domicilio, String _NIT, String _telefono, String _celular, String _email, String _website) {
         this._id = _id;
         this._respresentante = _respresentante;
         this._nombre = _nombre;
         this._NRC = _NRC;
         this._domicilio = _domicilio;
-        this._departamento = _departamento;
+        this._NIT = _NIT;
         this._telefono = _telefono;
         this._celular = _celular;
         this._email = _email;

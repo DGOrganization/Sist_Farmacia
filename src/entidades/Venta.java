@@ -15,7 +15,10 @@ import java.util.List;
  */
 public class Venta {
     private long _id;
+    private String _nFactura;
     private java.sql.Date _fecha;
+    private BigDecimal _subtotal;
+    private BigDecimal _iva;
     private BigDecimal _total;
     private BigDecimal _cambio;
     private String _observacion;
@@ -33,6 +36,14 @@ public class Venta {
         this._id = _id;
     }
 
+    public String getNFactura() {
+        return _nFactura;
+    }
+
+    public void setNFactura(String _nFactura) {
+        this._nFactura = _nFactura;
+    }
+    
     public java.sql.Date getFecha() {
         return _fecha;
     }
@@ -45,6 +56,21 @@ public class Venta {
         this._fecha = new java.sql.Date(_fecha.getTime());
     }
 
+    public BigDecimal getSubtotal() {
+        return _subtotal;
+    }
+
+    public void setSubtotal(BigDecimal _subtotal) {
+        this._subtotal = _subtotal;
+    }
+
+    public BigDecimal getIva() {
+        return _iva;
+    }
+
+    public void setIva(BigDecimal _iva) {
+        this._iva = _iva;
+    }
     public BigDecimal getTotal() {
         return _total;
     }
@@ -111,18 +137,5 @@ public class Venta {
 
     public Venta() {
     }
-
-    public Venta(long _id, Date _fecha, BigDecimal _total, BigDecimal _cambio, String _observacion, Empleado _empleado, Cliente _cliente, String _letras, List<DetalleVenta> _detalle, boolean _estado) {
-        this._id = _id;
-        this._fecha = _fecha;
-        this._total = _total;
-        this._cambio = _cambio;
-        this._observacion = _observacion;
-        this._empleado = _empleado;
-        this._cliente = _cliente;
-        this._letras = _letras;
-        this._detalle = _detalle;
-        this._estado = _estado;
-    }
-    
+   
 }

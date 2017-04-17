@@ -26,6 +26,7 @@ public class Inventario {
     private List<Precio> _precio;
     private java.sql.Date _vencimiento;
     private Imagen _imagen;
+    private List<Inventario> _compatibles;
     private boolean _estado;
 
     public int getId() {
@@ -124,6 +125,14 @@ public class Inventario {
         return _estado;
     }
 
+    public List<Inventario> getCompatibles() {
+        return _compatibles;
+    }
+
+    public void setCompatibles(List<Inventario> _compatibles) {
+        this._compatibles = _compatibles;
+    }
+    
     public void setEstado(boolean _estado) {
         this._estado = _estado;
     }

@@ -7,6 +7,7 @@ package Vista;
 
 import configuracion.Gestionar;
 import entidades.Venta;
+import java.awt.Color;
 import java.math.BigDecimal;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -33,11 +34,27 @@ public class frmPagoVenta extends javax.swing.JDialog {
     }
     
     private void CalcularCambio(){
+        BigDecimal pago = BigDecimal.ZERO;
         BigDecimal total = new BigDecimal(lblTotal.getText());
-        BigDecimal cambio = new BigDecimal(txtPago.getText()).subtract(total).setScale(2, BigDecimal.ROUND_HALF_UP);
+        BigDecimal cambio = BigDecimal.ZERO;
+        try{
+            pago = new BigDecimal(txtPago.getText());
+            cambio = pago.subtract(total).setScale(2, BigDecimal.ROUND_HALF_UP);
+        }catch (Exception ex){
+            System.err.println("Error : " + ex.getMessage());
+        }
         lblCambio.setText(cambio.toString());
-        lblLetrasC.setText(new Validaciones().Convertir(lblCambio.getText(), true));
-        ventaActual.setCambio(cambio);
+        System.out.println("Cambio = " + (pago.compareTo(total) < 0 ? "Rojo" : "Verde"));
+        if(pago.compareTo(total) < 0){
+            lblCambio.setForeground(Color.red);
+            btnAceptar.setEnabled(false);
+        } else {
+            btnAceptar.setEnabled(true);
+            lblCambio.setForeground(Color.green);
+            lblLetrasC.setText(new Validaciones().Convertir(lblCambio.getText(), true));
+            ventaActual.setCambio(cambio);
+        }
+        
     }
     
     private void changeText(){
@@ -74,14 +91,13 @@ public class frmPagoVenta extends javax.swing.JDialog {
         jTree1 = new javax.swing.JTree();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtPago = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         lblLetrasT = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lblCambio = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
@@ -91,6 +107,7 @@ public class frmPagoVenta extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         lblSalir = new javax.swing.JLabel();
+        txtPago = new javax.swing.JFormattedTextField();
 
         jScrollPane1.setViewportView(jTree1);
 
@@ -106,9 +123,6 @@ public class frmPagoVenta extends javax.swing.JDialog {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Paga:");
-
-        txtPago.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtPago.setMaximumSize(new java.awt.Dimension(21474, 21474));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 153));
@@ -135,11 +149,11 @@ public class frmPagoVenta extends javax.swing.JDialog {
         lblCambio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCambio.setText("jLabel8");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/okay16.png"))); // NOI18N
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/okay16.png"))); // NOI18N
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
 
@@ -185,6 +199,8 @@ public class frmPagoVenta extends javax.swing.JDialog {
             }
         });
 
+        txtPago.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -199,15 +215,15 @@ public class frmPagoVenta extends javax.swing.JDialog {
                                 .addContainerGap()
                                 .addComponent(lblSalir)
                                 .addGap(159, 159, 159)
-                                .addComponent(jButton1)
+                                .addComponent(btnAceptar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCheckBox1))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(160, 160, 160)
                                 .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtPago, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 59, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,7 +273,7 @@ public class frmPagoVenta extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jCheckBox1)))
                 .addContainerGap())
         );
@@ -276,20 +292,24 @@ public class frmPagoVenta extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:        
         lblTotal.setText(ventaActual.getTotal().toString());
         lblLetrasT.setText(new Validaciones().Convertir(lblTotal.getText(), true));
-        lblCambio.setText("-" + lblTotal.getText());
+        txtPago.setText(ventaActual.getTotal().toString());
+        CalcularCambio();
     }//GEN-LAST:event_formWindowOpened
 
     private void lblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseClicked
         // TODO add your handling code here:
+        BigDecimal cambio = BigDecimal.ZERO;
+        cambio = cambio.subtract(BigDecimal.ONE);
+        ventaActual.setCambio(cambio);
         this.setVisible(false);
     }//GEN-LAST:event_lblSalirMouseClicked
 
@@ -336,7 +356,7 @@ public class frmPagoVenta extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -358,7 +378,7 @@ public class frmPagoVenta extends javax.swing.JDialog {
     private javax.swing.JLabel lblLetrasT;
     private javax.swing.JLabel lblSalir;
     private javax.swing.JLabel lblTotal;
-    private javax.swing.JTextField txtPago;
+    private javax.swing.JFormattedTextField txtPago;
     // End of variables declaration//GEN-END:variables
 
     public void setVentaActual(Venta ventaActual) {

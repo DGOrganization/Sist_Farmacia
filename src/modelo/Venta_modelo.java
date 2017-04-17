@@ -7,6 +7,7 @@ package modelo;
 
 import configuracion.Gestionar;
 import entidades.Venta;
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -25,12 +26,16 @@ public class Venta_modelo {
         Conexion conn = new Conexion();
         try{
             if(conn.Conectar()){
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call registrarventa(?,?,?,?,?,?,?) }");
+                CallableStatement cmd = conn.getConnection().prepareCall("{ call registrarventa(?,?,?,?,?,?,?,?,?,?) }");
                 cmd.setInt(1, pVenta.getCliente().getId());
                 cmd.setInt(2, pVenta.getEmpleado().getId());
                 cmd.setBigDecimal(3, pVenta.getTotal());
                 cmd.setBigDecimal(4, pVenta.getCambio());
-                cmd.setString(5, pVenta.getObservacion());
+                if(pVenta.getObservacion().isEmpty()){
+                    cmd.setNull(5, java.sql.Types.LONGVARCHAR);
+                } else {
+                    cmd.setString(5, pVenta.getObservacion());
+                }
                 cmd.setString(6, pVenta.getLetras());
                 JSONArray detalles_v = new JSONArray();
                 pVenta.getDetalle().stream().forEach(detalle ->{
@@ -47,6 +52,25 @@ public class Venta_modelo {
                 detalles.setType("json");
                 detalles.setValue(detalles_v.toString());
                 cmd.setObject(7, detalles);
+                
+                if(pVenta.getSubtotal().compareTo(BigDecimal.ZERO) == 0){
+                    cmd.setNull(8, java.sql.Types.NUMERIC);
+                } else {
+                    cmd.setBigDecimal(8, pVenta.getSubtotal());
+                }
+                
+                if(pVenta.getIva().compareTo(BigDecimal.ZERO) == 0){
+                    cmd.setNull(9, java.sql.Types.NUMERIC);
+                } else {
+                    cmd.setBigDecimal(9, pVenta.getIva());
+                }
+                
+                if(pVenta.getNFactura().isEmpty()){
+                    cmd.setNull(10, java.sql.Types.VARCHAR);
+                } else {
+                    cmd.setString(10, pVenta.getNFactura());
+                }
+                
                 exito = cmd.execute();
             }
         } catch (SQLException ex){

@@ -43,7 +43,7 @@ public class Usuario_modelo {
                     null, 
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
                             + "\nFavor contacte al desarrollador",
-                    "Sistema de Compras y Ventas - Usuario",
+                    new configuracion.Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE
             );
         } finally {

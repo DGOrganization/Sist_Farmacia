@@ -8,10 +8,13 @@ package Vista;
 import configuracion.Gestionar;
 import controlador.Inventario_controlador;
 import entidades.Inventario;
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -255,7 +258,8 @@ public class frmAgregarProducto extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        frmNuevoProducto frm = new frmNuevoProducto(this, true);
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmNuevoProducto frm = new frmNuevoProducto((JFrame) f, true);
         frm.setVisible(true);
         if(!frm.isVisible()){
             if (frm.getInventario().equals(new Inventario())) {
@@ -272,7 +276,8 @@ public class frmAgregarProducto extends javax.swing.JDialog {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         int fila = jtInventario.getSelectedRow();
-        frmNuevoProducto frm = new frmNuevoProducto(this, true);
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmNuevoProducto frm = new frmNuevoProducto((JFrame) f, true);
         if (fila > -1) {
             if (jtInventario.getValueAt(fila, 0) instanceof Inventario) {
                 frm.setInventario(inventarioList.get(inventarioList.indexOf(jtInventario.getValueAt(fila, 0))));

@@ -9,9 +9,11 @@ import controlador.Inventario_controlador;
 import entidades.Inventario;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -62,11 +64,24 @@ public class frmProducto extends javax.swing.JInternalFrame {
         jtProductos.setModel(modelo);
     }
 
-    private void buscarTXT(){
+    private void buscarTXT() {
         List<Inventario> encontrado = inventarioList.stream().filter(
-                datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
+                datos -> {
+                    if(chkExistencia1.isSelected()){
+                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase()) 
+                                && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) > 0 ;
+                    } else {
+                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase()) 
+                                && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) < 1 ;
+                    }
+                    
+                }
         ).collect(Collectors.toList());
-        cargarDatos(encontrado);
+        if(txtBusqueda.getText().isEmpty()){
+            cargarDatos(inventarioList);
+        } else {
+            cargarDatos(encontrado);
+        }
     }
     
     private void changeText(){
@@ -100,16 +115,16 @@ public class frmProducto extends javax.swing.JInternalFrame {
         btnNuevo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnStock = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtProductos = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        chkCategorias = new javax.swing.JCheckBox();
+        chkExistencia1 = new javax.swing.JCheckBox();
+        chkExistenciaNo = new javax.swing.JCheckBox();
         jSeparator2 = new javax.swing.JSeparator();
 
         setClosable(true);
@@ -145,12 +160,12 @@ public class frmProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/inv_ajuste24.png"))); // NOI18N
-        jButton1.setText("Ajustar");
-        jButton1.setToolTipText("Ajuste de Inventario");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnStock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/inv_ajuste24.png"))); // NOI18N
+        btnStock.setText("Ajustar");
+        btnStock.setToolTipText("Ajuste de Inventario");
+        btnStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnStockActionPerformed(evt);
             }
         });
 
@@ -164,7 +179,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(btnEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnStock)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(btnEliminar)
                 .addContainerGap(36, Short.MAX_VALUE))
@@ -180,7 +195,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
                             .addComponent(btnEditar)
                             .addComponent(btnEliminar))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnStock, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -198,11 +213,16 @@ public class frmProducto extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jtProductos);
 
-        jCheckBox1.setText("Todas las Categorias");
+        chkCategorias.setText("Todas las Categorias");
 
-        jCheckBox3.setText("Articulos con Existencia");
+        chkExistencia1.setText("Articulos con Existencia");
+        chkExistencia1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chkExistencia1ItemStateChanged(evt);
+            }
+        });
 
-        jCheckBox2.setText("Articulos sin Existencia");
+        chkExistenciaNo.setText("Articulos sin Existencia");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -218,11 +238,11 @@ public class frmProducto extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBusqueda))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
+                        .addComponent(chkCategorias)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jCheckBox3)
+                        .addComponent(chkExistencia1)
                         .addGap(102, 102, 102)
-                        .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(chkExistenciaNo, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator1))
                 .addGap(14, 14, 14))
         );
@@ -237,9 +257,9 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox3))
+                    .addComponent(chkCategorias)
+                    .addComponent(chkExistenciaNo)
+                    .addComponent(chkExistencia1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -310,9 +330,9 @@ public class frmProducto extends javax.swing.JInternalFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
-        frmNuevoProducto frm = new frmNuevoProducto(f, true);
+        frmNuevoProducto frm = new frmNuevoProducto((JFrame) f, true);
         int fila = jtProductos.getSelectedRow();
-        if(fila > -1){
+        if (fila > -1) {
             frm.setInventario(inventarioList.get(inventarioList.indexOf(jtProductos.getValueAt(fila, 0))));
             frm.setEditar(true);
             frm.setVisible(true);
@@ -320,35 +340,50 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 inventarioList = controlador.Obtener();
                 cargarDatos(inventarioList);
                 frm.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this,
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
                     "Selecciona primero",
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.WARNING_MESSAGE);
-            }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockActionPerformed
         // TODO add your handling code here:
         Frame frmP = JOptionPane.getFrameForComponent(this);
-        frmAjustarInvent dialog = new frmAjustarInvent(frmP, true);
-        dialog.show();
-        if(!frmP.isVisible()){
-            inventarioList = controlador.Obtener();
-            cargarDatos(inventarioList);
+        frmAjustarInvent dialog = new frmAjustarInvent((JFrame)frmP, true);
+        int fila = jtProductos.getSelectedRow();
+        if (fila > -1) {
+            dialog.setInv(inventarioList.get(inventarioList.indexOf(jtProductos.getValueAt(fila, 0))));
+            dialog.setVisible(true);
+            if (!dialog.isVisible()) {
+                inventarioList = controlador.Obtener();
+                cargarDatos(inventarioList);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+                
+    }//GEN-LAST:event_btnStockActionPerformed
+
+    private void chkExistencia1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkExistencia1ItemStateChanged
+        // TODO add your handling code here:
+        buscarTXT();
+    }//GEN-LAST:event_chkExistencia1ItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JButton btnStock;
+    private javax.swing.JCheckBox chkCategorias;
+    private javax.swing.JCheckBox chkExistencia1;
+    private javax.swing.JCheckBox chkExistenciaNo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

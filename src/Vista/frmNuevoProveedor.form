@@ -75,10 +75,10 @@
                               <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cboDepartamento" max="32767" attributes="0"/>
                               <Component id="txtDireccion" max="32767" attributes="0"/>
+                              <Component id="txtNIT" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
@@ -131,7 +131,7 @@
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cboDepartamento" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtNIT" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -188,7 +188,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Departamento:"/>
+            <Property name="text" type="java.lang.String" value="NIT:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
@@ -216,19 +216,6 @@
         <Component class="javax.swing.JFormattedTextField" name="txtNRC">
         </Component>
         <Component class="javax.swing.JTextField" name="txtDireccion">
-        </Component>
-        <Component class="javax.swing.JComboBox" name="cboDepartamento">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboDepartamentoActionPerformed"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="txtTelefono">
         </Component>
@@ -273,6 +260,8 @@
           </SubComponents>
         </Container>
         <Component class="javax.swing.JTextField" name="txtRepresentante">
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="txtNIT">
         </Component>
       </SubComponents>
     </Container>

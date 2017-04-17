@@ -20,7 +20,7 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
     private Proveedor proveedor;
     private boolean editar;
     private final Validaciones validar;
-    private Proveedor_controlador controlador;
+    private final Proveedor_controlador controlador;
     /**
      * Creates new form frmNuevoProveedor
      * @param parent
@@ -32,9 +32,9 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         controlador = new Proveedor_controlador();
-        validar.cboDepto(cboDepartamento, new Departamento_controlador().Obtener());
         validar.telefonoFormato(txtTelefono, this);
         validar.telefonoFormato(txtCelular, this);
+        validar.nitFormato(txtNIT, this);
         setTitle(new Gestionar().Leer("Empresa", "Nombre"));
     }
 
@@ -61,7 +61,6 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         txtNombre = new javax.swing.JTextField();
         txtNRC = new javax.swing.JFormattedTextField();
         txtDireccion = new javax.swing.JTextField();
-        cboDepartamento = new javax.swing.JComboBox<>();
         txtTelefono = new javax.swing.JFormattedTextField();
         txtCelular = new javax.swing.JFormattedTextField();
         txtEmail = new javax.swing.JTextField();
@@ -69,6 +68,7 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         txtRepresentante = new javax.swing.JTextField();
+        txtNIT = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -88,7 +88,7 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
 
         jLabel5.setText("Domicilio:");
 
-        jLabel6.setText("Departamento:");
+        jLabel6.setText("NIT:");
 
         jLabel7.setText("Telefono:");
 
@@ -97,12 +97,6 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         jLabel9.setText("Email:");
 
         jLabel10.setText("Sitio Web:");
-
-        cboDepartamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboDepartamentoActionPerformed(evt);
-            }
-        });
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -150,10 +144,10 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(33, 33, 33)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cboDepartamento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtDireccion)))
+                            .addComponent(txtDireccion)
+                            .addComponent(txtNIT)))
                     .addComponent(jSeparator1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +188,7 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(cboDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -275,21 +269,17 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cboDepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDepartamentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboDepartamentoActionPerformed
-
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         boolean valido = validar.validarCamposTexto(txtRepresentante) && validar.validarCamposTexto(txtNombre) 
                 && validar.validarCamposTexto(txtNRC) && validar.validarCamposTexto(txtDireccion) && validar.validarCamposTexto(txtTelefono)
-                && validar.validarCamposTexto(txtCelular);
+                && validar.validarCamposTexto(txtCelular) && validar.validarCamposTexto(txtNIT);
         if(valido == true){
             proveedor.setRespresentante(txtRepresentante.getText());
             proveedor.setNombre(txtNombre.getText());
             proveedor.setNRC(txtNRC.getText());
             proveedor.setDomicilio(txtDireccion.getText());
-            proveedor.setDepartamento((Departamento) cboDepartamento.getSelectedItem());
+            proveedor.setNIT(txtNIT.getText());
             proveedor.setTelefono(txtTelefono.getText());
             proveedor.setCelular(txtCelular.getText());
             if(!txtEmail.getText().isEmpty()){
@@ -337,7 +327,7 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
             txtNombre.setText(proveedor.getNombre());
             txtNRC.setText(proveedor.getNRC());
             txtDireccion.setText(proveedor.getDomicilio());
-            cboDepartamento.setSelectedItem(proveedor.getDepartamento());
+            txtNIT.setText(proveedor.getNIT());
             txtTelefono.setText(proveedor.getTelefono());
             txtCelular.setText(proveedor.getCelular());
             txtEmail.setText(proveedor.getEmail());
@@ -388,7 +378,6 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> cboDepartamento;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -406,6 +395,7 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField txtCelular;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JFormattedTextField txtNIT;
     private javax.swing.JFormattedTextField txtNRC;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtRepresentante;

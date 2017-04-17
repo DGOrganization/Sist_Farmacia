@@ -37,7 +37,7 @@ public class Proveedor_modelo {
                         proveedor.setRespresentante(resultado.getString("represent"));
                         proveedor.setNRC(resultado.getString("nrc"));
                         proveedor.setDomicilio(resultado.getString("direccion"));
-                        proveedor.setDepartamento(new Departamento_modelo().ListarDepartamento(new Departamento(resultado.getInt("depto"))));
+                        proveedor.setNIT(resultado.getString("nit"));
                         proveedor.setTelefono(resultado.getString("telefono"));
                         proveedor.setCelular(resultado.getString("celular"));
                         proveedor.setEmail(resultado.getObject("email") == null ? "" : resultado.getString("email"));
@@ -76,7 +76,7 @@ public class Proveedor_modelo {
                         proveedor.setRespresentante(resultado.getString("represent"));
                         proveedor.setNRC(resultado.getString("nrc"));
                         proveedor.setDomicilio(resultado.getString("direccion"));
-                        proveedor.setDepartamento(new Departamento_modelo().ListarDepartamento(new Departamento(resultado.getInt("depto"))));
+                        proveedor.setNIT(resultado.getString("nit"));
                         proveedor.setTelefono(resultado.getString("telefono"));
                         proveedor.setCelular(resultado.getString("celular"));
                         proveedor.setEmail(resultado.getObject("email") == null ? "" : resultado.getString("email"));
@@ -109,7 +109,7 @@ public class Proveedor_modelo {
                 cmd.setString(2, pProveedor.getRespresentante());
                 cmd.setString(3, pProveedor.getNRC());
                 cmd.setString(4, pProveedor.getDomicilio());
-                cmd.setInt(5, pProveedor.getDepartamento().getId());
+                cmd.setString(5, pProveedor.getNIT());
                 cmd.setString(6, pProveedor.getTelefono());
                 cmd.setString(7, pProveedor.getCelular());
                 if(pProveedor.getEmail().isEmpty()){
@@ -149,7 +149,7 @@ public class Proveedor_modelo {
                 cmd.setString(2, pProveedor.getRespresentante());
                 cmd.setString(3, pProveedor.getNRC());
                 cmd.setString(4, pProveedor.getDomicilio());
-                cmd.setInt(5, pProveedor.getDepartamento().getId());
+                cmd.setString(5, pProveedor.getNIT());
                 cmd.setString(6, pProveedor.getTelefono());
                 cmd.setString(7, pProveedor.getCelular());
                 if(pProveedor.getEmail().isEmpty()){

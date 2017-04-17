@@ -62,7 +62,7 @@
                   <EmptySpace pref="50" max="32767" attributes="0"/>
                   <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="50" max="32767" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnStock" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="52" max="32767" attributes="0"/>
                   <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="36" max="32767" attributes="0"/>
@@ -82,7 +82,7 @@
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jButton1" alignment="1" max="32767" attributes="0"/>
+                      <Component id="btnStock" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -126,7 +126,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnStock">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Iconos/inv_ajuste24.png"/>
@@ -135,7 +135,7 @@
             <Property name="toolTipText" type="java.lang.String" value="Ajuste de Inventario"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStockActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -156,11 +156,11 @@
                           <Component id="txtBusqueda" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                          <Component id="chkCategorias" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chkExistencia1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
-                          <Component id="jCheckBox2" min="-2" pref="133" max="-2" attributes="0"/>
+                          <Component id="chkExistenciaNo" min="-2" pref="133" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -180,9 +180,9 @@
                   <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chkCategorias" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chkExistenciaNo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chkExistencia1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
@@ -251,17 +251,20 @@
         </Container>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+        <Component class="javax.swing.JCheckBox" name="chkCategorias">
           <Properties>
             <Property name="text" type="java.lang.String" value="Todas las Categorias"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox3">
+        <Component class="javax.swing.JCheckBox" name="chkExistencia1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Articulos con Existencia"/>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="chkExistencia1ItemStateChanged"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+        <Component class="javax.swing.JCheckBox" name="chkExistenciaNo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Articulos sin Existencia"/>
           </Properties>
