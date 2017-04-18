@@ -404,13 +404,14 @@ $BODY$
 
 select * from obtenerbodega(1);
 
+DROP FUNCTION obtenerpreciosinv(integer);
 CREATE OR REPLACE FUNCTION public.obtenerpreciosinv(inv int)
-  RETURNS TABLE(codigo int, precio numeric, est boolean) AS
+  RETURNS TABLE(codigo int, precio numeric, tipo varchar, est boolean) AS
 $BODY$
 	BEGIN
 		RETURN QUERY
 			SELECT 
-				p.id, p.cantidad, p.estado
+				p.id, p.cantidad, p.tipo, p.estado
 			FROM
 				precios as p
 			WHERE
@@ -448,6 +449,63 @@ $BODY$
 
 select * from obtenerinventarios();
 
+CREATE OR REPLACE FUNCTION public.obtenerinventario(cod int)
+  RETURNS TABLE(
+	codigo int, 
+	articulo integer, 
+	unidad int, 
+	categoria int, 
+	bodega int,
+	stck numeric, 
+	stckmin int, 
+	stckmax int, 
+	vencimiento date, 
+	est boolean) AS
+$BODY$
+	BEGIN
+		RETURN QUERY
+			SELECT 
+				i.id, i.idarticulo, i.idunidad, i.idcategoria, i.idbodega, i.stock, i.stockmin, 
+				i.stockmax, i.fechavencimiento,	i.estado
+			FROM
+				inventario as i
+			WHERE
+				i.id = $1;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+select * from obtenerinventario(2);
+
+CREATE OR REPLACE FUNCTION public.obtenercompatibles(cod int)
+  RETURNS TABLE(
+	codigo int, 
+	articulo integer, 
+	unidad int, 
+	categoria int, 
+	bodega int,
+	stck numeric, 
+	stckmin int, 
+	stckmax int, 
+	vencimiento date, 
+	est boolean) AS
+$BODY$
+	BEGIN
+		RETURN QUERY
+			SELECT 
+				i.id, i.idarticulo, i.idunidad, i.idcategoria, i.idbodega, i.stock, i.stockmin, 
+				i.stockmax, i.fechavencimiento,	c.estado
+			FROM
+				inventario as i inner join compatibles as c on c.idinventario = i.id
+			WHERE
+				c.idinventario = $1;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+select * from obtenercompatibles(2);
+
+
 DROP FUNCTION public.obtenernivel(integer);
 CREATE OR REPLACE FUNCTION public.obtenernivel(IN id int)
   RETURNS TABLE(codigo int, nivel character varying, est boolean) AS
@@ -482,14 +540,14 @@ $BODY$
 $BODY$
   LANGUAGE plpgsql;
 
-
+DROP FUNCTION obtenerprecioinv(integer);
 CREATE OR REPLACE FUNCTION public.obtenerprecioinv(inventario int)
-  RETURNS TABLE(codigo int, cant numeric) AS
+  RETURNS TABLE(codigo int, cant numeric, tipo varchar, est boolean) AS
 $BODY$
 	BEGIN
 		RETURN QUERY
 			SELECT 
-				p.id, p.cantidad
+				p.id, p.cantidad, p.tipo, p.estado
 			FROM
 				precios as p
 			WHERE 
@@ -517,6 +575,7 @@ $BODY$
 
 select * from obtenerimagen(1);
 
+
 CREATE OR REPLACE FUNCTION public.registrarinventario( 
 	articulo varchar,
 	decrip text, 
@@ -527,7 +586,8 @@ CREATE OR REPLACE FUNCTION public.registrarinventario(
 	stckmax int, 
 	vencimiento date,
 	invprecios json,
-	imagen text) RETURNS void AS
+	imagen text,
+	compatibles json) RETURNS void AS
 $BODY$
 	DECLARE 
 		idatr int;
@@ -538,7 +598,6 @@ $BODY$
 		VALUES
 			($1, $2)
 		RETURNING id INTO idatr;
-
 		
 		INSERT INTO
 			inventario(idarticulo, idunidad, idcategoria, idbodega, stockmin, stockmax, fechavencimiento)
@@ -559,6 +618,16 @@ $BODY$
 				imagenes(url, idinventario)
 			VALUES
 				($10, idinv);
+		END IF;
+
+		IF $11 IS NOT NULL THEN
+			INSERT INTO
+				compatibles(idinventario, idcompatible)
+			SELECT
+				idinv, *
+			FROM
+				json_to_recordset($11)
+				AS tb(codcomp int);
 		END IF;
 	END
 $BODY$
@@ -618,6 +687,8 @@ $BODY$
 
 select * from obtenerunidades();
 
+DROP FUNCTION editarinventario(varchar,text,int,int,int,int,int,date,json,text,int);
+
 CREATE OR REPLACE FUNCTION public.editarinventario( 
 	articulo varchar,
 	decrip text, 
@@ -629,7 +700,8 @@ CREATE OR REPLACE FUNCTION public.editarinventario(
 	vencimiento date,
 	invprecios json,
 	imagen text,
-	codinv int) RETURNS void AS
+	codinv int,
+	compatibles json) RETURNS void AS
 $BODY$
 	DECLARE 
 		idatr int;
@@ -676,6 +748,27 @@ $BODY$
 				imagenes(url, idinventario)
 			VALUES
 				($10, $11);
+		END IF;
+
+		IF $12 IS NOT NULL THEN
+			UPDATE
+				compatibles c
+			SET
+				idcompatible = tb.codcomp,
+				estado = tb.est
+			FROM
+				json_to_recordset($12)
+				AS tb(codcomp int, est boolean)
+			WHERE
+				idinventario = $11;
+		ELSE
+			INSERT INTO
+				compatibles(idinventario, idcompatible)
+			SELECT
+				$11, *
+			FROM
+				json_to_recordset($12)
+				AS tb(codcomp int);
 		END IF;
 	END
 $BODY$
@@ -724,7 +817,14 @@ $BODY$
 		SET
 			estado = false
 		WHERE
-			idinventario = $1;		
+			idinventario = $1;
+
+		UPDATE
+			compatibles c
+		SET
+			estado = false
+		WHERE
+			idinventario = $1;
 	END
 $BODY$
   LANGUAGE plpgsql;
@@ -736,7 +836,10 @@ CREATE OR REPLACE FUNCTION public.registrarventa(
 	camb numeric,
 	comentario text,
 	ltr text,
-	detalles json
+	detalles json, 
+	subtot numeric, 
+	iva numeric,
+	nfact varchar
     )
   RETURNS void AS
 $BODY$
@@ -744,9 +847,9 @@ $BODY$
 		codventa bigint;
 	BEGIN
 		INSERT INTO
-			ventas(fecha, total, cambio, observacion, letra, idempleado, idcliente)
+			ventas(fecha, total, cambio, observacion, letra, idempleado, idcliente, subtotal, iva, nfactura)
 		VALUES
-			(NOW(), $3, $4, $5, $6, $2, $1)
+			(NOW(), $3, $4, $5, $6, $2, $1, $8, $9, $10)
 		RETURNING
 			id INTO codventa;
 		
@@ -775,13 +878,13 @@ $BODY$
 
 DROP FUNCTION public.obtenerproveedores();
 CREATE OR REPLACE FUNCTION public.obtenerproveedores()
-  RETURNS TABLE(cod int, nombre character varying, represent varchar, nrc varchar, direccion text, depto int, telefono varchar, celular varchar, email character varying, website character varying, est boolean) AS
+  RETURNS TABLE(cod int, nombre character varying, represent varchar, nrc varchar, direccion text, nit varchar, telefono varchar, celular varchar, email character varying, website character varying, est boolean) AS
 $BODY$
 	BEGIN
 		RETURN QUERY
 			SELECT
 				prov.id, prov.nombre, prov.representante, prov.rfc, prov.direccion,
-				prov.iddepartamento, prov.telefono, prov.celular, prov.email, prov.sitioweb, prov.estado
+				prov.nit, prov.telefono, prov.celular, prov.email, prov.sitioweb, prov.estado
 			FROM
 				proveedores as prov;
 	END
@@ -805,14 +908,15 @@ $BODY$
 
 select * from obtenerdepartamento(1);
 
+DROP FUNCTION public.obtenerproveedor(int);
 CREATE OR REPLACE FUNCTION public.obtenerproveedor(codigo int)
-  RETURNS TABLE(cod int, nombre character varying, represent varchar, nrc varchar, direccion text, depto int, telefono varchar, celular varchar, email character varying, website character varying, est boolean) AS
+  RETURNS TABLE(cod int, nombre character varying, represent varchar, nrc varchar, direccion text, nit varchar, telefono varchar, celular varchar, email character varying, website character varying, est boolean) AS
 $BODY$
 	BEGIN
 		RETURN QUERY
 			SELECT
 				prov.id, prov.nombre, prov.representante, prov.rfc, prov.direccion,
-				prov.iddepartamento, prov.telefono, prov.celular, prov.email, prov.sitioweb, prov.estado
+				prov.nit, prov.telefono, prov.celular, prov.email, prov.sitioweb, prov.estado
 			FROM
 				proveedores as prov
 			WHERE
@@ -828,7 +932,7 @@ CREATE OR REPLACE FUNCTION public.registrarproveedor(
 	represent varchar, 
 	nrc varchar, 
 	direccion text, 
-	depto int, 
+	nit varchar, 
 	telefono varchar, 
 	celular varchar, 
 	email character varying, 
@@ -837,7 +941,7 @@ CREATE OR REPLACE FUNCTION public.registrarproveedor(
 $BODY$
 	BEGIN
 		INSERT INTO
-			proveedores(nombre, representante, rfc, direccion, iddepartamento, telefono, celular, email, sitioweb)
+			proveedores(nombre, representante, rfc, direccion, nit, telefono, celular, email, sitioweb)
 		VALUES
 			($1, $2, $3, $4, $5, $6, $7, $8, $9);
 	END
@@ -845,11 +949,11 @@ $BODY$
   LANGUAGE plpgsql;
 
 select registrarproveedor(
-	'Bayer',
-	'Juan Perez',
+	'Bayer 2',
+	'Juan Perez ',
 	'11',
 	'Por ahi',
-	2,
+	'1234-567891-234-5',
 	'1234-6789',
 	'7235-7896',
 	null,
@@ -861,7 +965,7 @@ CREATE OR REPLACE FUNCTION public.editarproveedor(
 	represent varchar, 
 	nrc varchar, 
 	direccion text, 
-	depto int, 
+	nit varchar, 
 	telefono varchar, 
 	celular varchar, 
 	email character varying, 
@@ -873,7 +977,7 @@ $BODY$
 		UPDATE
 			proveedores p
 		SET
-			nombre = $1, representante = $2, rfc = $3, direccion = $4, iddepartamento = $5, 
+			nombre = $1, representante = $2, rfc = $3, direccion = $4, nit = $5, 
 			telefono = $6, celular = $7, email = $8, sitioweb = $9
 		WHERE
 			id = $10;
@@ -886,12 +990,12 @@ select editarproveedor(
 	'Juan Perez',
 	'11',
 	'Por ahi',
-	2,
+	'1234-567891-234-6',
 	'1234-6789',
 	'7235-7896',
 	'bayer@organizacion.com',
 	'www.bayer.com',
-	1
+	2
 );
 
 CREATE OR REPLACE FUNCTION public.eliminarproveedor(cod int)
@@ -909,3 +1013,101 @@ $BODY$
   LANGUAGE plpgsql;
 
 select eliminarproveedor(1);
+
+DROP FUNCTION obtenerdetallesventa(bigint);
+CREATE OR REPLACE FUNCTION public.obtenerdetallesventa(IN cod bigint)
+  RETURNS TABLE(codinv int, cant numeric, unidad int, precio numeric, imp numeric, descpor numeric) AS
+$BODY$
+
+	begin
+		return QUERY
+			select 
+				dtv.idinventario, dtv.cantidad, dtv.idunidad, dtv.preciounitario, dtv.importe, dtv.descporcentaje 
+			from
+				detalleventas as dtv
+			where 
+				dtv.idventa = $1;
+	end
+
+$BODY$
+  LANGUAGE plpgsql;
+
+select * from obtenerdetallesventa(3);
+
+CREATE OR REPLACE FUNCTION public.registrarcompra(
+	numfact varchar,
+	descrip text,
+	tot numeric,
+	empleado int,
+	proveedor int,
+	detalles json
+    )
+  RETURNS void AS
+$BODY$
+	DECLARE
+		codcompra bigint;
+	BEGIN
+		INSERT INTO
+			compras(nfactura, fecha, descripcion, total, idempleado, idproveedor)
+		VALUES
+			($1, NOW(), $2, $3, $4, $5)
+		RETURNING
+			id INTO codcompra;
+		
+		INSERT INTO
+			detallecompras(idcompra, idinventario, cantidad, idunidad, preciounitario, importe)			
+		SELECT
+			codcompra, *
+		FROM
+			json_to_recordset($6) 
+			as tbl(idinv int, cant numeric, unidad int, precio numeric, imp numeric);
+
+		UPDATE
+			inventario i
+		SET
+			stock = stock + tbl.cant
+		FROM
+			json_to_recordset($6) 
+			as tbl(idinv int, cant numeric)
+		WHERE
+			id = tbl.idinv;
+		
+	END
+
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION public.obtenerdetallescompra(IN cod bigint)
+  RETURNS TABLE(codinv int, cant numeric, unidad int, precio numeric, imp numeric) AS
+$BODY$
+
+	begin
+		return QUERY
+			select 
+				dtc.idinventario, dtc.cantidad, dtc.idunidad, dtc.preciounitario, dtc.importe 
+			from
+				detallecompras as dtc
+			where 
+				dtc.idcompra = $1;
+	end
+
+$BODY$
+  LANGUAGE plpgsql;
+
+select * from obtenerdetallescompra(2);
+
+CREATE OR REPLACE FUNCTION public.editarstockinventario(cod int, stck numeric)
+  RETURNS void AS 
+$BODY$
+	BEGIN
+		UPDATE
+			inventario
+		SET
+			stock = $2
+		WHERE
+			id = $1;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+select editarstockinventario(7, 10.00);
