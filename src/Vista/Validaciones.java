@@ -381,6 +381,13 @@ public class Validaciones {
         });
     }
     
+    public void cboCategoria2(JComboBox cbo, List<Categoria> pLista){
+        cbo.addItem(new Categoria(0, "Todas", true));
+        pLista.stream().forEach(datos -> {
+            cbo.addItem(datos);
+        });
+    }
+    
     public void cboBodega(JComboBox cbo, List<Bodega> pLista){
         pLista.stream().forEach(datos -> {
             cbo.addItem(datos);

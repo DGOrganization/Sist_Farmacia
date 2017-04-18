@@ -5,14 +5,18 @@
  */
 package Vista;
 import configuracion.Gestionar;
+import controlador.Categoria_controlador;
 import controlador.Inventario_controlador;
+import entidades.Categoria;
 import entidades.Inventario;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -30,12 +34,16 @@ public class frmProducto extends javax.swing.JInternalFrame {
      */
     public frmProducto() {
         initComponents();
-
         inventarioList = new ArrayList<>();
         controlador = new Inventario_controlador();
         inventarioList = controlador.Obtener();
         cargarDatos(inventarioList);
         changeText();
+        chkExistencias.add(jrbExistencia1);
+        chkExistencias.add(jrbExistencia2);
+        chkExistencias.add(jrbTodos);
+        new Validaciones().cboCategoria2(cboCategorias, new Categoria_controlador().Obtener());
+        jrbTodos.setSelected(true);
     }
 
     private void nombre_personaKeyPressed(java.awt.event.KeyEvent evt) { 
@@ -65,23 +73,31 @@ public class frmProducto extends javax.swing.JInternalFrame {
     }
 
     private void buscarTXT() {
+        Categoria cat = ((Categoria) cboCategorias.getSelectedItem());
         List<Inventario> encontrado = inventarioList.stream().filter(
                 datos -> {
-                    if(chkExistencia1.isSelected()){
+                    if(jrbExistencia1.isSelected() == true && jrbExistencia2.isSelected() == false){
                         return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase()) 
                                 && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) > 0 ;
-                    } else {
+                    } else if(jrbExistencia1.isSelected() == false && jrbExistencia2.isSelected() == true) {
                         return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase()) 
-                                && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) < 1 ;
+                                && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) < 0;
+                    } else {
+                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase());
                     }
-                    
                 }
         ).collect(Collectors.toList());
-        if(txtBusqueda.getText().isEmpty()){
-            cargarDatos(inventarioList);
-        } else {
-            cargarDatos(encontrado);
-        }
+        encontrado = encontrado.stream().filter(
+                datos -> {
+                    if(cat.getId() > 0){
+                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase()) 
+                                && datos.getCategoria().getId() == cat.getId() ;
+                    } else {
+                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase());
+                    }
+                }                
+        ).collect(Collectors.toList());
+        cargarDatos(encontrado);
     }
     
     private void changeText(){
@@ -111,6 +127,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        chkExistencias = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -122,10 +139,12 @@ public class frmProducto extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtProductos = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
-        chkCategorias = new javax.swing.JCheckBox();
-        chkExistencia1 = new javax.swing.JCheckBox();
-        chkExistenciaNo = new javax.swing.JCheckBox();
         jSeparator2 = new javax.swing.JSeparator();
+        jrbExistencia1 = new javax.swing.JRadioButton();
+        jrbExistencia2 = new javax.swing.JRadioButton();
+        cboCategorias = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jrbTodos = new javax.swing.JRadioButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -213,37 +232,62 @@ public class frmProducto extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jtProductos);
 
-        chkCategorias.setText("Todas las Categorias");
-
-        chkExistencia1.setText("Articulos con Existencia");
-        chkExistencia1.addItemListener(new java.awt.event.ItemListener() {
+        jrbExistencia1.setText("Articulo en existencia");
+        jrbExistencia1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkExistencia1ItemStateChanged(evt);
+                jrbExistencia1ItemStateChanged(evt);
             }
         });
 
-        chkExistenciaNo.setText("Articulos sin Existencia");
+        jrbExistencia2.setText("Articulo sin existencia");
+        jrbExistencia2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jrbExistencia2ItemStateChanged(evt);
+            }
+        });
+
+        cboCategorias.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboCategoriasItemStateChanged(evt);
+            }
+        });
+
+        jLabel2.setText("Categorias");
+
+        jrbTodos.setText("Todos");
+        jrbTodos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jrbTodosItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator2)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtBusqueda))
+                            .addComponent(jSeparator1)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addGap(27, 27, 27)
+                        .addComponent(cboCategorias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBusqueda))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(chkCategorias)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(chkExistencia1)
-                        .addGap(102, 102, 102)
-                        .addComponent(chkExistenciaNo, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator1))
+                        .addComponent(jrbTodos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jrbExistencia1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jrbExistencia2)))
                 .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
@@ -257,13 +301,15 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chkCategorias)
-                    .addComponent(chkExistenciaNo)
-                    .addComponent(chkExistencia1))
+                    .addComponent(jrbExistencia1)
+                    .addComponent(jrbExistencia2)
+                    .addComponent(cboCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jrbTodos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -370,10 +416,25 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 
     }//GEN-LAST:event_btnStockActionPerformed
 
-    private void chkExistencia1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkExistencia1ItemStateChanged
+    private void jrbExistencia1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jrbExistencia1ItemStateChanged
         // TODO add your handling code here:
         buscarTXT();
-    }//GEN-LAST:event_chkExistencia1ItemStateChanged
+    }//GEN-LAST:event_jrbExistencia1ItemStateChanged
+
+    private void cboCategoriasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboCategoriasItemStateChanged
+        // TODO add your handling code here:
+        buscarTXT();
+    }//GEN-LAST:event_cboCategoriasItemStateChanged
+
+    private void jrbExistencia2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jrbExistencia2ItemStateChanged
+        // TODO add your handling code here:
+        buscarTXT();
+    }//GEN-LAST:event_jrbExistencia2ItemStateChanged
+
+    private void jrbTodosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jrbTodosItemStateChanged
+        // TODO add your handling code here:
+        buscarTXT();
+    }//GEN-LAST:event_jrbTodosItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -381,15 +442,18 @@ public class frmProducto extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnStock;
-    private javax.swing.JCheckBox chkCategorias;
-    private javax.swing.JCheckBox chkExistencia1;
-    private javax.swing.JCheckBox chkExistenciaNo;
+    private javax.swing.JComboBox<String> cboCategorias;
+    private javax.swing.ButtonGroup chkExistencias;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JRadioButton jrbExistencia1;
+    private javax.swing.JRadioButton jrbExistencia2;
+    private javax.swing.JRadioButton jrbTodos;
     private javax.swing.JTable jtProductos;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables

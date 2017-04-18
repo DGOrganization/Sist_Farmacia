@@ -7,15 +7,14 @@ El margen de utilidad es opcional dejarlo, pueden colocarse los precios manuales
 3.)Habilitar la opcion Compatibles ok
 4.)Al dar editar sino est� seleccionado un producto que mande un mensaje. ok
 5.)En la tabla donde se muestran los productos, habilitar el campo stock y Precio. ok
-6.)Funcion de los cheks de filtro ¿pero los filtros no tienen subfiltro para su funcionamiento?
-Formulario Clientes
-7.)Generar un c�digo para cada producto ¿En cliente codigo de producto?
+6.)Funcion de los cheks de filtro ok
+7.)Generar un c�digo para cada producto ok
 ---------
 1.)Agregu� el campo de NRC. ok
 
 Formulario Ventas
 ---------
-1.) Al seleccionar Ticket desabilitar el campo N� de Factura okj
+1.) Al seleccionar Ticket desabilitar el campo N� de Factura ok
 2.) Al seleccionar Credito fiscal se debe calcular el iva que se ha aplicado y mostrarlo en el textbox. ok
 3.) En el precio mostrar si es Normal o Mayoreo(mas detallado) ok
 4.) Validar, s�lo numeros donde se requiera 

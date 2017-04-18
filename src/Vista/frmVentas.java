@@ -173,7 +173,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         txtCliente = new javax.swing.JTextField();
         lblProducto = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        lblcodigo = new javax.swing.JLabel();
+        lblCodigo = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -409,9 +409,9 @@ public class frmVentas extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText("Descripcion: ");
 
-        lblcodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblcodigo.setForeground(new java.awt.Color(0, 102, 255));
-        lblcodigo.setText("<codigo>");
+        lblCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblCodigo.setForeground(new java.awt.Color(0, 102, 255));
+        lblCodigo.setText("<codigo>");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Código");
@@ -512,7 +512,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(34, 34, 34)
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -566,7 +566,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
                         .addGap(1, 1, 1)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(lblcodigo)
+                            .addComponent(lblCodigo)
                             .addComponent(lblProducto)
                             .addComponent(jLabel8))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -706,6 +706,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
                             lblTotal.setText("0.00");
                             lblImagen.setIcon(null);
                             txtNFactura.setText("");
+                            lblCodigo.setText("");
                         }
                     }
                 }
@@ -732,6 +733,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
             Inventario inv = (Inventario) jTableDetalleVenta.getValueAt(fila, 0);
             setImagen(inv.getImagen().getUrl());
             lblProducto.setText(inv.getArticulo().toString());
+            lblCodigo.setText(inv.getCodigoInterno());
             int columna = jTableDetalleVenta.getSelectedColumn();
             if (jTableDetalleVenta.getValueAt(fila, columna) instanceof JButton) {
                 int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
@@ -863,12 +865,12 @@ public class frmVentas extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTable jTableDetalleVenta;
+    private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblReloj;
     private javax.swing.JLabel lblSubTotal;
     private javax.swing.JLabel lblTotal;
-    private javax.swing.JLabel lblcodigo;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtComentarios;
     private javax.swing.JTextField txtDescuento;

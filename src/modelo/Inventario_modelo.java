@@ -11,7 +11,6 @@ import entidades.Articulo;
 import entidades.Bodega;
 import entidades.Categoria;
 import entidades.Unidad;
-import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,6 +50,7 @@ public class Inventario_modelo {
                         inventario.setBodega(new Bodega_modelo().ListarBodega(new Bodega(resultado.getInt("bodega"))));
                         inventario.setImagen(new Imagen_modelo().ListarImagen(inventario));
                         inventario.setCompatibles(new Compatible_modelo().ListarCompatibles(inventario));
+                        inventario.setCodigoInterno(resultado.getString("intcod"));
                         lista.add(inventario);
                     }
                 }
@@ -93,6 +93,7 @@ public class Inventario_modelo {
                         inventario.setBodega(new Bodega_modelo().ListarBodega(new Bodega(resultado.getInt("bodega"))));
                         inventario.setImagen(new Imagen_modelo().ListarImagen(inventario));
                         inventario.setCompatibles(new Compatible_modelo().ListarCompatibles(inventario));
+                        inventario.setCodigoInterno(resultado.getString("intcod"));
                     }
                 }
             }

@@ -27,6 +27,7 @@ public class Inventario {
     private java.sql.Date _vencimiento;
     private Imagen _imagen;
     private List<Inventario> _compatibles;
+    private String _codigoInterno;
     private boolean _estado;
 
     public int getId() {
@@ -121,16 +122,24 @@ public class Inventario {
         this._vencimiento = new java.sql.Date(_vencimiento.getTime());
     }
     
-    public boolean isEstado() {
-        return _estado;
-    }
-
     public List<Inventario> getCompatibles() {
         return _compatibles;
     }
 
     public void setCompatibles(List<Inventario> _compatibles) {
         this._compatibles = _compatibles;
+    }
+
+    public String getCodigoInterno() {
+        return _codigoInterno;
+    }
+
+    public void setCodigoInterno(String _codigoInterno) {
+        this._codigoInterno = _codigoInterno;
+    }
+    
+    public boolean isEstado() {
+        return _estado;
     }
     
     public void setEstado(boolean _estado) {
@@ -162,6 +171,5 @@ public class Inventario {
     @Override
     public String toString() {
         return _categoria + " " + _articulo;
-    }
-    
+    }    
 }

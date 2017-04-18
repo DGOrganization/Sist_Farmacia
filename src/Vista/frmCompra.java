@@ -119,7 +119,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         lblProducto = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        lblcodigo = new javax.swing.JLabel();
+        lblCodigo = new javax.swing.JLabel();
         cboUnidadMedida = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -223,9 +223,9 @@ public class frmCompra extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Código");
 
-        lblcodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblcodigo.setForeground(new java.awt.Color(0, 102, 255));
-        lblcodigo.setText("<codigo>");
+        lblCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblCodigo.setForeground(new java.awt.Color(0, 102, 255));
+        lblCodigo.setText("<codigo>");
 
         jLabel12.setText("Unidad de medida:");
 
@@ -242,7 +242,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpProductoLayout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addComponent(lblcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
@@ -263,7 +263,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(lblcodigo)
+                    .addComponent(lblCodigo)
                     .addComponent(lblProducto)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -421,6 +421,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
         if(fila > -1){
             DefaultTableModel modelo = (DefaultTableModel) jTableDetalleCompra.getModel();
             int columna = jTableDetalleCompra.getSelectedColumn();
+            Inventario inv = (Inventario) jTableDetalleCompra.getValueAt(fila, 0);
             switch (columna) {
                 case 1:
                     {
@@ -432,7 +433,6 @@ public class frmCompra extends javax.swing.JInternalFrame {
                     }
                 case 2:
                     {
-                        Inventario inv = (Inventario) modelo.getValueAt(fila, 0);
                         JComboBox cbo = new JComboBox(inv.getPrecio().toArray());
                         JOptionPane.showMessageDialog(this, cbo, "Selecciona el precio con el cual se comprara", JOptionPane.INFORMATION_MESSAGE);
                         BigDecimal precio = new BigDecimal(cbo.getSelectedItem().toString());
@@ -454,7 +454,8 @@ public class frmCompra extends javax.swing.JInternalFrame {
                     break;
                 }
                 default:
-                    lblProducto.setText(jTableDetalleCompra.getValueAt(fila, 0).toString());
+                    lblProducto.setText(inv.toString());
+                    lblCodigo.setText(inv.getCodigoInterno());
                     break;
             }
             jTableDetalleCompra.setModel(modelo);
@@ -492,6 +493,8 @@ public class frmCompra extends javax.swing.JInternalFrame {
                     txtProveedor.setText("");
                     txtNFactura.setText("");
                     lblTotal.setText("0.00");
+                    lblProducto.setText("");
+                    lblCodigo.setText("");
                     prov_actual = new Proveedor();
             }
         } else if(prov_actual == null){
@@ -536,9 +539,9 @@ public class frmCompra extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTableDetalleCompra;
     private javax.swing.JPanel jpProducto;
+    private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblTotal;
-    private javax.swing.JLabel lblcodigo;
     private javax.swing.JFormattedTextField txtFecha;
     private javax.swing.JTextField txtNFactura;
     private javax.swing.JTextField txtProveedor;
