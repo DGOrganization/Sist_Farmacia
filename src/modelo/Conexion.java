@@ -9,6 +9,8 @@ import configuracion.Gestionar;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -36,21 +38,31 @@ public class Conexion {
     public boolean Conectar(){
         boolean exito = false;
         try{
-            Class.forName("org.postgresql.Driver");
+            if(conn == null || conn.isClosed()){
+                Class.forName("org.postgresql.Driver").newInstance();
+            }
             conn = DriverManager.getConnection(url, usuario, contraseña);
             System.out.println("Conexion con la base de datos " + base + " ha sido exitosa");
             exito = true;
         }catch(ClassNotFoundException | SQLException ex){
               JOptionPane.showMessageDialog(null, 
-                    "Ha ocurrido un error al conectar a la base de datos: \n" + ex.getMessage() + "\n, Por favor contacte al desarrollador", 
+                    "Ha ocurrido un error al conectar a la base de datos: \n" + ex.getMessage() + "\n.Por favor contacte al desarrollador", 
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return exito;
     }
     
     public void Desconectar(){
-        conn = null;
+        if(conn != null){
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         System.out.println("Se ha desconectado de la base de datos " + base);
     }
 }
