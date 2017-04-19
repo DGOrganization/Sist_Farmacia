@@ -236,11 +236,13 @@ public class Inventario_modelo {
                         compatible.put("est", datos.isEstado());
                         compatibles.put(compatible);
                     });
+                    System.out.println("Compatibles == " + compatibles.toString());
                     PGobject invcompatible = new PGobject();
                     invcompatible.setType("json");
                     invcompatible.setValue(compatibles.toString());
                     cmd.setObject(12, invcompatible);
                 }
+                System.out.println("Query == " + cmd.toString());
                 exito = cmd.execute();
             }
         } catch (SQLException ex) {

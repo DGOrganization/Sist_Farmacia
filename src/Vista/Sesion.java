@@ -165,11 +165,11 @@ public class Sesion extends javax.swing.JFrame {
         usuario.setPassword(String.valueOf(txtPassword.getPassword()));
         if(controlador.Login(usuario)){
             usuario = controlador.Obtener(usuario);
-            frmMenuPrincipal.usuarioActual = usuario;
-            frmMenuPrincipal frm = new frmMenuPrincipal();
+            frmMenu.usuarioActual = usuario;
+            frmMenu frm = new frmMenu();
             JOptionPane.showMessageDialog(
                     this, 
-                    "Bienvenido al sistema " + frmMenuPrincipal.usuarioActual.getEmpleado().toString(), 
+                    "Bienvenido al sistema " + frmMenu.usuarioActual.getEmpleado().toString(), 
                     new configuracion.Gestionar().Leer("Empresa","nombre"), 
                     JOptionPane.INFORMATION_MESSAGE);
             frm.setVisible(true);

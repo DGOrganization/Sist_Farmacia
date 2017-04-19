@@ -6,10 +6,16 @@
 package modelo;
 
 import configuracion.Gestionar;
+import controlador.Cliente_controlador;
+import entidades.Cliente;
+import entidades.Empleado;
 import entidades.Venta;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -85,6 +91,47 @@ public class Venta_modelo {
             conn.Desconectar();
         }
         return exito;
+    }
+    
+    public List<Venta> ListarVentas(){
+        List<Venta> lista = new ArrayList<>();
+        Conexion conn = new Conexion();
+        try{
+            if(conn.Conectar()){
+                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerventas() }");
+                if(cmd.execute()){
+                    ResultSet resultado = cmd.getResultSet();
+                    while(resultado.next()){
+                        Venta venta = new Venta();
+                        venta.setId(resultado.getLong("cod"));
+                        venta.setCliente(new Cliente_controlador().Obtener(new Cliente(resultado.getInt("cliente"))));
+                        venta.setEmpleado(new Empleado_modelo().ListarEmpleado(new Empleado(resultado.getInt("empleado"))));
+                        venta.setTotal(resultado.getBigDecimal("tot"));
+                        venta.setCambio(resultado.getBigDecimal("camb"));
+                        venta.setObservacion(resultado.getObject("comentario") == null ? "No hay observaciones" : resultado.getString("comentario"));
+                        venta.setLetras(resultado.getString("ltr"));
+                        venta.setSubtotal(resultado.getBigDecimal("subtot"));
+                        venta.setIva(resultado.getBigDecimal("iva"));
+                        venta.setNFactura(resultado.getObject("nfact") == null ? "Ticket" : resultado.getString("nfact"));
+                        venta.setFecha(resultado.getTimestamp("fecha"));
+                        venta.setEstado(resultado.getBoolean("estado"));
+                        venta.setDetalle(new DetalleVenta_modelo().ObtenerDetalleVenta(venta));
+                        lista.add(venta);
+                    }
+                }
+            }
+        } catch (SQLException ex){
+             JOptionPane.showMessageDialog(
+                    null,
+                    "No se han cargado datos debido al error: \n" + ex.getMessage()
+                    + "\nFavor contacte al desarrollador",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } finally {
+            conn.Desconectar();
+        }
+        return lista;
     }
     
 }

@@ -6,6 +6,8 @@
 package controlador;
 
 import entidades.Venta;
+import java.util.Collections;
+import java.util.List;
 import modelo.Venta_modelo;
 
 /**
@@ -16,5 +18,13 @@ public class Venta_controlador {
     
     public boolean Registrar(Venta pVenta){
         return new Venta_modelo().Registrar(pVenta);
+    }
+    
+    public List<Venta> Obtener(){
+        List<Venta> lista = new Venta_modelo().ListarVentas();
+        Collections.sort(lista, (Venta v1, Venta v2) -> {
+            return v2.getFecha().compareTo(v1.getFecha());
+        });
+        return lista;
     }
 }

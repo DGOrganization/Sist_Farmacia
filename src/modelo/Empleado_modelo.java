@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class Empleado_modelo {
     
-    public Empleado Empleado(Empleado pEmpleado){
+    public Empleado ListarEmpleado(Empleado pEmpleado){
         Empleado empleado = new Empleado();
         Conexion conn = new Conexion();
         try{

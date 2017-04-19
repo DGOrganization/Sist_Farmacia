@@ -434,13 +434,14 @@ CREATE OR REPLACE FUNCTION public.obtenerinventarios()
 	stckmin int, 
 	stckmax int, 
 	vencimiento date, 
-	est boolean) AS
+	est boolean,
+	intcod varchar) AS
 $BODY$
 	BEGIN
 		RETURN QUERY
 			SELECT 
 				i.id, i.idarticulo, i.idunidad, i.idcategoria, i.idbodega, i.stock, i.stockmin, 
-				i.stockmax, i.fechavencimiento,	i.estado
+				i.stockmax, i.fechavencimiento,	i.estado, i.internalcod
 			FROM
 				inventario as i;
 	END
@@ -449,6 +450,7 @@ $BODY$
 
 select * from obtenerinventarios();
 
+DROP FUNCTION public.obtenerinventario(int);
 CREATE OR REPLACE FUNCTION public.obtenerinventario(cod int)
   RETURNS TABLE(
 	codigo int, 
@@ -460,13 +462,14 @@ CREATE OR REPLACE FUNCTION public.obtenerinventario(cod int)
 	stckmin int, 
 	stckmax int, 
 	vencimiento date, 
-	est boolean) AS
+	est boolean,
+	intcod varchar) AS
 $BODY$
 	BEGIN
 		RETURN QUERY
 			SELECT 
 				i.id, i.idarticulo, i.idunidad, i.idcategoria, i.idbodega, i.stock, i.stockmin, 
-				i.stockmax, i.fechavencimiento,	i.estado
+				i.stockmax, i.fechavencimiento,	i.estado, i.internalcod
 			FROM
 				inventario as i
 			WHERE
@@ -493,17 +496,17 @@ $BODY$
 	BEGIN
 		RETURN QUERY
 			SELECT 
-				i.id, i.idarticulo, i.idunidad, i.idcategoria, i.idbodega, i.stock, i.stockmin, 
+				c.idcompatible, i.idarticulo, i.idunidad, i.idcategoria, i.idbodega, i.stock, i.stockmin, 
 				i.stockmax, i.fechavencimiento,	c.estado
 			FROM
-				inventario as i inner join compatibles as c on c.idinventario = i.id
+				inventario as i inner join compatibles as c on c.idcompatible = i.id
 			WHERE
 				c.idinventario = $1;
 	END
 $BODY$
   LANGUAGE plpgsql;
 
-select * from obtenercompatibles(2);
+select * from obtenercompatibles(7);
 
 
 DROP FUNCTION public.obtenernivel(integer);
@@ -592,17 +595,29 @@ $BODY$
 	DECLARE 
 		idatr int;
 		idinv int;
+		codgen1 varchar;
 	BEGIN
 		INSERT INTO
 			articulos(nombre, descripcion)
 		VALUES
 			($1, $2)
 		RETURNING id INTO idatr;
+
+		SELECT 
+			concat(substr(internalcod, 1, 1), LPAD((max(substr(internalcod,2, length(internalcod)))::integer + 1)::text, 4, '0')) 
+			INTO codgen1
+		FROM 
+			inventario
+		WHERE
+			substr(internalcod,1,1) = substr($1, 1, 1)
+		GROUP BY 
+			substr(internalcod,1,1);
+		
 		
 		INSERT INTO
-			inventario(idarticulo, idunidad, idcategoria, idbodega, stockmin, stockmax, fechavencimiento)
+			inventario(idarticulo, idunidad, idcategoria, idbodega, stockmin, stockmax, fechavencimiento, internalcod)
 		VALUES
-			(idatr, $3, $4, $5, $6, $7, $8)
+			(idatr, $3, $4, $5, $6, $7, $8, codgen1)
 		RETURNING id INTO idinv;
 
 		INSERT INTO
@@ -634,7 +649,7 @@ $BODY$
   LANGUAGE plpgsql;
   
  SELECT registrarinventario(
-	'Metocarbamol',
+	'Metocarbamol 2',
 	'Para los dolores de musculo cotidiano',
 	1,
 	2,
@@ -643,7 +658,8 @@ $BODY$
 	500,
 	'2018-07-13',
 	'[{"cant":"2.50"}, {"cant":"3.50"}, {"cant":"4.50"}, {"cant":"5.50"}, {"cant":"6.50"}, {"cant":"7.50"}]',
-	''
+	null,
+	null
  );
 
  CREATE OR REPLACE FUNCTION public.obtenerbodegas()
@@ -706,6 +722,7 @@ $BODY$
 	DECLARE 
 		idatr int;
 		imgcount int = 0;
+		i json;
 	BEGIN
 
 		UPDATE
@@ -743,6 +760,7 @@ $BODY$
 				url = $10
 			WHERE
 				idinventario = $11;
+				
 		ELSIF $10 IS NOT NULL AND imgcount = 0 THEN
 			INSERT INTO
 				imagenes(url, idinventario)
@@ -750,45 +768,36 @@ $BODY$
 				($10, $11);
 		END IF;
 
-		IF $12 IS NOT NULL THEN
-			UPDATE
-				compatibles c
-			SET
-				idcompatible = tb.codcomp,
-				estado = tb.est
-			FROM
-				json_to_recordset($12)
-				AS tb(codcomp int, est boolean)
-			WHERE
-				idinventario = $11;
-		ELSE
-			INSERT INTO
-				compatibles(idinventario, idcompatible)
-			SELECT
-				$11, *
-			FROM
-				json_to_recordset($12)
-				AS tb(codcomp int);
-		END IF;
+		FOR i IN SELECT * FROM json_array_elements($12)
+		LOOP
+			IF (SELECT COUNT(*) FROM compatibles  where idinventario = $11 AND idcompatible = CAST(i->>'codcomp' as INT)) THEN
+				UPDATE
+					compatibles c
+				SET
+					estado = CAST(i->>'est' AS BOOLEAN)
+				WHERE
+					idinventario = $11 AND idcompatible = CAST(i->>'codcomp' as INT);
+			ELSE
+				INSERT INTO
+					compatibles(idinventario, idcompatible)
+				VALUES
+					($11, CAST(i->>'codcomp' as INT));
+			END IF;
+		END LOOP;
 	END
 $BODY$
   LANGUAGE plpgsql;
   
  SELECT editarinventario(
-	'Metocarbamol 500mg',
-	'Para los dolores muculares recurrentes',
-	1,
+	'Ibrupofeno MK II',
+	'Para dolores II',
+	1,3,2,10,1000,
+	'2050-04-15 -06',
+	'[{"idp":31,"cant":"0.25"},{"idp":32,"cant":"0.50"},{"idp":33,"cant":"0.75"},{"idp":34,"cant":"1.50"},{"idp":35,"cant":"1.25"},{"idp":36,"cant":"1.00"}]',
+	'C:\Users\dakrpastiursSennin\Documents\NetBeansProjects\Sist_Farmacia\Recursos\Productos\pregunta.PNG',
 	7,
-	2,
-	52,
-	5000,
-	'2018-07-27 -06',
-	'[{"idp":7,"cant":2.51},{"idp":8,"cant":3.51},{"idp":9,"cant":4.51},{"idp":10,"cant":5.51},{"idp":11,"cant":6.51},{"idp":12,"cant":7.51}]',
-	'C:\Users\dakrpastiursSennin\Documents\NetBeansProjects\Sist_Farmacia\Recursos\Productos\metocarbamol_750_mg_mk_tabs_-_caja_x_20_-_mckesson.jpg',
-	3
- );
+	'[{"codcomp":2,"est":true},{"codcomp":8,"est":true}]');
 
- 
 CREATE OR REPLACE FUNCTION public.eliminarinventario( 
 	codinv int) RETURNS void AS
 $BODY$
@@ -1111,3 +1120,35 @@ $BODY$
   LANGUAGE plpgsql;
 
 select editarstockinventario(7, 10.00);
+
+DROP FUNCTION obtenerventas();
+CREATE OR REPLACE FUNCTION public.obtenerventas() RETURNS TABLE(
+	cod bigint,
+	cliente int,
+	empleado int,
+	tot numeric,
+	camb numeric,
+	comentario text,
+	ltr text,
+	subtot numeric, 
+	iva numeric,
+	nfact varchar,
+	fecha timestamp,
+	estado boolean
+    )AS
+$BODY$	
+	BEGIN
+		RETURN QUERY
+			SELECT
+				v.id, v.idcliente, v.idempleado, v.total, v.cambio, v.observacion,
+				v.letra, v.subtotal, v.iva, v.nfactura, v.fecha, v.estado
+			FROM
+				ventas as v
+			ORDER BY
+				v.fecha DESC;
+	END
+
+$BODY$
+  LANGUAGE plpgsql;
+
+select * from obtenerventas();

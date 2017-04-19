@@ -75,6 +75,8 @@ public class frmNuevoVendedor extends javax.swing.JDialog {
 
         jLabel10.setText("Apellidos:");
 
+        jDateChooser1.setDateFormatString("dd-MM-yyyy");
+
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setText("Estado:");
 
