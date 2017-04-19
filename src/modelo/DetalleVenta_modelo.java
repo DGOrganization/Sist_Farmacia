@@ -39,7 +39,7 @@ public class DetalleVenta_modelo {
                         detalle.setUnidad(new Unidad_modelo().ListarUnidad(new Unidad(_resultado.getInt("unidad"))));
                         detalle.setPrecio(_resultado.getBigDecimal("precio"));
                         detalle.setImporte(_resultado.getBigDecimal("imp"));
-                        detalle.setDescuento(_resultado.getBigDecimal("descpor").intValueExact());
+                        detalle.setDescuento(Integer.parseInt(_resultado.getBigDecimal("descpor").toString()));
                         lista.add(detalle);
                     }
                 }

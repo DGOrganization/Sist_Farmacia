@@ -63,7 +63,7 @@ public class Usuario_modelo {
                     while(resultado.next()){
                         Usuario usuario = new Usuario();
                         usuario.setUsername(resultado.getString("nickname"));
-                        usuario.setEmpleado(new Empleado_modelo().ListarEmpleado(new Empleado(resultado.getInt("idempleado"))));
+                        usuario.setEmpleado(new Empleado_modelo().Empleado(new Empleado(resultado.getInt("idempleado"))));
                         usuario.setEstado(resultado.getBoolean("estado"));
                         lista.add(usuario);
                     }
@@ -94,7 +94,7 @@ public class Usuario_modelo {
                     ResultSet resultado = cmd.getResultSet();
                     while(resultado.next()){
                         usuario.setUsername(resultado.getString("nickname"));
-                        usuario.setEmpleado(new Empleado_modelo().ListarEmpleado(new Empleado(resultado.getInt("idempleado"))));
+                        usuario.setEmpleado(new Empleado_modelo().Empleado(new Empleado(resultado.getInt("idempleado"))));
                         usuario.setNivel(new Nivel_modelo().ListarNivel(new Nivel(resultado.getInt("idnivel")), true));
                         usuario.setEstado(resultado.getBoolean("estado"));
                     }

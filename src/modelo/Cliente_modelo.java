@@ -71,7 +71,7 @@ public class Cliente_modelo {
         try {
             if (conn.Conectar()) {
                 CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenercliente(?) }");
-                cmd.setInt(1, pCliente.getId());
+                cmd.setLong(1, pCliente.getId());
                 if (cmd.execute()) {
                     ResultSet resultado = cmd.getResultSet();
                     while (resultado.next()) {
