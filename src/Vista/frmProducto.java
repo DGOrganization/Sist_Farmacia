@@ -13,10 +13,8 @@ import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -56,7 +54,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
     }
     private void cargarDatos(List<Inventario> lista){
         String[] columnas = {"Producto", "Stock Actual", "Ubicacion"};
-        ControlesGenerales.reiniciarJTable(jtProductos);
+        ControlesGenerales.reiniciarJTable(jtInventario);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.stream().forEach(datos -> {
@@ -69,7 +67,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 modelo.addRow(nuevaFila);
             }
         });
-        jtProductos.setModel(modelo);
+        jtInventario.setModel(modelo);
     }
 
     private void buscarTXT() {
@@ -98,6 +96,9 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 }                
         ).collect(Collectors.toList());
         cargarDatos(encontrado);
+        if(jtInventario.getRowCount() == 1){
+            jtInventario.setRowSelectionInterval(0, 0);
+        }
     }
     
     private void changeText(){
@@ -137,7 +138,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtProductos = new javax.swing.JTable();
+        jtInventario = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jrbExistencia1 = new javax.swing.JRadioButton();
@@ -222,7 +223,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
-        jtProductos.setModel(new javax.swing.table.DefaultTableModel(
+        jtInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null}
             },
@@ -230,7 +231,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 "Producto", "stock", "Precio"
             }
         ));
-        jScrollPane1.setViewportView(jtProductos);
+        jScrollPane1.setViewportView(jtInventario);
 
         jrbExistencia1.setText("Articulo en existencia");
         jrbExistencia1.addItemListener(new java.awt.event.ItemListener() {
@@ -348,13 +349,13 @@ public class frmProducto extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        int fila = jtProductos.getSelectedRow();
+        int fila = jtInventario.getSelectedRow();
         if (fila > -1) {
-            if (jtProductos.getValueAt(fila, 0) instanceof Inventario) {
+            if (jtInventario.getValueAt(fila, 0) instanceof Inventario) {
                 int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
                         JOptionPane.YES_NO_OPTION);
                 if (respuesta == JOptionPane.YES_OPTION) {
-                    if (controlador.Eliminar(inventarioList.get(inventarioList.indexOf(jtProductos.getValueAt(fila, 0))))) {
+                    if (controlador.Eliminar(inventarioList.get(inventarioList.indexOf(jtInventario.getValueAt(fila, 0))))) {
                         JOptionPane.showMessageDialog(this,
                                 "El registro ha sido eliminado exitosamente",
                                 "Sistema de Ventas - Categoria",
@@ -376,9 +377,9 @@ public class frmProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
         frmNuevoProducto frm = new frmNuevoProducto((JFrame) f, true);
-        int fila = jtProductos.getSelectedRow();
+        int fila = jtInventario.getSelectedRow();
         if (fila > -1) {
-            frm.setInventario(inventarioList.get(inventarioList.indexOf(jtProductos.getValueAt(fila, 0))));
+            frm.setInventario(inventarioList.get(inventarioList.indexOf(jtInventario.getValueAt(fila, 0))));
             frm.setEditar(true);
             frm.setVisible(true);
             if (!frm.isVisible()) {
@@ -398,9 +399,9 @@ public class frmProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Frame frmP = JOptionPane.getFrameForComponent(this);
         frmAjustarInvent dialog = new frmAjustarInvent((JFrame)frmP, true);
-        int fila = jtProductos.getSelectedRow();
+        int fila = jtInventario.getSelectedRow();
         if (fila > -1) {
-            dialog.setInv(inventarioList.get(inventarioList.indexOf(jtProductos.getValueAt(fila, 0))));
+            dialog.setInv(inventarioList.get(inventarioList.indexOf(jtInventario.getValueAt(fila, 0))));
             dialog.setVisible(true);
             if (!dialog.isVisible()) {
                 inventarioList = controlador.Obtener();
@@ -453,7 +454,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton jrbExistencia1;
     private javax.swing.JRadioButton jrbExistencia2;
     private javax.swing.JRadioButton jrbTodos;
-    private javax.swing.JTable jtProductos;
+    private javax.swing.JTable jtInventario;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }

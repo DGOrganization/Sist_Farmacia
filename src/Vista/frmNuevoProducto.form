@@ -421,11 +421,11 @@
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                      <Component id="jTextField16" min="-2" pref="125" max="-2" attributes="0"/>
+                                      <Component id="txtMargen1" min="-2" pref="125" max="-2" attributes="0"/>
                                       <EmptySpace min="25" pref="25" max="-2" attributes="0"/>
-                                      <Component id="jTextField15" min="-2" pref="125" max="-2" attributes="0"/>
+                                      <Component id="txtMargen2" min="-2" pref="125" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                                      <Component id="jTextField14" pref="121" max="32767" attributes="0"/>
+                                      <Component id="txtMargen3" pref="121" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -465,14 +465,14 @@
                               <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jTextField16" max="32767" attributes="0"/>
-                                  <Component id="jTextField15" max="32767" attributes="0"/>
+                                  <Component id="txtMargen1" max="32767" attributes="0"/>
+                                  <Component id="txtMargen2" max="32767" attributes="0"/>
                                   <Component id="jLabel24" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Component id="jTextField14" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtMargen3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -489,11 +489,11 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JTextField" name="jTextField14">
+            <Component class="javax.swing.JTextField" name="txtMargen3">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField15">
+            <Component class="javax.swing.JTextField" name="txtMargen2">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField16">
+            <Component class="javax.swing.JTextField" name="txtMargen1">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel24">
               <Properties>
@@ -825,7 +825,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jLabel14" max="32767" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnQuitar" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -839,7 +839,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnBuscarCompatible" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel14" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnQuitar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="241" max="-2" attributes="0"/>
@@ -869,7 +869,7 @@
                 <Property name="text" type="java.lang.String" value="Medicamentos Compatibles"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="btnQuitar">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Iconos/delete24.png"/>
@@ -877,7 +877,7 @@
                 <Property name="text" type="java.lang.String" value="Eliminar Medicamento"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQuitarActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -890,12 +890,11 @@
                 <Component class="javax.swing.JTable" name="jtCompatibles">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="5" rowCount="0">
+                      <Table columnCount="4" rowCount="0">
                         <Column editable="false" title="Producto" type="java.lang.Object"/>
                         <Column editable="false" title="Localizacion" type="java.lang.Object"/>
                         <Column editable="false" title="Stock" type="java.lang.Object"/>
                         <Column editable="false" title="Precio" type="java.lang.Object"/>
-                        <Column editable="true" title="&#xbf;Quitar?" type="java.lang.Boolean"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

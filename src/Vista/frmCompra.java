@@ -475,7 +475,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
             compra.setNumFactura(txtNFactura.getText());
             compra.setDescripcion("Nada");
             compra.setTotal(new BigDecimal(lblTotal.getText()));
-            compra.setEmpleado(frmMenuPrincipal.usuarioActual.getEmpleado());
+            compra.setEmpleado(frmMenu.usuarioActual.getEmpleado());
             compra.setProveedor(prov_actual);
             List<DetalleCompra> detalles = new ArrayList<>();
             for (int i = 0; i < jTableDetalleCompra.getRowCount(); i++) {

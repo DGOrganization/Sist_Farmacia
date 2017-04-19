@@ -50,7 +50,6 @@ public class frmAgregarProducto extends javax.swing.JDialog {
         ControlesGenerales.reiniciarJTable(jtInventario);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
-        System.out.println("Datos 3 :: " + inv_seleccion.getId());
         lista.forEach(datos->{
             Object[] nuevafila = {
                 datos,
@@ -59,7 +58,6 @@ public class frmAgregarProducto extends javax.swing.JDialog {
                 datos.getPrecio().get(0).getCantidad(),
                 datos.getBodega()
             };
-            System.out.println("Comparacion :: " + datos.getId() + " " + inv_seleccion.getId());
             if(datos.isEstado() && datos.getId() != inv_seleccion.getId()){
                 modelo.addRow(nuevafila);
             }
@@ -73,6 +71,9 @@ public class frmAgregarProducto extends javax.swing.JDialog {
                 datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
         ).collect(Collectors.toList());
         cargarDatos(encontrado);
+        if(jtInventario.getRowCount() == 1){
+            jtInventario.setRowSelectionInterval(0, 0);
+        }
     }
     
     private void changeText(){

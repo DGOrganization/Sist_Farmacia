@@ -65,6 +65,9 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
                 datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
         ).collect(Collectors.toList());
         cargarDatos(encontrado);
+        if(jtProveedores.getRowCount() == 1){
+            jtProveedores.setRowSelectionInterval(0, 0);
+        }
     }
     
     private void changeText(){

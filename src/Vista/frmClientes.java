@@ -57,6 +57,9 @@ public class frmClientes extends javax.swing.JInternalFrame {
                 datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
         ).collect(Collectors.toList());
         cargarDatos(encontrado);
+        if(jtClientes.getRowCount() == 1){
+            jtClientes.setRowSelectionInterval(0, 0);
+        }
     }
     
     private void changeText(){

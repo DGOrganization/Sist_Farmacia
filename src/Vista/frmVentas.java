@@ -50,7 +50,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         jTableDetalleVenta.setModel(modelo);
-        txtEmpleado.setText(frmMenuPrincipal.usuarioActual.getEmpleado().toString());
+        txtEmpleado.setText(frmMenu.usuarioActual.getEmpleado().toString());
         controlador = new Venta_controlador();
         clienteActual = new Cliente();
         ActionListener updateClockAction = (ActionEvent e) -> {

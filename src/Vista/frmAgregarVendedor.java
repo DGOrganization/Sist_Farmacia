@@ -58,6 +58,9 @@ public class frmAgregarVendedor extends javax.swing.JDialog {
                 datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
         ).collect(Collectors.toList());
         cargarDatos(encontrado);
+        if(jtUsuarios.getRowCount() == 1){
+            jtUsuarios.setRowSelectionInterval(0, 0);
+        }
     }
     
     private void changeText(){

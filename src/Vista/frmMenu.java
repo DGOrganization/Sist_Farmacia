@@ -43,6 +43,7 @@ public class frmMenu extends javax.swing.JFrame {
         };
         Timer t = new Timer(100, updateClockAction);
         t.start();
+        tblSesion.setFloatable(false);
     }
 
     /**

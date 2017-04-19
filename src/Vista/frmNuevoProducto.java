@@ -14,6 +14,7 @@ import entidades.Inventario;
 import entidades.Articulo;
 import entidades.Bodega;
 import entidades.Categoria;
+import entidades.Cliente;
 import entidades.Imagen;
 import entidades.Precio;
 import entidades.Unidad;
@@ -31,10 +32,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -60,10 +64,13 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         controlador = new Inventario_controlador();
         validar = new Validaciones();
         this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
-//        Object[] columnas = {"Producto", "Localizacion", "Stock", "Precio", "¿Quitar?"};
-//        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
-//        modelo.setColumnIdentifiers(columnas);
-//        jtCompatibles.setModel(modelo);
+        Object[] columnas = {"Producto", "Localizacion", "Stock", "Precio"};
+        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        modelo.setColumnIdentifiers(columnas);
+        jtCompatibles.setModel(modelo);
+        validar.validarSoloNumeros(txtMargen1);
+        validar.validarSoloNumeros(txtMargen2);
+        validar.validarSoloNumeros(txtMargen2);
 //        TableColumn tc = jtCompatibles.getColumnModel().getColumn(4);
 //        tc.setCellEditor(jtCompatibles.getDefaultEditor(Boolean.class));
 //        tc.setCellRenderer(jtCompatibles.getDefaultRenderer(Boolean.class)); 
@@ -117,6 +124,29 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         }
         return urlSalida;
     }
+    
+    private void CalcularMargenTXT(){
+        int margen =
+    }
+    
+    private void changeText(){
+        txtBusqueda.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+        
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,9 +182,9 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         jdcVencimiento = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jTextField14 = new javax.swing.JTextField();
-        jTextField15 = new javax.swing.JTextField();
-        jTextField16 = new javax.swing.JTextField();
+        txtMargen3 = new javax.swing.JTextField();
+        txtMargen2 = new javax.swing.JTextField();
+        txtMargen1 = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -184,7 +214,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         btnBuscarCompatible = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnQuitar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtCompatibles = new javax.swing.JTable();
 
@@ -505,11 +535,11 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel24)
                                 .addGap(9, 9, 9)
-                                .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtMargen1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(25, 25, 25)
-                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtMargen2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(22, 22, 22)
-                                .addComponent(jTextField14, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))))
+                                .addComponent(txtMargen3, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSeparator5))
@@ -538,12 +568,12 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField16)
-                            .addComponent(jTextField15)
+                            .addComponent(txtMargen1)
+                            .addComponent(txtMargen2)
                             .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtMargen3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -636,11 +666,11 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Medicamentos Compatibles");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete24.png"))); // NOI18N
-        jButton2.setText("Eliminar Medicamento");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnQuitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete24.png"))); // NOI18N
+        btnQuitar.setText("Eliminar Medicamento");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnQuitarActionPerformed(evt);
             }
         });
 
@@ -649,19 +679,12 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Producto", "Localizacion", "Stock", "Precio", "¿Quitar?"
+                "Producto", "Localizacion", "Stock", "Precio"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -694,7 +717,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(btnQuitar)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -704,7 +727,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscarCompatible)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(btnQuitar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -900,9 +923,24 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 //        }
     }//GEN-LAST:event_jtCompatiblesMouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        int fila = jtCompatibles.getSelectedRow();
+        if(fila > -1){
+            System.out.println("Compatibles == " + inventario.getCompatibles().size());
+            if(editar){
+                inventario.getCompatibles().get(inventario.getCompatibles().indexOf((Inventario) jtCompatibles.getValueAt(fila, 0))).setEstado(false);
+            } else {                
+                inventario.getCompatibles().remove(inventario.getCompatibles().indexOf((Inventario) jtCompatibles.getValueAt(fila, 0)));
+            }
+            System.out.println("Compatibles == " + inventario.getCompatibles().size());
+            DefaultTableModel modelo = (DefaultTableModel) jtCompatibles.getModel();
+            modelo.removeRow(fila);
+            jtCompatibles.setModel(modelo);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona primero", new Gestionar().Leer("Empresa", "nombre"), JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnQuitarActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -967,10 +1005,10 @@ public class frmNuevoProducto extends javax.swing.JDialog {
     private javax.swing.JButton btnBuscarCompatible;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnQuitar;
     private javax.swing.JComboBox<String> cboBodega;
     private javax.swing.JComboBox<String> cboCategoria;
     private javax.swing.JComboBox<String> cboUnidad;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
@@ -1005,9 +1043,6 @@ public class frmNuevoProducto extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
     private com.toedter.calendar.JDateChooser jdcVencimiento;
     private javax.swing.JPanel jpAcciones;
     private javax.swing.JTable jtCompatibles;
@@ -1015,6 +1050,9 @@ public class frmNuevoProducto extends javax.swing.JDialog {
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblSeleccionar;
     private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtMargen1;
+    private javax.swing.JTextField txtMargen2;
+    private javax.swing.JTextField txtMargen3;
     private javax.swing.JTextField txtMayoreo1;
     private javax.swing.JTextField txtMayoreo2;
     private javax.swing.JTextField txtMayoreo3;

@@ -21,14 +21,14 @@ Formulario Ventas
 -------------------------
 *******************19-04-2017**********************
 GENERALES
--En la barra de tareas que no se pueda arrastrar.
--En los formularios de busqueda: al empezar a buscar algo, al momento de encontrarlo que lo seleccione.
-    -Al estar seleccionado algo que al dar ENTER funcione de la misma forma que el boton seleccionar.
+-En la barra de tareas que no se pueda arrastrar. ok
+-En los formularios de busqueda: al empezar a buscar algo, al momento de encontrarlo que lo seleccione.ok
+    -Al estar seleccionado algo que al dar ENTER funcione de la misma forma que el boton seleccionar. 
 ---
 FORMULARIO PRODUCTOS
--Al actualizar con imagen manda un error
--En compatibles: el boton eliminar es para quitar un producto de la tabla
-(tambien validar que sino hay nada seleccionado de un mensaje).
+-Al actualizar con imagen manda un error (Se ha probado y no da error)
+-En compatibles: el boton eliminar es para quitar un producto de la tabla ok
+(tambien validar que sino hay nada seleccionado de un mensaje). ok
 -En la opcion de Precios: Margen de utilidad al poner un porcentaje que se vaya calculando el precio
 en el textbox correspondiente.
 -Verificar lo de la imagen al guardar
