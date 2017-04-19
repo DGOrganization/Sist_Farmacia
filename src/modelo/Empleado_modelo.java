@@ -11,7 +11,6 @@ import entidades.Persona;
 import entidades.Usuario;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -46,7 +45,7 @@ public class Empleado_modelo {
                     }
                 }
             }
-        } catch(SQLException ex){
+        } catch(Exception ex){
             JOptionPane.showMessageDialog(
                     null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
