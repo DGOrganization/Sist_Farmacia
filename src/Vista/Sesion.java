@@ -167,11 +167,11 @@ public class Sesion extends javax.swing.JFrame {
             usuario = controlador.Obtener(usuario);
             frmMenuPrincipal.usuarioActual = usuario;
             frmMenuPrincipal frm = new frmMenuPrincipal();
-            JOptionPane.showMessageDialog(
-                    this, 
-                    "Bienvenido al sistema " + frmMenuPrincipal.usuarioActual.getEmpleado().toString(), 
-                    new configuracion.Gestionar().Leer("Empresa","nombre"), 
-                    JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(
+//                    this, 
+//                    "Bienvenido al sistema " + frmMenuPrincipal.usuarioActual.getEmpleado().toString(), 
+//                    new configuracion.Gestionar().Leer("Empresa","nombre"), 
+//                    JOptionPane.INFORMATION_MESSAGE);
             frm.setVisible(true);
             this.dispose();
         } else {

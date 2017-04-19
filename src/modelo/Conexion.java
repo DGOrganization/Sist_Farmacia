@@ -22,7 +22,7 @@ public class Conexion {
     protected final String contraseña = "adminroot";
     protected final String servidor = "localhost";
     protected final String puerto = "5432";
-    protected final String base = "db_farmacia";
+    protected final String base = "dbfarmacia";
     protected String url = "";
     private Connection conn;
     
