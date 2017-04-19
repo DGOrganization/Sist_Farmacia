@@ -14,7 +14,45 @@ El margen de utilidad es opcional dejarlo, pueden colocarse los precios manuales
 
 Formulario Ventas
 ---------
-1.) Al seleccionar Ticket desabilitar el campo N� de Factura ok
+1.) Al seleccionar Ticket desabilitar el campo N de Factura ok
 2.) Al seleccionar Credito fiscal se debe calcular el iva que se ha aplicado y mostrarlo en el textbox. ok
 3.) En el precio mostrar si es Normal o Mayoreo(mas detallado) ok
 4.) Validar, s�lo numeros donde se requiera 
+-------------------------
+*******************19-04-2017**********************
+GENERALES
+-En la barra de tareas que no se pueda arrastrar.
+-En los formularios de busqueda: al empezar a buscar algo, al momento de encontrarlo que lo seleccione.
+    -Al estar seleccionado algo que al dar ENTER funcione de la misma forma que el boton seleccionar.
+---
+FORMULARIO PRODUCTOS
+-Al actualizar con imagen manda un error
+-En compatibles: el boton eliminar es para quitar un producto de la tabla
+(tambien validar que sino hay nada seleccionado de un mensaje).
+-En la opcion de Precios: Margen de utilidad al poner un porcentaje que se vaya calculando el precio
+en el textbox correspondiente.
+-Verificar lo de la imagen al guardar
+
+FORMULARIO CLIENTES
+-Agregar codigo
+
+FORMULARIO PROVEEDOR
+-Validacion de NRC, NIT, email (formatos)
+-Validaciones generales
+-Al dar editar o borrar sino esta seleccionado un producto que mande un mensaje.
+
+FORMULARIO COMPRAS
+-En el campo fecha: que muestre en un formato corto(dd/M/yy
+-Al dar borrar sino esta seleccionado un producto que mande un mensaje y .
+-Agregar un label abajo de la tabla para mostrar la cantidad de items(productos que se han agregado).
+
+FORMULARIO VENTAS
+-Al agregar un producto en el formulario que sino selecciona (boton editar y seleccionar) que mande el mensaje.
+-Que no permita agregar productos sin existencia (Que la letra sea de color rojo para estos).
+-Validar en Cantidad, Precio, Descuento que sólo permita números  y una cadena no muy larga.
+-En la ventana de Pago: validar que sólo acepte numeros con 2 decimales.
+-Verificar el correcto funcionamiento.
+-El campo IVA, al hacer el cambio a Factura o ticket que vuelva al estado 0.00
+ y que si está en Crédito Fiscal que se calcule el IVA nuevamente.
+-Revisar el boton quitar (no funciona).
+-Al cerrar la Ventana que pregunte si está seguro (mas adelante agregaremos la opcion Venta en Espera).
