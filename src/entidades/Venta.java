@@ -6,7 +6,6 @@
 package entidades;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -16,7 +15,7 @@ import java.util.List;
 public class Venta {
     private long _id;
     private String _nFactura;
-    private java.sql.Date _fecha;
+    private java.sql.Timestamp _fecha;
     private BigDecimal _subtotal;
     private BigDecimal _iva;
     private BigDecimal _total;
@@ -44,16 +43,16 @@ public class Venta {
         this._nFactura = _nFactura;
     }
     
-    public java.sql.Date getFecha() {
+    public java.sql.Timestamp getFecha() {
         return _fecha;
     }
 
-    public void setFecha(java.sql.Date _fecha) {
+    public void setFecha(java.sql.Timestamp _fecha) {
         this._fecha = _fecha;
     }
     
     public void setFecha(java.util.Date _fecha) {
-        this._fecha = new java.sql.Date(_fecha.getTime());
+        this._fecha = new java.sql.Timestamp(_fecha.getTime());
     }
 
     public BigDecimal getSubtotal() {
@@ -136,6 +135,11 @@ public class Venta {
     }
 
     public Venta() {
+    }
+
+    @Override
+    public String toString() {
+        return _nFactura;
     }
    
 }

@@ -8,9 +8,9 @@ package modelo;
 import configuracion.Gestionar;
 import entidades.Empleado;
 import entidades.Persona;
-import entidades.Usuario;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class Empleado_modelo {
     
-    public Empleado Empleado(Empleado pEmpleado){
+    public Empleado ListarEmpleado(Empleado pEmpleado){
         Empleado empleado = new Empleado();
         Conexion conn = new Conexion();
         try{
@@ -45,7 +45,7 @@ public class Empleado_modelo {
                     }
                 }
             }
-        } catch(Exception ex){
+        } catch(SQLException ex){
             JOptionPane.showMessageDialog(
                     null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()

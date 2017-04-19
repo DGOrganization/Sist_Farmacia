@@ -41,7 +41,6 @@ public class frmAgregarProducto extends javax.swing.JDialog {
         controlador = new Inventario_controlador();
         inventarioList = controlador.Obtener();
         inv_seleccion = new Inventario();
-        cargarDatos(inventarioList);
         changeText();
         this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
     }
@@ -51,6 +50,7 @@ public class frmAgregarProducto extends javax.swing.JDialog {
         ControlesGenerales.reiniciarJTable(jtInventario);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
+        System.out.println("Datos 3 :: " + inv_seleccion.getId());
         lista.forEach(datos->{
             Object[] nuevafila = {
                 datos,
@@ -59,7 +59,8 @@ public class frmAgregarProducto extends javax.swing.JDialog {
                 datos.getPrecio().get(0).getCantidad(),
                 datos.getBodega()
             };
-            if(datos.isEstado()){
+            System.out.println("Comparacion :: " + datos.getId() + " " + inv_seleccion.getId());
+            if(datos.isEstado() && datos.getId() != inv_seleccion.getId()){
                 modelo.addRow(nuevafila);
             }
         });
@@ -118,7 +119,11 @@ public class frmAgregarProducto extends javax.swing.JDialog {
         btnSeleccionar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
@@ -305,6 +310,11 @@ public class frmAgregarProducto extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        cargarDatos(inventarioList);
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -367,4 +377,10 @@ public class frmAgregarProducto extends javax.swing.JDialog {
     public Inventario getInv_seleccion() {
         return inv_seleccion;
     }
+
+    public void setInv_seleccion(Inventario inv_seleccion) {
+        System.out.println("Datos 2 :: " + inv_seleccion.getId());
+        this.inv_seleccion = inv_seleccion;
+    }
+    
 }

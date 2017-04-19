@@ -32,13 +32,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 /**
  *
  * @author Gerard
@@ -55,7 +53,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public frmNuevoProducto(Frame parent, boolean modal) {
+    public frmNuevoProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
@@ -640,6 +638,11 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete24.png"))); // NOI18N
         jButton2.setText("Eliminar Medicamento");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jtCompatibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -779,6 +782,13 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                 inventario.getPrecio().get(3).setCantidad(new BigDecimal(txtMayoreo1.getText()).setScale(2));
                 inventario.getPrecio().get(4).setCantidad(new BigDecimal(txtMayoreo2.getText()).setScale(2));
                 inventario.getPrecio().get(5).setCantidad(new BigDecimal(txtMayoreo3.getText()).setScale(2));
+                List<Inventario> compatibles = inventario.getCompatibles();
+                for (int i = 0; i < jtCompatibles.getRowCount(); i++) {
+                    Inventario compatible = (Inventario) jtCompatibles.getValueAt(i, 0);
+                    compatible.setEstado(!(Boolean.parseBoolean(jtCompatibles.getValueAt(i, 0).toString())));
+                    compatibles.add(compatible);
+                }
+                inventario.setCompatibles(compatibles);
                 int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de editar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.YES_NO_OPTION);
                 if (respuesta == JOptionPane.YES_OPTION) {
@@ -863,8 +873,11 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
         frmAgregarProducto frm = new frmAgregarProducto((JFrame) f, true);
+        if(inventario.getId() != 0){
+            frm.setInv_seleccion(inventario);
+        }
         frm.setVisible(true);
-        if(!frm.isVisible()){
+        if(!frm.isVisible() && frm.getInv_seleccion().getId() != 0){
             DefaultTableModel modelo = (DefaultTableModel) jtCompatibles.getModel();
             Object[] nuevaFila = {
                 frm.getInv_seleccion(), 
@@ -886,6 +899,10 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 //            jtCompatibles.set
 //        }
     }//GEN-LAST:event_jtCompatiblesMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -917,15 +934,17 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(() -> {
-            frmNuevoProducto dialog = new frmNuevoProducto(new javax.swing.JFrame(), true);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
-                }
-            });
-            dialog.setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                frmNuevoProducto dialog = new frmNuevoProducto(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
         });
     }
     public Inventario getInventario() {
