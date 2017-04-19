@@ -36,6 +36,7 @@ public class Usuario_modelo {
                     if (_reader.next()) {
                         validado = _reader.getBoolean(1);
                     }
+                    cmd.close();
                 }
             }
         } catch(SQLException ex){
