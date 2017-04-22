@@ -31,6 +31,7 @@ public class frmPagoVenta extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         setTitle(new Gestionar().Leer("Empresa", "nombre"));
         changeText();
+        new Validaciones().validarSoloDecimales(txtPago);
     }
     
     private void CalcularCambio(){
@@ -38,21 +39,22 @@ public class frmPagoVenta extends javax.swing.JDialog {
         BigDecimal total = new BigDecimal(lblTotal.getText());
         BigDecimal cambio = BigDecimal.ZERO;
         try{
-            pago = new BigDecimal(txtPago.getText());
-            cambio = pago.subtract(total).setScale(2, BigDecimal.ROUND_HALF_UP);
+            if (txtPago.getText().isEmpty() == false) {
+                pago = new BigDecimal(txtPago.getText());
+                cambio = pago.subtract(total).setScale(2, BigDecimal.ROUND_HALF_UP);
+            }
         }catch (Exception ex){
             System.err.println("Error : " + ex.getMessage());
         }
         lblCambio.setText(cambio.toString());
-        System.out.println("Cambio = " + (pago.compareTo(total) < 0 ? "Rojo" : "Verde"));
-        if(pago.compareTo(total) < 0){
+        if(cambio.compareTo(BigDecimal.ZERO) < 0){
             lblCambio.setForeground(Color.red);
             btnAceptar.setEnabled(false);
         } else {
-            btnAceptar.setEnabled(true);
             lblCambio.setForeground(Color.green);
             lblLetrasC.setText(new Validaciones().Convertir(lblCambio.getText(), true));
             ventaActual.setCambio(cambio);
+            btnAceptar.setEnabled(true);
         }
         
     }

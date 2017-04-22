@@ -12,6 +12,7 @@ import controlador.Venta_controlador;
 import entidades.Cliente;
 import entidades.DetalleVenta;
 import entidades.Inventario;
+import entidades.Precio;
 import entidades.Venta;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -37,14 +38,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmVentas extends javax.swing.JInternalFrame {
     private Cliente clienteActual;
-    private Venta_controlador controlador;
+    private final Venta_controlador controlador;
 
     /**
      * Creates new form frmVentas
      */
     public frmVentas() {
         initComponents();
-        jTableDetalleVenta.setDefaultRenderer(Object.class, new Renderizador());
+        jTableDetalleVenta.setDefaultRenderer(Object.class, new RenderizadorBoton());
         jTableDetalleVenta.setRowHeight(25);
         Object[] columnas = {"Producto", "Cantidad", "Descuento (%)", "Precio ($)", "Importe", "¿Quitar?"};
         DefaultTableModel modelo = new DefaultTableModelImpl();
@@ -129,6 +130,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
             txtDescuento.setText(descuentoTotal.setScale(2, RoundingMode.HALF_UP).toString());
         } else {
             total = subtotal;
+            txtIVA.setText("0.00");
             lblTotal.setText(total.setScale(2, RoundingMode.HALF_UP).toString());
             txtDescuento.setText(descuentoTotal.setScale(2, RoundingMode.HALF_UP).toString());
         }    
@@ -647,7 +649,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
             Inventario inv = (Inventario) modelo.getValueAt(fila, 0);
             JComboBox jcboDialog = new JComboBox(inv.getPrecio().toArray());
             JOptionPane.showMessageDialog(this, jcboDialog, "Selecciona el precio con el cual se vendera", JOptionPane.INFORMATION_MESSAGE);
-            BigDecimal precio = new BigDecimal(jcboDialog.getSelectedItem().toString());
+            BigDecimal precio = ((Precio) jcboDialog.getSelectedItem()).getCantidad();
             modelo.setValueAt(precio, fila, 3);
             BigDecimal subtotal = precio.multiply(cantidad);
             descuento = descuento.divide(new BigDecimal(100));
@@ -666,7 +668,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         frmPagoVenta frm = new frmPagoVenta(f, true);
         Venta venta = new Venta();
         venta.setCliente(clienteActual);
-        venta.setEmpleado(frmMenuPrincipal.usuarioActual.getEmpleado());
+        venta.setEmpleado(frmMenu.usuarioActual.getEmpleado());
         venta.setObservacion(txtComentarios.getText());
         venta.setFecha(new Date());
         venta.setTotal(new BigDecimal(lblTotal.getText()));
@@ -705,6 +707,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
                             txtComentarios.setText("");
                             lblTotal.setText("0.00");
                             lblImagen.setIcon(null);
+                            lblImagen.setText("Selecciona un producto");
                             txtNFactura.setText("");
                             lblCodigo.setText("");
                         }

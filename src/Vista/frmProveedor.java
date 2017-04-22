@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import com.sun.glass.events.KeyEvent;
 import configuracion.Gestionar;
 import controlador.Proveedor_controlador;
 import entidades.Proveedor;
@@ -23,8 +24,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Gerard
  */
 public class frmProveedor extends javax.swing.JInternalFrame {
+
     private Proveedor_controlador controlador;
     private List<Proveedor> proveedorList;
+
     /**
      * Creates new form frmProveedor
      */
@@ -36,42 +39,43 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         cargarDatos(proveedorList);
         changeText();
     }
-    
-    private void cargarDatos(List<Proveedor> lista){
+
+    private void cargarDatos(List<Proveedor> lista) {
         String[] columnas = {"Nombre", "Telefono", "Direccion"};
         ControlesGenerales.reiniciarJTable(jtProveedores);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.forEach(datos -> {
-            Object[] nuevaFila= {
+            Object[] nuevaFila = {
                 datos,
                 datos.getTelefono(),
                 datos.getDomicilio()
             };
-            if(datos.isEstado()){
+            if (datos.isEstado()) {
                 modelo.addRow(nuevaFila);
             }
         });
         jtProveedores.setModel(modelo);
     }
-    
-     private void buscarTXT(){
+
+    private void buscarTXT() {
         List<Proveedor> encontrado = new ArrayList<>();
         encontrado = proveedorList.stream().filter(
                 datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
         ).collect(Collectors.toList());
         cargarDatos(encontrado);
-        if(jtProveedores.getRowCount() == 1){
+        if (jtProveedores.getRowCount() == 1) {
             jtProveedores.setRowSelectionInterval(0, 0);
         }
     }
-    
-    private void changeText(){
-        txtBusqueda.getDocument().addDocumentListener(new DocumentListener(){
+
+    private void changeText() {
+        txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent de) {
                 buscarTXT();
             }
+
             @Override
             public void removeUpdate(DocumentEvent de) {
                 buscarTXT();
@@ -81,8 +85,25 @@ public class frmProveedor extends javax.swing.JInternalFrame {
             public void changedUpdate(DocumentEvent de) {
                 buscarTXT();
             }
-        
+
         });
+    }
+
+    private void Editar() {
+        Frame f = JOptionPane.getFrameForComponent(this);
+        int fila = jtProveedores.getSelectedRow();
+        if (fila > -1) {
+            frmNuevoProveedor frm = new frmNuevoProveedor((JFrame) f, true);
+            frm.setProveedor(proveedorList.get(proveedorList.indexOf((Proveedor) jtProveedores.getValueAt(fila, 0))));
+            System.out.println("Proveedor seleccionado" + frm.getProveedor());
+            frm.setEditar(true);
+            frm.setVisible(true);
+            if (!frm.isVisible()) {
+                proveedorList = controlador.Obtener();
+                cargarDatos(proveedorList);
+                frm.dispose();
+            }
+        }
     }
 
     /**
@@ -161,6 +182,12 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyPressed(evt);
+            }
+        });
+
         jtProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -220,7 +247,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         Frame f = JOptionPane.getFrameForComponent(this);
         frmNuevoProveedor frm = new frmNuevoProveedor((JFrame) f, true);
         frm.setVisible(true);
-        if(!frm.isVisible()){
+        if (!frm.isVisible()) {
             proveedorList = controlador.Obtener();
             cargarDatos(proveedorList);
             frm.dispose();
@@ -229,20 +256,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
 
     private void btnEditarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProveedorActionPerformed
         // TODO add your handling code here:
-        Frame f = JOptionPane.getFrameForComponent(this);
-        int fila = jtProveedores.getSelectedRow();
-        if(fila > -1){
-            frmNuevoProveedor frm = new frmNuevoProveedor((JFrame) f, true);
-            frm.setProveedor(proveedorList.get(proveedorList.indexOf((Proveedor) jtProveedores.getValueAt(fila, 0))));
-            System.out.println("Proveedor seleccionado" + frm.getProveedor());
-            frm.setEditar(true);
-            frm.setVisible(true);
-            if (!frm.isVisible()) {
-                proveedorList = controlador.Obtener();
-                cargarDatos(proveedorList);
-                frm.dispose();
-            }
-        }
+        Editar();
     }//GEN-LAST:event_btnEditarProveedorActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -255,9 +269,9 @@ public class frmProveedor extends javax.swing.JInternalFrame {
                 if (respuesta == JOptionPane.YES_OPTION) {
                     if (controlador.Eliminar(proveedorList.get(proveedorList.indexOf((Proveedor) jtProveedores.getValueAt(fila, 0))))) {
                         JOptionPane.showMessageDialog(this,
-                            "El registro ha sido eliminado exitosamente",
-                            "Sistema de Compras y Ventas - Categoria",
-                            JOptionPane.INFORMATION_MESSAGE);
+                                "El registro ha sido eliminado exitosamente",
+                                "Sistema de Compras y Ventas - Categoria",
+                                JOptionPane.INFORMATION_MESSAGE);
                         proveedorList = controlador.Obtener();
                         cargarDatos(proveedorList);
                     }
@@ -265,6 +279,13 @@ public class frmProveedor extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            Editar();
+        }
+    }//GEN-LAST:event_txtBusquedaKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

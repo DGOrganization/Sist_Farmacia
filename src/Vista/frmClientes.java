@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Vista;
+import com.sun.glass.events.KeyEvent;
 import configuracion.Gestionar;
 import controlador.Cliente_controlador;
 import entidades.Cliente;
@@ -79,6 +80,27 @@ public class frmClientes extends javax.swing.JInternalFrame {
             }
         
         });
+    }
+    
+    private void Editar(){
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmNuevoCliente frm = new frmNuevoCliente((JFrame) f, true);
+        int fila = jtClientes.getSelectedRow();
+        if (fila > -1) {
+            frm.setCliente(clienteList.get(clienteList.indexOf(jtClientes.getValueAt(fila, 0))));
+            frm.setEditar(true);
+            frm.setVisible(true);
+            if (frm.isVisible() == false) {
+                clienteList = controlador.Obtener();
+                cargarDatos(clienteList);
+                frm.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "Selecciona primero",
+                new Gestionar().Leer("Empresa", "nombre"),
+                JOptionPane.WARNING_MESSAGE);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -157,6 +179,12 @@ public class frmClientes extends javax.swing.JInternalFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyPressed(evt);
+            }
+        });
+
         jtClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null}
@@ -228,24 +256,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        Frame f = JOptionPane.getFrameForComponent(this);
-        frmNuevoCliente frm = new frmNuevoCliente((JFrame) f, true);
-        int fila = jtClientes.getSelectedRow();
-        if (fila > -1) {
-            frm.setCliente(clienteList.get(clienteList.indexOf(jtClientes.getValueAt(fila, 0))));
-            frm.setEditar(true);
-            frm.setVisible(true);
-            if (frm.isVisible() == false) {
-                clienteList = controlador.Obtener();
-                cargarDatos(clienteList);
-                frm.dispose();
-            }
-        } else {
-            JOptionPane.showMessageDialog(this,
-                "Selecciona primero",
-                new Gestionar().Leer("Empresa", "nombre"),
-                JOptionPane.WARNING_MESSAGE);
-        }
+        Editar();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -273,6 +284,13 @@ public class frmClientes extends javax.swing.JInternalFrame {
                 JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            Editar();
+        }
+    }//GEN-LAST:event_txtBusquedaKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

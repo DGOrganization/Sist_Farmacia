@@ -1,23 +1,23 @@
 Formulario Productos
 ---------
-1.)Mejorar el tiempo de carga en formulario Producto. pendiente
+1.)Mejorar el tiempo de carga en formulario Producto. Pendiente
 2.)Los unicos campos obligatorios en Registro de Productos son:
-	-Nombre y Fecha de Vencimiento. ok
+	-Nombre y Fecha de Vencimiento. OK
 El margen de utilidad es opcional dejarlo, pueden colocarse los precios manuales.
-3.)Habilitar la opcion Compatibles ok
-4.)Al dar editar sino est� seleccionado un producto que mande un mensaje. ok
-5.)En la tabla donde se muestran los productos, habilitar el campo stock y Precio. ok
-6.)Funcion de los cheks de filtro ok
-7.)Generar un c�digo para cada producto ok
+3.)Habilitar la opcion Compatibles OK
+4.)Al dar editar sino est� seleccionado un producto que mande un mensaje. OK
+5.)En la tabla donde se muestran los productos, habilitar el campo stock y Precio. OK
+6.)Funcion de los cheks de filtro OK
+7.)Generar un c�digo para cada producto OK
 ---------
-1.)Agregu� el campo de NRC. ok
+1.)Agregu� el campo de NRC. OK
 
 Formulario Ventas
 ---------
-1.) Al seleccionar Ticket desabilitar el campo N de Factura ok
-2.) Al seleccionar Credito fiscal se debe calcular el iva que se ha aplicado y mostrarlo en el textbox. ok
-3.) En el precio mostrar si es Normal o Mayoreo(mas detallado) ok
-4.) Validar, s�lo numeros donde se requiera 
+1.) Al seleccionar Ticket desabilitar el campo N de Factura OK
+2.) Al seleccionar Credito fiscal se debe calcular el iva que se ha aplicado y mostrarlo en el textbox. OK
+3.) En el precio mostrar si es Normal o Mayoreo(mas detallado) OK
+4.) Validar, s�lo numeros donde se requiera OK
 -------------------------
 *******************19-04-2017**********************
 GENERALES
@@ -26,33 +26,48 @@ GENERALES
     -Al estar seleccionado algo que al dar ENTER funcione de la misma forma que el boton seleccionar. 
 ---
 FORMULARIO PRODUCTOS
--Al actualizar con imagen manda un error (Se ha probado y no da error)
--En compatibles: el boton eliminar es para quitar un producto de la tabla ok
-(tambien validar que sino hay nada seleccionado de un mensaje). ok
+-Al actualizar con imagen manda un error 
+-- Se ha probado y no da error
+-En compatibles: el boton eliminar es para quitar un producto de la tabla OK
+(tambien validar que sino hay nada seleccionado de un mensaje). OK
 -En la opcion de Precios: Margen de utilidad al poner un porcentaje que se vaya calculando el precio
 en el textbox correspondiente.
--Verificar lo de la imagen al guardar
+-- ¿Tambien de mayoreo?
+-Verificar lo de la imagen al guardar. 
+-- Esto ha sido verificado y funciona adecuadamente.
 
 FORMULARIO CLIENTES
 -Agregar codigo
 
 FORMULARIO PROVEEDOR
--Validacion de NRC, NIT, email (formatos)
--Validaciones generales
--Al dar editar o borrar sino esta seleccionado un producto que mande un mensaje.
+-Validacion de NRC, NIT, email (formatos). 
+-- Ya estaban validados
+-Validaciones generales. 
+-- Ya tenia las validaciones
+-Al dar editar o borrar sino esta seleccionado un producto que mande un mensaje. OK
 
 FORMULARIO COMPRAS
--En el campo fecha: que muestre en un formato corto(dd/M/yy
--Al dar borrar sino esta seleccionado un producto que mande un mensaje y .
--Agregar un label abajo de la tabla para mostrar la cantidad de items(productos que se han agregado).
+-En el campo fecha: que muestre en un formato corto(dd/M/yy). 
+-- ¿Que siga mostrando la hora?
+-Al dar borrar sino esta seleccionado un producto que mande un mensaje y . 
+-- Cada fila de la jTable ya tiene su propio boton para quitar
+-Agregar un label abajo de la tabla para mostrar la cantidad de items(productos que se han agregado). OK
 
 FORMULARIO VENTAS
--Al agregar un producto en el formulario que sino selecciona (boton editar y seleccionar) que mande el mensaje.
--Que no permita agregar productos sin existencia (Que la letra sea de color rojo para estos).
+-Al agregar un producto en el formulario que sino selecciona (boton editar y seleccionar) que mande el mensaje. OK
+-Que no permita agregar productos sin existencia (Que la letra sea de color rojo para estos). OK
 -Validar en Cantidad, Precio, Descuento que sólo permita números  y una cadena no muy larga.
+-- En este punto se me hace dificil viejo porque que se autentique en vivo es imposible porque son inputbox en el caso de Cantidad y Descuento
+-- El de precio ya se le agrego el tipo de precio y ademas este es un combobox
+
 -En la ventana de Pago: validar que sólo acepte numeros con 2 decimales.
+-- En esto sucede que la autenticacion viejo se hace en vivo y lo hacer por caracter ingresado
 -Verificar el correcto funcionamiento.
--El campo IVA, al hacer el cambio a Factura o ticket que vuelva al estado 0.00
- y que si está en Crédito Fiscal que se calcule el IVA nuevamente.
+-- Esta funcionando en las ultimas pruebas realizadas
+-El campo IVA, al hacer el cambio a Factura o ticket que vuelva al estado 0.00 
+ y que si está en Crédito Fiscal que se calcule el IVA nuevamente.OK
 -Revisar el boton quitar (no funciona).
--Al cerrar la Ventana que pregunte si está seguro (mas adelante agregaremos la opcion Venta en Espera).
+-- Esto se debe a que cada producto posee en su fila el boton de quitar
+-Al cerrar la Ventana que pregunte si está seguro (mas adelante agregaremos la opcion Venta en Espera). 
+-- ¿Cual ventana?
+-- Soy sincero no entiendo esta caracteristica.

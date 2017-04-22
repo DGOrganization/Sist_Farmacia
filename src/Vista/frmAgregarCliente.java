@@ -9,6 +9,7 @@ package Vista;
 import configuracion.Gestionar;
 import controlador.Cliente_controlador;
 import entidades.Cliente;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -89,6 +90,19 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         
         });
     }
+    
+    private void SeleccionarCliente() {
+        int fila = jtClientes.getSelectedRow();
+        if (fila > -1) {
+            cli_seleccion = clienteList.get(clienteList.indexOf(jtClientes.getValueAt(fila, 0)));
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -117,6 +131,12 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyPressed(evt);
+            }
+        });
+
         jtClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -128,6 +148,11 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         jtClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtClientesMouseClicked(evt);
+            }
+        });
+        jtClientes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtClientesKeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(jtClientes);
@@ -298,17 +323,22 @@ public class frmAgregarCliente extends javax.swing.JDialog {
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         // TODO add your handling code here:
-        int fila = jtClientes.getSelectedRow();
-        if (fila > -1) {
-           cli_seleccion = clienteList.get(clienteList.indexOf(jtClientes.getValueAt(fila, 0)));
-           this.setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Selecciona primero",
-                    new Gestionar().Leer("Empresa", "nombre"),
-                    JOptionPane.WARNING_MESSAGE);
-        }
+       SeleccionarCliente();
     }//GEN-LAST:event_btnSeleccionarActionPerformed
+
+    private void jtClientesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtClientesKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            SeleccionarCliente();
+        }
+    }//GEN-LAST:event_jtClientesKeyPressed
+
+    private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            SeleccionarCliente();
+        }
+    }//GEN-LAST:event_txtBusquedaKeyPressed
 
     /**
      * @param args the command line arguments

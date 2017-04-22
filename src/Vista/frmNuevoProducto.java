@@ -14,7 +14,6 @@ import entidades.Inventario;
 import entidades.Articulo;
 import entidades.Bodega;
 import entidades.Categoria;
-import entidades.Cliente;
 import entidades.Imagen;
 import entidades.Precio;
 import entidades.Unidad;
@@ -27,16 +26,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -64,13 +64,26 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         controlador = new Inventario_controlador();
         validar = new Validaciones();
         this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
-        Object[] columnas = {"Producto", "Localizacion", "Stock", "Precio"};
+        Object[] columnas = {"Producto", "Localizacion", "Stock", "Precio ($)"};
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         jtCompatibles.setModel(modelo);
         validar.validarSoloNumeros(txtMargen1);
         validar.validarSoloNumeros(txtMargen2);
-        validar.validarSoloNumeros(txtMargen2);
+        validar.validarSoloNumeros(txtMargen3);
+        validar.validarSoloDecimales(txtPrecioCompra);
+        validar.validarSoloDecimales(txtPrecio1);
+        validar.validarSoloDecimales(txtPrecio2);
+        validar.validarSoloDecimales(txtPrecio3);
+        validar.validarSoloDecimales(txtMayoreo1);
+        validar.validarSoloDecimales(txtMayoreo2);
+        validar.validarSoloDecimales(txtMayoreo3);
+        validar.validarSoloNumeros(txtStockMin);
+        validar.validarSoloNumeros(txtStockMax);
+        changeText(txtMargen1);
+        changeText(txtMargen2);
+        changeText(txtMargen3);        
+        changeText(txtPrecioCompra);
 //        TableColumn tc = jtCompatibles.getColumnModel().getColumn(4);
 //        tc.setCellEditor(jtCompatibles.getDefaultEditor(Boolean.class));
 //        tc.setCellRenderer(jtCompatibles.getDefaultRenderer(Boolean.class)); 
@@ -126,23 +139,53 @@ public class frmNuevoProducto extends javax.swing.JDialog {
     }
     
     private void CalcularMargenTXT(){
-        int margen =
+        BigDecimal margen1 = new BigDecimal(0);
+        BigDecimal margen2 = new BigDecimal(0);
+        BigDecimal margen3 = new BigDecimal(0);
+        BigDecimal precioCompra = new BigDecimal(0);
+        try{
+            if(txtPrecioCompra.getText().isEmpty() == false){
+                if (txtMargen1.getText().isEmpty() == false) {
+                    precioCompra = new BigDecimal(txtPrecioCompra.getText());
+                    margen1 = new BigDecimal(txtMargen1.getText());
+                    BigDecimal precio1 = precioCompra.add(precioCompra.multiply(margen1.divide(new BigDecimal(100))));
+                    txtPrecio1.setText(precio1.setScale(2, RoundingMode.HALF_UP).toString());
+                }
+
+                if (txtMargen2.getText().isEmpty() == false) {
+                    margen2 = new BigDecimal(txtMargen2.getText());
+                    BigDecimal precio2 = precioCompra.add(precioCompra.multiply(margen2.divide(new BigDecimal(100))));
+                    txtPrecio2.setText(precio2.setScale(2, RoundingMode.HALF_UP).toString());
+                }
+
+                if (txtMargen3.getText().isEmpty() == false) {
+                    margen3 = new BigDecimal(txtMargen3.getText());
+                    BigDecimal precio3 = precioCompra.add(precioCompra.multiply(margen3.divide(new BigDecimal(100))));
+                    txtPrecio3.setText(precio3.setScale(2, RoundingMode.HALF_UP).toString());
+                }
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(this, "El numero digitado no es valido");
+            txtPrecio1.setText("");
+            txtPrecio2.setText("");
+            txtPrecio3.setText("");
+        }
     }
     
-    private void changeText(){
-        txtBusqueda.getDocument().addDocumentListener(new DocumentListener(){
+    private void changeText(JTextField txt){
+        txt.getDocument().addDocumentListener(new DocumentListener(){
             @Override
             public void insertUpdate(DocumentEvent de) {
-                buscarTXT();
+                CalcularMargenTXT();
             }
             @Override
             public void removeUpdate(DocumentEvent de) {
-                buscarTXT();
+                CalcularMargenTXT();
             }
 
             @Override
             public void changedUpdate(DocumentEvent de) {
-                buscarTXT();
+                CalcularMargenTXT();
             }
         
         });
@@ -701,7 +744,6 @@ public class frmNuevoProducto extends javax.swing.JDialog {
             jtCompatibles.getColumnModel().getColumn(1).setResizable(false);
             jtCompatibles.getColumnModel().getColumn(2).setResizable(false);
             jtCompatibles.getColumnModel().getColumn(3).setResizable(false);
-            jtCompatibles.getColumnModel().getColumn(4).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);

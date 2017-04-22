@@ -42,6 +42,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
         chkExistencias.add(jrbTodos);
         new Validaciones().cboCategoria2(cboCategorias, new Categoria_controlador().Obtener());
         jrbTodos.setSelected(true);
+        jtInventario.setDefaultRenderer(Object.class, new RenderizadoColor());
     }
 
     private void nombre_personaKeyPressed(java.awt.event.KeyEvent evt) { 
@@ -79,7 +80,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
                                 && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) > 0 ;
                     } else if(jrbExistencia1.isSelected() == false && jrbExistencia2.isSelected() == true) {
                         return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase()) 
-                                && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) < 0;
+                                && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) <= 0;
                     } else {
                         return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase());
                     }
@@ -119,6 +120,26 @@ public class frmProducto extends javax.swing.JInternalFrame {
         });
     }
 
+    public void Editar(){
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmNuevoProducto frm = new frmNuevoProducto((JFrame) f, true);
+        int fila = jtInventario.getSelectedRow();
+        if (fila > -1) {
+            frm.setInventario(inventarioList.get(inventarioList.indexOf(jtInventario.getValueAt(fila, 0))));
+            frm.setEditar(true);
+            frm.setVisible(true);
+            if (!frm.isVisible()) {
+                inventarioList = controlador.Obtener();
+                cargarDatos(inventarioList);
+                frm.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -231,6 +252,11 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 "Producto", "stock", "Precio"
             }
         ));
+        jtInventario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtInventarioKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtInventario);
 
         jrbExistencia1.setText("Articulo en existencia");
@@ -375,24 +401,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        Frame f = JOptionPane.getFrameForComponent(this);
-        frmNuevoProducto frm = new frmNuevoProducto((JFrame) f, true);
-        int fila = jtInventario.getSelectedRow();
-        if (fila > -1) {
-            frm.setInventario(inventarioList.get(inventarioList.indexOf(jtInventario.getValueAt(fila, 0))));
-            frm.setEditar(true);
-            frm.setVisible(true);
-            if (!frm.isVisible()) {
-                inventarioList = controlador.Obtener();
-                cargarDatos(inventarioList);
-                frm.dispose();
-            }
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Selecciona primero",
-                    new Gestionar().Leer("Empresa", "nombre"),
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        Editar();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockActionPerformed
@@ -435,6 +444,13 @@ public class frmProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         buscarTXT();
     }//GEN-LAST:event_jrbTodosItemStateChanged
+
+    private void jtInventarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtInventarioKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            Editar();
+        }
+    }//GEN-LAST:event_jtInventarioKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

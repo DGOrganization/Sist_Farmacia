@@ -6,9 +6,7 @@
 package Vista;
 
 import configuracion.Gestionar;
-import controlador.Departamento_controlador;
 import controlador.Proveedor_controlador;
-import entidades.Departamento;
 import entidades.Proveedor;
 import javax.swing.JOptionPane;
 
@@ -332,6 +330,8 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
             txtCelular.setText(proveedor.getCelular());
             txtEmail.setText(proveedor.getEmail());
             txtWeb.setText(proveedor.getWebsite());
+        } else {
+            proveedor = new Proveedor();
         }
     }//GEN-LAST:event_formWindowOpened
 

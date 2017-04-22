@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author dakrpastiursSennin
  */
-public class Renderizador extends DefaultTableCellRenderer {
+public class RenderizadorBoton extends DefaultTableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -23,14 +23,4 @@ public class Renderizador extends DefaultTableCellRenderer {
         }
         return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); //To change body of generated methods, choose Tools | Templates.
     }
-    /*@Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        // Va a mostrar el botón solo en la última fila.
-        // de otra forma muestra un espacio en blanco.
-        if(value instanceof JButton){
-            System.out.println("Set Renderer");
-            return (JButton) value;
-        }
-        return null;
-    }*/
 }

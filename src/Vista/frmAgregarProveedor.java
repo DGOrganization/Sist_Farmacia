@@ -9,6 +9,7 @@ import configuracion.Gestionar;
 import controlador.Proveedor_controlador;
 import entidades.Proveedor;
 import java.awt.Frame;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,6 +89,15 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
         
         });
     }
+    
+    private void SeleccionarProveedor(){
+        int fila = jtProveedores.getSelectedRow();
+        if(fila > -1){
+            proveedor_sel = proveedorList.get(proveedorList.indexOf((Proveedor) jtProveedores.getValueAt(fila, 0)));
+            System.out.println("Proveedor seleccionado = " + proveedor_sel);
+            this.setVisible(false);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,6 +124,12 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar");
 
+        txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyPressed(evt);
+            }
+        });
+
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add16.png"))); // NOI18N
         btnNuevo.setText("Agregar");
         btnNuevo.setToolTipText("Nuevo Proveedor");
@@ -131,6 +147,11 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
                 "Código", "Nombre", "Tel/Cel", "Direccion"
             }
         ));
+        jtProveedores.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtProveedoresKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtProveedores);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
@@ -220,13 +241,22 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
 
     private void btnSeleccionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionaActionPerformed
         // TODO add your handling code here:
-        int fila = jtProveedores.getSelectedRow();
-        if(fila > -1){
-            proveedor_sel = proveedorList.get(proveedorList.indexOf((Proveedor) jtProveedores.getValueAt(fila, 0)));
-            System.out.println("Proveedor seleccionado = " + proveedor_sel);
-            this.setVisible(false);
-        }
+        SeleccionarProveedor();
     }//GEN-LAST:event_btnSeleccionaActionPerformed
+
+    private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            SeleccionarProveedor();
+        }
+    }//GEN-LAST:event_txtBusquedaKeyPressed
+
+    private void jtProveedoresKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtProveedoresKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            SeleccionarProveedor();
+        }
+    }//GEN-LAST:event_jtProveedoresKeyPressed
 
     /**
      * @param args the command line arguments
