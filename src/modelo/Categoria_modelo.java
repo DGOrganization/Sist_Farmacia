@@ -36,6 +36,7 @@ public class Categoria_modelo {
                         lista.add(categoria);
                     }
                 }
+                cmd.close();
             }
         } catch(SQLException ex){
             JOptionPane.showMessageDialog(
@@ -57,14 +58,16 @@ public class Categoria_modelo {
         Conexion conn = new Conexion();        
         try{
             if(conn.Conectar()){
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenercategoria(?) }");
-                cmd.setInt(1, pCategoria.getId());
-                if(cmd.execute()){
-                    ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
-                        categoria.setId(resultado.getInt("codigo"));
-                        categoria.setNombre(resultado.getString("categoria"));
-                        categoria.setEstado(resultado.getBoolean("estado"));
+                try (CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenercategoria(?) }")) {
+                    cmd.setInt(1, pCategoria.getId());
+                    if(cmd.execute()){
+                        try (ResultSet resultado = cmd.getResultSet()) {
+                            while(resultado.next()){
+                                categoria.setId(resultado.getInt("codigo"));
+                                categoria.setNombre(resultado.getString("categoria"));
+                                categoria.setEstado(resultado.getBoolean("estado"));
+                            }
+                        }
                     }
                 }
             }

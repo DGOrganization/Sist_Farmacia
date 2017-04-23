@@ -163,6 +163,11 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
         jLabel1.setText("Fecha Inicial:");
 
         jdcInicio.setDateFormatString("dd-MM-yyyy");
+        jdcInicio.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jdcInicioPropertyChange(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/fecha16.png"))); // NOI18N
@@ -286,6 +291,13 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         buscarTXT();
     }//GEN-LAST:event_cboEstadoItemStateChanged
+
+    private void jdcInicioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdcInicioPropertyChange
+        // TODO add your handling code here:
+        if(evt.getPropertyName().toUpperCase().equals("DATE")){
+            System.out.println("Se cambio el valor de la jDateChooser");
+        }
+    }//GEN-LAST:event_jdcInicioPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

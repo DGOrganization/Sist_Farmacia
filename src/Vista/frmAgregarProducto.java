@@ -137,16 +137,7 @@ public class frmAgregarProducto extends javax.swing.JDialog {
         if (fila > -1) {
             if (jtInventario.getValueAt(fila, 0) instanceof Inventario) {
                 inv_seleccion = inventarioList.get(inventarioList.indexOf(jtInventario.getValueAt(fila, 0)));
-                if (inv_seleccion.getStock().compareTo(BigDecimal.ZERO) > 0) {
-                    this.setVisible(false);
-                } else {
-                    JOptionPane.showMessageDialog(
-                            this, 
-                            "No hay existencias del producto " + inv_seleccion + " para vender", 
-                            this.getTitle(), 
-                            JOptionPane.WARNING_MESSAGE
-                    );
-                }
+                this.setVisible(false);
             }
         } else {
             JOptionPane.showMessageDialog(

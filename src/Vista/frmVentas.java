@@ -633,7 +633,16 @@ public class frmVentas extends javax.swing.JInternalFrame {
         frmAgregarProducto frm = new frmAgregarProducto(f, true);
         frm.setVisible(true);
         if (frm.isVisible() == false) {
-            AñadirDetalle(frm.getInv_seleccion());
+            if (frm.getInv_seleccion().getStock().compareTo(BigDecimal.ZERO) > 0) {
+                AñadirDetalle(frm.getInv_seleccion());
+            } else {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "No hay existencias del producto " + frm.getInv_seleccion() + " para vender",
+                        this.getTitle(),
+                        JOptionPane.WARNING_MESSAGE
+                );
+            }
             frm.dispose();
         }
     }//GEN-LAST:event_btnBuscarProductoActionPerformed

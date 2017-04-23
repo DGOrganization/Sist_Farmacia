@@ -25,16 +25,18 @@ public class Bodega_modelo {
         Conexion conn = new Conexion();        
         try{
             if(conn.Conectar()){
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerbodegas() }");
-                if(cmd.execute()){
-                    ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
-                        Bodega bodega = new Bodega();
-                        bodega.setId(resultado.getInt("codigo"));
-                        bodega.setNombre(resultado.getString("bodega"));
-                        bodega.setDireccion(resultado.getString("dir"));
-                        bodega.setEstado(resultado.getBoolean("est"));
-                        lista.add(bodega);
+                try (CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerbodegas() }")) {
+                    if(cmd.execute()){
+                        try (ResultSet resultado = cmd.getResultSet()) {
+                            while(resultado.next()){
+                                Bodega bodega = new Bodega();
+                                bodega.setId(resultado.getInt("codigo"));
+                                bodega.setNombre(resultado.getString("bodega"));
+                                bodega.setDireccion(resultado.getString("dir"));
+                                bodega.setEstado(resultado.getBoolean("est"));
+                                lista.add(bodega);
+                            }
+                        }
                     }
                 }
             }
@@ -58,15 +60,17 @@ public class Bodega_modelo {
         Conexion conn = new Conexion();        
         try{
             if(conn.Conectar()){
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerbodega(?) }");
-                cmd.setInt(1, pBodega.getId());
-                if(cmd.execute()){
-                    ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
-                        bodega.setId(resultado.getInt("codigo"));
-                        bodega.setNombre(resultado.getString("bodega"));
-                        bodega.setDireccion(resultado.getString("dir"));
-                        bodega.setEstado(resultado.getBoolean("est"));
+                try (CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerbodega(?) }")) {
+                    cmd.setInt(1, pBodega.getId());
+                    if(cmd.execute()){
+                        try (ResultSet resultado = cmd.getResultSet()) {
+                            while(resultado.next()){
+                                bodega.setId(resultado.getInt("codigo"));
+                                bodega.setNombre(resultado.getString("bodega"));
+                                bodega.setDireccion(resultado.getString("dir"));
+                                bodega.setEstado(resultado.getBoolean("est"));
+                            }
+                        }
                     }
                 }
             }

@@ -195,6 +195,9 @@
           <Properties>
             <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
           </Properties>
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jdcInicioPropertyChange"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>

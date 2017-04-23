@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.postgresql.ds.PGConnectionPoolDataSource;
 
 /**
  *
@@ -21,13 +22,18 @@ public class Conexion {
     protected final String usuario = "postgres";
     protected final String contraseña = "adminroot";
     protected final String servidor = "localhost";
-    protected final String puerto = "5432";
+    protected final int puerto = 5432;
     protected final String base = "db_farmacia";
     protected String url = "";
     private Connection conn;
-    
+    private PGConnectionPoolDataSource pool;
     public Conexion(){
         conn = null;
+        pool.setServerName(servidor);
+        pool.setPortNumber(puerto);
+        pool.setDatabaseName(base);
+        pool.setUser(usuario);
+        pool.setPassword(contraseña);
         url = "jdbc:postgresql://" + servidor + ":" + puerto + "/" + base;
     }
 

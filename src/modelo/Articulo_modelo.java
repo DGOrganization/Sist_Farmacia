@@ -23,15 +23,17 @@ public class Articulo_modelo {
         Conexion conn = new Conexion();        
         try{
             if(conn.Conectar()){
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerarticulo(?) }");
-                cmd.setInt(1, pArticulo.getId());
-                if(cmd.execute()){
-                    ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
-                        articulo.setId(resultado.getInt("cod"));
-                        articulo.setNombre(resultado.getString("prod"));
-                        articulo.setDescripcion(resultado.getString("descrip"));
-                        articulo.setEstado(resultado.getBoolean("estado"));
+                try (CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerarticulo(?) }")) {
+                    cmd.setInt(1, pArticulo.getId());
+                    if(cmd.execute()){
+                        try (ResultSet resultado = cmd.getResultSet()) {
+                            while(resultado.next()){
+                                articulo.setId(resultado.getInt("cod"));
+                                articulo.setNombre(resultado.getString("prod"));
+                                articulo.setDescripcion(resultado.getString("descrip"));
+                                articulo.setEstado(resultado.getBoolean("estado"));
+                            }
+                        }
                     }
                 }
             }
