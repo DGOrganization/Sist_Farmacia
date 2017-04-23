@@ -22,4 +22,9 @@ public class Unidad_controlador {
         });
         return lista;
     }
+    
+    public Unidad Obtener(Unidad pUnidad){
+        return new Unidad_modelo().ListarUnidad(pUnidad);
+    }
+    
 }

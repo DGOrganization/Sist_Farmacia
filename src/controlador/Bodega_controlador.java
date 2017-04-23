@@ -22,4 +22,8 @@ public class Bodega_controlador {
         });
         return lista;
     }
+    
+    public Bodega Obtener(Bodega pBodega){
+        return new Bodega_modelo().ListarBodega(pBodega);
+    }
 }

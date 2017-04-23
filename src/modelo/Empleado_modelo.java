@@ -18,17 +18,16 @@ import javax.swing.JOptionPane;
  * @author dakrpastiursSennin
  */
 public class Empleado_modelo {
-    
-    public Empleado ListarEmpleado(Empleado pEmpleado){
+
+    public Empleado ListarEmpleado(Empleado pEmpleado) {
         Empleado empleado = new Empleado();
-        Conexion conn = new Conexion();
-        try{
-            if (conn.Conectar()) {
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerempleado(?) }");
-                cmd.setInt(1, pEmpleado.getId());
-                if(cmd.execute()){
-                    ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenerempleado(?) }")) {
+            cmd.setInt(1, pEmpleado.getId());
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
+                    while (resultado.next()) {
                         empleado.setId(resultado.getInt("codigo"));
                         empleado.setNombre(resultado.getString("nombre"));
                         empleado.setApellidoPaterno(resultado.getString("apellido1"));
@@ -45,7 +44,8 @@ public class Empleado_modelo {
                     }
                 }
             }
-        } catch(SQLException ex){
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
@@ -53,10 +53,8 @@ public class Empleado_modelo {
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
         return empleado;
     }
-    
+
 }

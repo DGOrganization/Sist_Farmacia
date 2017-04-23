@@ -5,18 +5,17 @@
  */
 package controlador;
 
-import entidades.Municipio;
 import entidades.Persona;
-import modelo.Municipio_modelo;
+import entidades.Telefono;
+import java.util.List;
+import modelo.Telefono_modelo;
 
 /**
  *
  * @author dakrpastiursSennin
  */
-public class Municipio_controlador {
-    
-    public Municipio Obtener(Persona pPersona){
-        return new Municipio_modelo().ListarMunicipio(pPersona);
+public class Telefono_controlador {
+    public List<Telefono> Obtener(Persona pPersona){
+        return new Telefono_modelo().ListarTelefonos(pPersona);
     }
-    
 }

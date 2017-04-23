@@ -20,17 +20,16 @@ import javax.swing.JOptionPane;
  * @author dakrpastiursSennin
  */
 public class Telefono_modelo {
-    
-    public List<Telefono> ListarTelefonos(Persona pPersona){
+
+    public List<Telefono> ListarTelefonos(Persona pPersona) {
         List<Telefono> lista = new ArrayList<>();
-        Conexion conn = new Conexion();
-        try{
-            if(conn.Conectar()){
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenertelefonos(?) }");
-                cmd.setInt(1, pPersona.getIdPersona());
-                if(cmd.execute()){
-                    ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenertelefonos(?) }")) {
+            cmd.setInt(1, pPersona.getIdPersona());
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
+                    while (resultado.next()) {
                         Telefono telefono = new Telefono();
                         telefono.setId(resultado.getLong("codigo"));
                         telefono.setNumero(resultado.getString("num"));
@@ -39,18 +38,16 @@ public class Telefono_modelo {
                     }
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
-                    null, 
+                    null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
-                            + "\nFavor contacte al desarrollador",
+                    + "\nFavor contacte al desarrollador",
                     new Gestionar().Leer("Empresa", "nombre") + " - " + this.getClass().getName(),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
         return lista;
     }
-    
+
 }

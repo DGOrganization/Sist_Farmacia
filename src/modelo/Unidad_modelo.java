@@ -22,12 +22,11 @@ public class Unidad_modelo {
 
     public List<Unidad> ListarUnidades() {
         List<Unidad> lista = new ArrayList<>();
-        Conexion conn = new Conexion();
-        try {
-            if (conn.Conectar()) {
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerunidades() }");
-                if (cmd.execute()) {
-                    ResultSet resultado = cmd.getResultSet();
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenerunidades() }")) {
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
                     while (resultado.next()) {
                         Unidad unidad = new Unidad();
                         unidad.setId(resultado.getInt("codigo"));
@@ -45,22 +44,18 @@ public class Unidad_modelo {
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
-
         return lista;
     }
 
     public Unidad ListarUnidad(Unidad pUnidad) {
         Unidad unidad = new Unidad();
-        Conexion conn = new Conexion();
-        try {
-            if (conn.Conectar()) {
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerunidad(?) }");
-                cmd.setInt(1, pUnidad.getId());
-                if (cmd.execute()) {
-                    ResultSet resultado = cmd.getResultSet();
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenerunidad(?) }")) {
+            cmd.setInt(1, pUnidad.getId());
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
                     while (resultado.next()) {
                         unidad.setId(resultado.getInt("codigo"));
                         unidad.setNombre(resultado.getString("unidad"));
@@ -76,10 +71,7 @@ public class Unidad_modelo {
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
-
         return unidad;
     }
 

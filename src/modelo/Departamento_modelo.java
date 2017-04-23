@@ -19,15 +19,15 @@ import javax.swing.JOptionPane;
  * @author dakrpastiursSennin
  */
 public class Departamento_modelo {
-    public List<Departamento> ListarDepartamentos(){
+
+    public List<Departamento> ListarDepartamentos() {
         List<Departamento> lista = new ArrayList<>();
-        Conexion conn = new Conexion();
-        try{
-            if (conn.Conectar()) {
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerdepartamentos() }");
-                if(cmd.execute()){
-                    ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenerdepartamentos() }")) {
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
+                    while (resultado.next()) {
                         Departamento depto = new Departamento();
                         depto.setId(resultado.getInt("codigo"));
                         depto.setNombre(resultado.getString("nom"));
@@ -37,7 +37,7 @@ public class Departamento_modelo {
                     }
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
@@ -45,22 +45,19 @@ public class Departamento_modelo {
                     new Gestionar().Leer("Empresa", "nombre") + " - " + this.getClass().getName(),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
         return lista;
     }
-    
-    public Departamento ListarDepartamento(Departamento pDepartamento){
+
+    public Departamento ListarDepartamento(Departamento pDepartamento) {
         Departamento depto = new Departamento();
-        Conexion conn = new Conexion();
-        try{
-            if (conn.Conectar()) {
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerdepartamento(?) }");
-                cmd.setInt(1, pDepartamento.getId());
-                if(cmd.execute()){
-                    ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenerdepartamento(?) }")) {
+            cmd.setInt(1, pDepartamento.getId());
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
+                    while (resultado.next()) {
                         depto.setId(resultado.getInt("codigo"));
                         depto.setNombre(resultado.getString("nom"));
                         depto.setEstado(resultado.getBoolean("est"));
@@ -68,7 +65,7 @@ public class Departamento_modelo {
                     }
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
@@ -76,8 +73,6 @@ public class Departamento_modelo {
                     new Gestionar().Leer("Empresa", "nombre") + " - " + this.getClass().getName(),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
         return depto;
     }

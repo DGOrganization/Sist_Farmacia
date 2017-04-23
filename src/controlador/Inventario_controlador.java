@@ -24,6 +24,10 @@ public class Inventario_controlador {
         return lista;
     }
     
+    public Inventario Obtener(Inventario pInventario){
+        return  new Inventario_modelo().ListarInventario(pInventario);
+    }
+    
     public boolean Registrar(Inventario pInventario){
         return new Inventario_modelo().Registrar(pInventario);
     }

@@ -9,6 +9,7 @@ import entidades.Menu;
 import entidades.Nivel;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -18,26 +19,25 @@ import javax.swing.JOptionPane;
  * @author dakrpastiursSennin
  */
 public class Menu_modelo {
+
     public List<Menu> obtenerMenus(Nivel pNivel) {
         List<Menu> menus = new ArrayList<>();
-        Conexion conn = new Conexion();
-        try {
-            if (conn.Conectar()) {
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call cargarpermisos(?) }");
-                cmd.setInt(1, pNivel.getId());
-                if (cmd.execute()) {
-                    ResultSet lector = cmd.getResultSet();
-                    while (lector.next()) {
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call cargarpermisos(?) }")) {
+            cmd.setInt(1, pNivel.getId());
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
+                    while (resultado.next()) {
                         Menu menu = new Menu();
-                        menu.setId(lector.getInt("codigo"));
-                        menu.setNombre(lector.getString("menu"));
-                        menu.setPermiso(lector.getBoolean("permiso"));
+                        menu.setId(resultado.getInt("codigo"));
+                        menu.setNombre(resultado.getString("menu"));
+                        menu.setPermiso(resultado.getBoolean("permiso"));
                         menus.add(menu);
                     }
                 }
             }
-
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
@@ -45,8 +45,6 @@ public class Menu_modelo {
                     "Sistema de Compras y Ventas - Menu",
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
         return menus;
     }

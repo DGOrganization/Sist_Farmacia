@@ -6,6 +6,9 @@
 package modelo;
 
 import configuracion.Gestionar;
+import controlador.Articulo_controlador;
+import controlador.Bodega_controlador;
+import controlador.Categoria_controlador;
 import entidades.Articulo;
 import entidades.Bodega;
 import entidades.Categoria;
@@ -23,21 +26,20 @@ import javax.swing.JOptionPane;
  * @author dakrpastiursSennin
  */
 public class Compatible_modelo {
-    
+
     public List<Inventario> ListarCompatibles(Inventario pInventario) {
         List<Inventario> lista = new ArrayList<>();
-        Conexion conn = new Conexion();
-        try {
-            if (conn.Conectar()) {
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenercompatibles(?) }");
-                cmd.setInt(1, pInventario.getId());
-                if (cmd.execute()) {
-                    ResultSet resultado = cmd.getResultSet();
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenercompatibles(?) }")) {
+            cmd.setInt(1, pInventario.getId());
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
                     while (resultado.next()) {
                         Inventario inventario = new Inventario();
                         inventario.setId(resultado.getInt("codigo"));
-                        inventario.setArticulo(new Articulo_modelo().ListarArticulo(new Articulo(resultado.getInt("articulo"))));
-                        inventario.setCategoria(new Categoria_modelo().ListarCategoria(new Categoria(resultado.getInt("categoria"))));
+                        inventario.setArticulo(new Articulo_controlador().Obtener(new Articulo(resultado.getInt("articulo"))));
+                        inventario.setCategoria(new Categoria_controlador().Obtener(new Categoria(resultado.getInt("categoria"))));
                         inventario.setUnidad(new Unidad_modelo().ListarUnidad(new Unidad(resultado.getInt("unidad"))));
                         inventario.setEstado(resultado.getBoolean("est"));
                         inventario.setStock(resultado.getBigDecimal("stck"));
@@ -45,7 +47,7 @@ public class Compatible_modelo {
                         inventario.setStockMax(resultado.getInt("stckmax"));
                         inventario.setPrecio(new Precio_modelo().ListarPrecioInv(inventario));
                         inventario.setVencimiento(resultado.getDate("vencimiento"));
-                        inventario.setBodega(new Bodega_modelo().ListarBodega(new Bodega(resultado.getInt("bodega"))));
+                        inventario.setBodega(new Bodega_controlador().Obtener(new Bodega(resultado.getInt("bodega"))));
                         inventario.setImagen(new Imagen_modelo().ListarImagen(inventario));
                         lista.add(inventario);
                     }
@@ -59,10 +61,7 @@ public class Compatible_modelo {
                     new Gestionar().Leer("Empresa", "nombre") + " - " + this.getClass().getName(),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
-
         return lista;
     }
 }

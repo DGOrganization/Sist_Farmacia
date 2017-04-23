@@ -17,39 +17,33 @@ import javax.swing.JOptionPane;
  * @author dakrpastiursSennin
  */
 public class Articulo_modelo {
-    
-    public Articulo ListarArticulo(Articulo pArticulo){
+
+    public Articulo ListarArticulo(Articulo pArticulo) {
         Articulo articulo = new Articulo();
-        Conexion conn = new Conexion();        
-        try{
-            if(conn.Conectar()){
-                try (CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerarticulo(?) }")) {
-                    cmd.setInt(1, pArticulo.getId());
-                    if(cmd.execute()){
-                        try (ResultSet resultado = cmd.getResultSet()) {
-                            while(resultado.next()){
-                                articulo.setId(resultado.getInt("cod"));
-                                articulo.setNombre(resultado.getString("prod"));
-                                articulo.setDescripcion(resultado.getString("descrip"));
-                                articulo.setEstado(resultado.getBoolean("estado"));
-                            }
-                        }
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenerarticulo(?) }")) {
+            cmd.setInt(1, pArticulo.getId());
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
+                    while (resultado.next()) {
+                        articulo.setId(resultado.getInt("cod"));
+                        articulo.setNombre(resultado.getString("prod"));
+                        articulo.setDescripcion(resultado.getString("descrip"));
+                        articulo.setEstado(resultado.getBoolean("estado"));
                     }
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
-                    null, 
+                    null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
-                            + "\nFavor contacte al desarrollador",
+                    + "\nFavor contacte al desarrollador",
                     new Gestionar().Leer("Empresa", "nombre") + " - " + this.getClass().getName(),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
-        
         return articulo;
     }
-    
+
 }

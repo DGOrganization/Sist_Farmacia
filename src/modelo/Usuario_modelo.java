@@ -9,7 +9,6 @@ package modelo;
  *
  * @author dakrpastiursSennin
  */
-
 import configuracion.Gestionar;
 import entidades.Empleado;
 import entidades.Nivel;
@@ -22,45 +21,42 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Usuario_modelo {
-    
-    public boolean Login(Usuario pUsuario){
+
+    public boolean Login(Usuario pUsuario) {
         boolean validado = false;
-        Conexion conn = new Conexion();
-        try{
-            if(conn.Conectar()){                
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call login(?,?) }");
-                cmd.setString(1, pUsuario.getUsername());
-                cmd.setString(2, pUsuario.getPassword());
-                if (cmd.execute()) {
-                    ResultSet _reader = cmd.getResultSet();
-                    if (_reader.next()) {
-                        validado = _reader.getBoolean(1);
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call login(?,?) }")) {
+            cmd.setString(1, pUsuario.getUsername());
+            cmd.setString(2, pUsuario.getPassword());
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
+                    if (resultado.next()) {
+                        validado = resultado.getBoolean(1);
                     }
+                    resultado.close();
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
-                    null, 
+                    null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
-                            + "\nFavor contacte al desarrollador",
+                    + "\nFavor contacte al desarrollador",
                     new configuracion.Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
         return validado;
     }
-    
-    public List<Usuario> ListarUsuarios(){
+
+    public List<Usuario> ListarUsuarios() {
         List<Usuario> lista = new ArrayList<>();
-        Conexion conn = new Conexion();
-        try{
-            if(conn.Conectar()){
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerusuarios() }");
-                if(cmd.execute()){
-                    ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenerusuarios() }")) {
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
+                    while (resultado.next()) {
                         Usuario usuario = new Usuario();
                         usuario.setUsername(resultado.getString("nickname"));
                         usuario.setEmpleado(new Empleado_modelo().ListarEmpleado(new Empleado(resultado.getInt("idempleado"))));
@@ -69,30 +65,27 @@ public class Usuario_modelo {
                     }
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
-                    null, 
+                    null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
-                            + "\nFavor contacte al desarrollador",
+                    + "\nFavor contacte al desarrollador",
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
         return lista;
     }
-    
-    public Usuario ListarUsuario(Usuario pUsuario){
+
+    public Usuario ListarUsuario(Usuario pUsuario) {
         Usuario usuario = new Usuario();
-        Conexion conn = new Conexion();
-        try{
-            if(conn.Conectar()){
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerusuario(?) }");
-                cmd.setString(1, pUsuario.getUsername());
-                if(cmd.execute()){
-                    ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenerusuario(?) }")) {
+            cmd.setString(1, pUsuario.getUsername());
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
+                    while (resultado.next()) {
                         usuario.setUsername(resultado.getString("nickname"));
                         usuario.setEmpleado(new Empleado_modelo().ListarEmpleado(new Empleado(resultado.getInt("idempleado"))));
                         usuario.setNivel(new Nivel_modelo().ListarNivel(new Nivel(resultado.getInt("idnivel")), true));
@@ -100,23 +93,19 @@ public class Usuario_modelo {
                     }
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
-                    null, 
+                    null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
-                            + "\nFavor contacte al desarrollador",
+                    + "\nFavor contacte al desarrollador",
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
         return usuario;
     }
-    
-    
-    
-    public boolean Registrar(Usuario pUsuario){
+
+    /*public boolean Registrar(Usuario pUsuario){
         boolean exito = false;
         Conexion conn = new Conexion();
         try{
@@ -192,6 +181,5 @@ public class Usuario_modelo {
             conn.Desconectar();
         }
         return exito;
-    }
-    
+    }*/
 }

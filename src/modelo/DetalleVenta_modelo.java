@@ -6,6 +6,8 @@
 package modelo;
 
 import configuracion.Gestionar;
+import controlador.Inventario_controlador;
+import controlador.Unidad_controlador;
 import entidades.DetalleVenta;
 import entidades.Inventario;
 import entidades.Unidad;
@@ -22,40 +24,37 @@ import javax.swing.JOptionPane;
  * @author dakrpastiursSennin
  */
 public class DetalleVenta_modelo {
-    
-    public List<DetalleVenta> ObtenerDetalleVenta(Venta pVenta){
+
+    public List<DetalleVenta> ObtenerDetalleVenta(Venta pVenta) {
         List<DetalleVenta> lista = new ArrayList<>();
-        Conexion conn = new Conexion();
-        try{
-            if(conn.Conectar()){
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerdetallesventa(?) }");
-                cmd.setLong(1, pVenta.getId());
-                if(cmd.execute()){
-                    ResultSet _resultado = cmd.getResultSet();
-                    while(_resultado.next()){
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenerdetallesventa(?) }")) {
+            cmd.setLong(1, pVenta.getId());
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
+                    while (resultado.next()) {
                         DetalleVenta detalle = new DetalleVenta();
-                        detalle.setInventario(new Inventario_modelo().ListarInventario(new Inventario(_resultado.getInt("codinv"))));
-                        detalle.setCantidad(_resultado.getBigDecimal("cant"));
-                        detalle.setUnidad(new Unidad_modelo().ListarUnidad(new Unidad(_resultado.getInt("unidad"))));
-                        detalle.setPrecio(_resultado.getBigDecimal("precio"));
-                        detalle.setImporte(_resultado.getBigDecimal("imp"));
-                        detalle.setDescuento(_resultado.getBigDecimal("descpor").intValueExact());
+                        detalle.setInventario(new Inventario_controlador().Obtener(new Inventario(resultado.getInt("codinv"))));
+                        detalle.setCantidad(resultado.getBigDecimal("cant"));
+                        detalle.setUnidad(new Unidad_controlador().Obtener(new Unidad(resultado.getInt("unidad"))));
+                        detalle.setPrecio(resultado.getBigDecimal("precio"));
+                        detalle.setImporte(resultado.getBigDecimal("imp"));
+                        detalle.setDescuento(resultado.getBigDecimal("descpor").intValueExact());
                         lista.add(detalle);
                     }
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
-                    null, 
+                    null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
-                            + "\nFavor contacte al desarrollador",
+                    + "\nFavor contacte al desarrollador",
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally{
-            conn.Desconectar();
         }
         return lista;
     }
-    
+
 }

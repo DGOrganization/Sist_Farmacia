@@ -32,7 +32,7 @@ public class Usuario_controlador {
         return new Usuario_modelo().ListarUsuario(pUsuario);
     }
     
-    public boolean Registrar(Usuario pUsuario){
+    /*public boolean Registrar(Usuario pUsuario){
         return new Usuario_modelo().Registrar(pUsuario);
     }
     
@@ -42,5 +42,5 @@ public class Usuario_controlador {
     
     public boolean Eliminar(Usuario pUsuario){
         return new Usuario_modelo().Eliminar(pUsuario);
-    }
+    }*/
 }

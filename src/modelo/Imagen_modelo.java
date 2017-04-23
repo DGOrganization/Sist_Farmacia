@@ -6,7 +6,6 @@
 package modelo;
 
 import configuracion.Gestionar;
-import entidades.Articulo;
 import entidades.Imagen;
 import entidades.Inventario;
 import java.sql.CallableStatement;
@@ -19,34 +18,30 @@ import javax.swing.JOptionPane;
  * @author dakrpastiursSennin
  */
 public class Imagen_modelo {
-    
-    public Imagen ListarImagen(Inventario pInventario){
+
+    public Imagen ListarImagen(Inventario pInventario) {
         Imagen imagen = new Imagen();
-        Conexion conn = new Conexion();        
-        try{
-            if(conn.Conectar()){
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerimagen(?) }");
-                cmd.setInt(1, pInventario.getId());
-                if(cmd.execute()){
-                    ResultSet resultado = cmd.getResultSet();
-                    while(resultado.next()){
+        try (
+                java.sql.Connection conn = new Conexion().getConnection();
+                CallableStatement cmd = conn.prepareCall("{ call obtenerimagen(?) }")) {
+            cmd.setInt(1, pInventario.getId());
+            if (cmd.execute()) {
+                try (ResultSet resultado = cmd.getResultSet()) {
+                    while (resultado.next()) {
                         imagen.setId(resultado.getInt("codigo"));
                         imagen.setUrl(resultado.getString("url"));
                     }
                 }
             }
-        } catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
-                    null, 
+                    null,
                     "No se han cargado datos debido al error: \n" + ex.getMessage()
-                            + "\nFavor contacte al desarrollador",
+                    + "\nFavor contacte al desarrollador",
                     new Gestionar().Leer("Empresa", "nombre") + " - " + this.getClass().getName(),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-            conn.Desconectar();
         }
-        
         return imagen;
     }
 }

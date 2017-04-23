@@ -5,18 +5,16 @@
  */
 package controlador;
 
-import entidades.Municipio;
-import entidades.Persona;
-import modelo.Municipio_modelo;
+import entidades.Imagen;
+import entidades.Inventario;
+import modelo.Imagen_modelo;
 
 /**
  *
  * @author dakrpastiursSennin
  */
-public class Municipio_controlador {
-    
-    public Municipio Obtener(Persona pPersona){
-        return new Municipio_modelo().ListarMunicipio(pPersona);
+public class Imagen_controlador {
+    public Imagen Obtener(Inventario pInventario){
+        return new Imagen_modelo().ListarImagen(pInventario);
     }
-    
 }

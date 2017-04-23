@@ -5,18 +5,15 @@
  */
 package controlador;
 
-import entidades.Municipio;
-import entidades.Persona;
-import modelo.Municipio_modelo;
+import entidades.Articulo;
+import modelo.Articulo_modelo;
 
 /**
  *
  * @author dakrpastiursSennin
  */
-public class Municipio_controlador {
-    
-    public Municipio Obtener(Persona pPersona){
-        return new Municipio_modelo().ListarMunicipio(pPersona);
+public class Articulo_controlador {
+    public Articulo Obtener(Articulo pArticulo){
+        return new Articulo_modelo().ListarArticulo(pArticulo);
     }
-    
 }

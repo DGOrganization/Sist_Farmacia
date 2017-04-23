@@ -6,6 +6,8 @@
 package modelo;
 
 import configuracion.Gestionar;
+import controlador.Inventario_controlador;
+import controlador.Unidad_controlador;
 import entidades.Compra;
 import entidades.DetalleCompra;
 import entidades.Inventario;
@@ -25,24 +27,23 @@ public class DetalleCompra_modelo {
     
     public List<DetalleCompra> ObtenerDetalle(Compra pCompra){
         List<DetalleCompra> lista = new ArrayList<>();
-        Conexion conn = new Conexion();
-        try{
-            if(conn.Conectar()){
-                CallableStatement cmd = conn.getConnection().prepareCall("{ call obtenerdetallescompra(?) }");
+        try (
+            java.sql.Connection conn = new Conexion().getConnection();
+            CallableStatement cmd = conn.prepareCall("{ call obtenerdetallescompra(?) }")){
                 cmd.setLong(1, pCompra.getId());
                 if(cmd.execute()){
-                    ResultSet _resultado = cmd.getResultSet();
-                    while(_resultado.next()){
+                    try (ResultSet resultado = cmd.getResultSet()){
+                    while(resultado.next()){
                         DetalleCompra detalle = new DetalleCompra();
-                        detalle.setInventario(new Inventario_modelo().ListarInventario(new Inventario(_resultado.getInt("codinv"))));
-                        detalle.setCantidad(_resultado.getBigDecimal("cant"));
-                        detalle.setUnidad(new Unidad_modelo().ListarUnidad(new Unidad(_resultado.getInt("unidad"))));
-                        detalle.setPrecio(_resultado.getBigDecimal("precio"));
-                        detalle.setImporte(_resultado.getBigDecimal("imp"));
+                        detalle.setInventario(new Inventario_controlador().Obtener(new Inventario(resultado.getInt("codinv"))));
+                        detalle.setCantidad(resultado.getBigDecimal("cant"));
+                        detalle.setUnidad(new Unidad_controlador().Obtener(new Unidad(resultado.getInt("unidad"))));
+                        detalle.setPrecio(resultado.getBigDecimal("precio"));
+                        detalle.setImporte(resultado.getBigDecimal("imp"));
                         lista.add(detalle);
                     }
                 }
-            }
+                }
         } catch(SQLException ex){
             JOptionPane.showMessageDialog(
                     null, 
@@ -51,8 +52,6 @@ public class DetalleCompra_modelo {
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE
             );
-        } finally{
-            conn.Desconectar();
         }
         return lista;
     }

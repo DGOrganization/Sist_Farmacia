@@ -5,18 +5,17 @@
  */
 package controlador;
 
-import entidades.Municipio;
-import entidades.Persona;
-import modelo.Municipio_modelo;
+import entidades.Inventario;
+import entidades.Precio;
+import java.util.List;
+import modelo.Precio_modelo;
 
 /**
  *
  * @author dakrpastiursSennin
  */
-public class Municipio_controlador {
-    
-    public Municipio Obtener(Persona pPersona){
-        return new Municipio_modelo().ListarMunicipio(pPersona);
+public class Precio_controlador {
+    public List<Precio> Obtener(Inventario pInventario){
+        return new Precio_modelo().ListarPrecioInv(pInventario);
     }
-    
 }

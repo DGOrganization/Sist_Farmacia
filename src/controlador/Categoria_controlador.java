@@ -22,4 +22,8 @@ public class Categoria_controlador {
         });
         return lista;
     }
+    
+    public Categoria Obtener(Categoria pCategoria) {
+        return new Categoria_modelo().ListarCategoria(pCategoria);
+    }
 }
