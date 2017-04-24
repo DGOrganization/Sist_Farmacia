@@ -71,3 +71,42 @@ FORMULARIO VENTAS
 -Al cerrar la Ventana que pregunte si está seguro (mas adelante agregaremos la opcion Venta en Espera). 
 -- ¿Cual ventana?
 -- Soy sincero no entiendo esta caracteristica.
+---------------------------------------------------
+---------------------------------------------------
+OBSERVACIONES   24-04-2017
+.........................
+------------Formulario Clientes-.-.-.-.-.-.-.-.
+-No actualiza Telefono ni Celular
+-Al actualizarlo, cerrar el formulario y limpiar los campos.
+-Validacion de campos vacíos por separado
+-Sólo una validacion a la vez
+-Sólo son obligatorios los campos de:   Nombres y Sexo el estado ponerlo en Activo por defecto.
+-Si no pone un correo no necesita mostrar la validacion que no es correcto (sólo en caso lo ponga).
+-Quitar lo de null.
+-Al guardar el Registro Salirse del formulario y limpiar los campos.
+
+-.-.-.-.-.Formulario Proveedor-------------------
+-Al dar en Editar y borrar mandar el mensaje.
+-Mostrar el NRC en el form
+-Los campos que no son obligarorios son: Celular, email y sitio web.
+-Verificar funcionamiento.
+
+---------Formulario Productos--------------------
+-La validacion de Campos vacíos que díga: Debes ingresar los datos necesarios
+-Los campos obligatorios son: Nombre, fecha de vencimiento
+-En Margen de utilidad, al cambiarse a Precio de compra (Recalcular el  precio de Venta) segun el margen de utilidad
+-Permitir sólo el valor de 0 a 100 en margen de utilidad.
+-Poner un check al final en la tabla (si tiene o no imagen).
+-En la consulta tomar en cuenta las Farmacias existentes para que los filtros funcionen bien. (no está mostrando todos los existentes, excluye 1 de la bd).
+-Los productos que poseen stock ponerlos de color negro.
+
+-----------Formulario Compras----------------------
+-Está fallando una validacion, al querer registrarla manda q 1ero agregue prods. aunque hayan.
+
+------------Formulario Ventas----------------------
+-Falla al intentar Registrar
+
+--------------Formulario Consultar Ventas-----------
+-El boton mostrar detalles servirá para mostrar los productos que se hallan vendido con la fact. seleccionada.
+-Al hacer uso de los filtros que se vaya actualizando los resultados.
+-Falta anulacion de facturas y validar q seleccione algo.

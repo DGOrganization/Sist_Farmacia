@@ -63,6 +63,7 @@ public class frmMovimientos extends javax.swing.JInternalFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel3.setText("Buscar:");
 
+        jTable1.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},

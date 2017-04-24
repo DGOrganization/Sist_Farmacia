@@ -44,6 +44,7 @@ public class frmUsuariosConec extends javax.swing.JDialog {
         jLabel1.setText("Lista de Usuarios Conectados");
         jLabel1.setOpaque(true);
 
+        jList1.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(jList1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

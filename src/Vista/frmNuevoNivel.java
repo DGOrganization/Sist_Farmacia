@@ -74,7 +74,7 @@ public class frmNuevoNivel extends javax.swing.JDialog {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel5.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel5.setBackground(new java.awt.Color(88, 166, 137));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save32.png"))); // NOI18N
         jButton1.setText("Guardar");

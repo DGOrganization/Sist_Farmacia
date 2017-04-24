@@ -187,6 +187,7 @@ public class frmAgregarProducto extends javax.swing.JDialog {
             }
         });
 
+        jtInventario.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jtInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}

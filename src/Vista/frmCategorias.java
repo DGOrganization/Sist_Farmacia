@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
  *
  * @author Gerard
  */
-public class frmUnidades extends javax.swing.JInternalFrame {
+public class frmCategorias extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmUnidades
      */
-    public frmUnidades() {
+    public frmCategorias() {
         initComponents();
     }
 
@@ -99,7 +99,7 @@ public class frmUnidades extends javax.swing.JInternalFrame {
                 {null}
             },
             new String [] {
-                "Unidad"
+                "Categorias"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -152,7 +152,7 @@ public class frmUnidades extends javax.swing.JInternalFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
-        frmNuevaUnidad dialog = new frmNuevaUnidad(f, true);
+        frmNuevaCategoria dialog = new frmNuevaCategoria(f, true);
         dialog.show();
     }//GEN-LAST:event_btnNuevoActionPerformed
 

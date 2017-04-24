@@ -139,6 +139,7 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
             }
         });
 
+        jtProveedores.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jtProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}

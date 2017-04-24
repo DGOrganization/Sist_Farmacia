@@ -131,7 +131,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
-        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add24.png"))); // NOI18N
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add32.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,7 +139,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
             }
         });
 
-        btnEditarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit24.png"))); // NOI18N
+        btnEditarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit32.png"))); // NOI18N
         btnEditarProveedor.setText("Editar");
         btnEditarProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,7 +147,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete24.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete32.png"))); // NOI18N
         jButton3.setText("Borrar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,13 +160,13 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addContainerGap(63, Short.MAX_VALUE)
                 .addComponent(btnNuevo)
-                .addGap(75, 75, 75)
+                .addGap(50, 50, 50)
                 .addComponent(btnEditarProveedor)
-                .addGap(75, 75, 75)
+                .addGap(50, 50, 50)
                 .addComponent(jButton3)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,6 +188,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
             }
         });
 
+        jtProveedores.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jtProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}

@@ -62,8 +62,10 @@ public class frmMenu extends javax.swing.JFrame {
         desktop = new javax.swing.JDesktopPane();
         jmbPrincipal = new javax.swing.JMenuBar();
         jMenuInicio = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuUsuCon = new javax.swing.JMenuItem();
+        jMenuCambiarUsu = new javax.swing.JMenuItem();
+        jMenuCaja = new javax.swing.JMenuItem();
+        jSeparator11 = new javax.swing.JPopupMenu.Separator();
         menuOperaciones = new javax.swing.JMenu();
         smClientes = new javax.swing.JMenuItem();
         smProveedores = new javax.swing.JMenuItem();
@@ -71,32 +73,49 @@ public class frmMenu extends javax.swing.JFrame {
         miProducto = new javax.swing.JMenuItem();
         smCompras = new javax.swing.JMenuItem();
         smVentas = new javax.swing.JMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
         smInventario = new javax.swing.JMenuItem();
+        jMenuAjustInv = new javax.swing.JMenuItem();
         smCorteCaja = new javax.swing.JMenuItem();
+        jSeparator12 = new javax.swing.JPopupMenu.Separator();
         menuConsultas = new javax.swing.JMenu();
         smConsCompras = new javax.swing.JMenuItem();
         smConsVentas = new javax.swing.JMenuItem();
         smConsProveedores = new javax.swing.JMenuItem();
         smConsClientes = new javax.swing.JMenuItem();
+        jSeparator9 = new javax.swing.JPopupMenu.Separator();
+        jMenuAjusteInv = new javax.swing.JMenuItem();
+        jMenuConsCaja = new javax.swing.JMenuItem();
+        jMenuMovimiento = new javax.swing.JMenuItem();
         menuProcesos = new javax.swing.JMenu();
-        smProcRespaldos = new javax.swing.JMenuItem();
-        smProcImportar = new javax.swing.JMenuItem();
+        smProcPrecios = new javax.swing.JMenuItem();
+        smProcExportar = new javax.swing.JMenuItem();
+        jMenuImportar = new javax.swing.JMenuItem();
+        jMenuCategorias = new javax.swing.JMenuItem();
+        jSeparator8 = new javax.swing.JPopupMenu.Separator();
         menuReportes = new javax.swing.JMenu();
-        smReportVentas = new javax.swing.JMenuItem();
         smReportCompras = new javax.swing.JMenuItem();
-        smReportProveedor = new javax.swing.JMenuItem();
-        smReportArticulos = new javax.swing.JMenuItem();
+        smReportVentas = new javax.swing.JMenuItem();
+        jMenuMovimientos = new javax.swing.JMenuItem();
+        smReporCortes = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        smReportBodegas = new javax.swing.JMenuItem();
+        smReportPrecios = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         smReportClientes = new javax.swing.JMenuItem();
-        smReportFarmacias = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuProveedores = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
         menuSistema = new javax.swing.JMenu();
         smAdministrar = new javax.swing.JMenu();
         smAdmEmpleado = new javax.swing.JMenuItem();
         smAdmUsuarios = new javax.swing.JMenuItem();
         smAdRoles = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
         smEmpresa = new javax.swing.JMenuItem();
         smImpresora = new javax.swing.JMenuItem();
         smUnidades = new javax.swing.JMenuItem();
+        jMenuAdCategorias = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -106,6 +125,7 @@ public class frmMenu extends javax.swing.JFrame {
         });
 
         lblEmpleado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblEmpleado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEmpleado.setText("jLabel1");
         tblSesion.add(lblEmpleado);
         tblSesion.add(jSeparator1);
@@ -132,11 +152,15 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuInicio.setText("Inicio");
         jMenuInicio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        jMenuItem3.setText("Usuarios Conectados");
-        jMenuInicio.add(jMenuItem3);
+        jMenuUsuCon.setText("Usuarios Conectados");
+        jMenuInicio.add(jMenuUsuCon);
 
-        jMenuItem4.setText("Cambiar de Usuario");
-        jMenuInicio.add(jMenuItem4);
+        jMenuCambiarUsu.setText("Cambiar de Usuario");
+        jMenuInicio.add(jMenuCambiarUsu);
+
+        jMenuCaja.setText("Cambiar de Caja");
+        jMenuInicio.add(jMenuCaja);
+        jMenuInicio.add(jSeparator11);
 
         jmbPrincipal.add(jMenuInicio);
 
@@ -189,6 +213,7 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         menuOperaciones.add(smVentas);
+        menuOperaciones.add(jSeparator10);
 
         smInventario.setText("Inventario Inicial");
         smInventario.setEnabled(false);
@@ -199,6 +224,10 @@ public class frmMenu extends javax.swing.JFrame {
         });
         menuOperaciones.add(smInventario);
 
+        jMenuAjustInv.setText("Ajuste de Inventario");
+        jMenuAjustInv.setEnabled(false);
+        menuOperaciones.add(jMenuAjustInv);
+
         smCorteCaja.setText("Corte de Caja");
         smCorteCaja.setEnabled(false);
         smCorteCaja.addActionListener(new java.awt.event.ActionListener() {
@@ -207,6 +236,7 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         menuOperaciones.add(smCorteCaja);
+        menuOperaciones.add(jSeparator12);
 
         jmbPrincipal.add(menuOperaciones);
 
@@ -244,6 +274,19 @@ public class frmMenu extends javax.swing.JFrame {
         smConsClientes.setText("Clientes");
         smConsClientes.setEnabled(false);
         menuConsultas.add(smConsClientes);
+        menuConsultas.add(jSeparator9);
+
+        jMenuAjusteInv.setText("Ajuste de Inventario");
+        jMenuAjusteInv.setEnabled(false);
+        menuConsultas.add(jMenuAjusteInv);
+
+        jMenuConsCaja.setText("Caja");
+        jMenuConsCaja.setEnabled(false);
+        menuConsultas.add(jMenuConsCaja);
+
+        jMenuMovimiento.setText("Movimientos");
+        jMenuMovimiento.setEnabled(false);
+        menuConsultas.add(jMenuMovimiento);
 
         jmbPrincipal.add(menuConsultas);
 
@@ -251,13 +294,27 @@ public class frmMenu extends javax.swing.JFrame {
         menuProcesos.setText("Procesos");
         menuProcesos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        smProcRespaldos.setText("Actualizacion de Precios");
-        smProcRespaldos.setEnabled(false);
-        menuProcesos.add(smProcRespaldos);
+        smProcPrecios.setText("Actualizacion de Precios");
+        smProcPrecios.setEnabled(false);
+        menuProcesos.add(smProcPrecios);
 
-        smProcImportar.setText("Importar de Excel");
-        smProcImportar.setEnabled(false);
-        menuProcesos.add(smProcImportar);
+        smProcExportar.setText("Exportar a Excel");
+        smProcExportar.setEnabled(false);
+        menuProcesos.add(smProcExportar);
+
+        jMenuImportar.setText("Importar désde Excel");
+        jMenuImportar.setEnabled(false);
+        menuProcesos.add(jMenuImportar);
+
+        jMenuCategorias.setText("Ajustar Categorias");
+        jMenuCategorias.setEnabled(false);
+        jMenuCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCategoriasActionPerformed(evt);
+            }
+        });
+        menuProcesos.add(jMenuCategorias);
+        menuProcesos.add(jSeparator8);
 
         jmbPrincipal.add(menuProcesos);
 
@@ -265,38 +322,49 @@ public class frmMenu extends javax.swing.JFrame {
         menuReportes.setText("Reportes");
         menuReportes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        smReportVentas.setText("Ventas");
-        smReportVentas.setEnabled(false);
-        menuReportes.add(smReportVentas);
-
         smReportCompras.setText("Compras");
         smReportCompras.setEnabled(false);
         menuReportes.add(smReportCompras);
 
-        smReportProveedor.setText("Cortes");
-        smReportProveedor.setEnabled(false);
-        menuReportes.add(smReportProveedor);
+        smReportVentas.setText("Ventas");
+        smReportVentas.setEnabled(false);
+        menuReportes.add(smReportVentas);
 
-        smReportArticulos.setText("Almacen y Costos");
-        smReportArticulos.setEnabled(false);
-        menuReportes.add(smReportArticulos);
+        jMenuMovimientos.setText("Movimientos");
+        jMenuMovimientos.setEnabled(false);
+        menuReportes.add(jMenuMovimientos);
 
-        smReportClientes.setText("Lista de Precios");
+        smReporCortes.setText("Cortes de Caja");
+        smReporCortes.setEnabled(false);
+        menuReportes.add(smReporCortes);
+        menuReportes.add(jSeparator3);
+
+        smReportBodegas.setText("Bodegas y Costos");
+        smReportBodegas.setToolTipText("Bodegas y Costos de Productos");
+        smReportBodegas.setEnabled(false);
+        menuReportes.add(smReportBodegas);
+
+        smReportPrecios.setText("Lista de Precios");
+        smReportPrecios.setToolTipText("Listado de Precios");
+        smReportPrecios.setEnabled(false);
+        menuReportes.add(smReportPrecios);
+        menuReportes.add(jSeparator4);
+
+        smReportClientes.setText("Clientes");
+        smReportClientes.setToolTipText("Catalogo de Clientes");
         smReportClientes.setEnabled(false);
         menuReportes.add(smReportClientes);
 
-        smReportFarmacias.setText("Clientes");
-        smReportFarmacias.setEnabled(false);
-        menuReportes.add(smReportFarmacias);
-
-        jMenuItem6.setText("Proveedores");
-        jMenuItem6.setEnabled(false);
-        menuReportes.add(jMenuItem6);
+        jMenuProveedores.setText("Proveedores");
+        jMenuProveedores.setToolTipText("Catalogo de Proveedores");
+        jMenuProveedores.setEnabled(false);
+        menuReportes.add(jMenuProveedores);
+        menuReportes.add(jSeparator7);
 
         jmbPrincipal.add(menuReportes);
 
         menuSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/config32.png"))); // NOI18N
-        menuSistema.setText("Sistema");
+        menuSistema.setText("Configuracion");
         menuSistema.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         smAdministrar.setText("Administrar");
@@ -305,6 +373,11 @@ public class frmMenu extends javax.swing.JFrame {
 
         smAdmEmpleado.setText("Empleados");
         smAdmEmpleado.setEnabled(false);
+        smAdmEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smAdmEmpleadoActionPerformed(evt);
+            }
+        });
         smAdministrar.add(smAdmEmpleado);
 
         smAdmUsuarios.setText("Usuarios");
@@ -326,12 +399,13 @@ public class frmMenu extends javax.swing.JFrame {
         smAdministrar.add(smAdRoles);
 
         menuSistema.add(smAdministrar);
+        menuSistema.add(jSeparator5);
 
-        smEmpresa.setText("Bodegas");
+        smEmpresa.setText("Datos de Empresa");
         smEmpresa.setEnabled(false);
         menuSistema.add(smEmpresa);
 
-        smImpresora.setText("Impresora");
+        smImpresora.setText("Configurar Impresora");
         smImpresora.setEnabled(false);
         menuSistema.add(smImpresora);
 
@@ -343,6 +417,16 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         menuSistema.add(smUnidades);
+
+        jMenuAdCategorias.setText("Categorias");
+        jMenuAdCategorias.setEnabled(false);
+        jMenuAdCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAdCategoriasActionPerformed(evt);
+            }
+        });
+        menuSistema.add(jMenuAdCategorias);
+        menuSistema.add(jSeparator6);
 
         jmbPrincipal.add(menuSistema);
 
@@ -529,8 +613,19 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void smAdRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smAdRolesActionPerformed
         // TODO add your handling code here:
-//        frmRoles frmR = new frmRoles();
-//        frmR.setVisible(true);
+        frmNiveles frmR = new frmNiveles();
+        frmR.pack();
+        desktop.add(frmR);
+            if(frmR.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmR.setVisible(true);
+        }
+        try {
+            frmR.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_smAdRolesActionPerformed
 
     private void smInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smInventarioActionPerformed
@@ -539,7 +634,45 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void smAdmUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smAdmUsuariosActionPerformed
         // TODO add your handling code here:
+        frmUsuarios frmUsu = new frmUsuarios();
+        frmUsu.pack();
+        desktop.add(frmUsu);
+                if(frmUsu.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmUsu.setVisible(true);
+        }
+        try {
+            frmUsu.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_smAdmUsuariosActionPerformed
+
+    private void jMenuAdCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAdCategoriasActionPerformed
+        // TODO add your handling code here:
+        frmCategorias frmCa = new frmCategorias();
+        frmCa.pack();
+        desktop.add(frmCa);
+                if(frmCa.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmCa.setVisible(true);
+        }
+        try {
+            frmCa.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuAdCategoriasActionPerformed
+
+    private void smAdmEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smAdmEmpleadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smAdmEmpleadoActionPerformed
+
+    private void jMenuCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCategoriasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuCategoriasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -579,12 +712,31 @@ public class frmMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktop;
+    private javax.swing.JMenuItem jMenuAdCategorias;
+    private javax.swing.JMenuItem jMenuAjustInv;
+    private javax.swing.JMenuItem jMenuAjusteInv;
+    private javax.swing.JMenuItem jMenuCaja;
+    private javax.swing.JMenuItem jMenuCambiarUsu;
+    private javax.swing.JMenuItem jMenuCategorias;
+    private javax.swing.JMenuItem jMenuConsCaja;
+    private javax.swing.JMenuItem jMenuImportar;
     private javax.swing.JMenu jMenuInicio;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuMovimiento;
+    private javax.swing.JMenuItem jMenuMovimientos;
+    private javax.swing.JMenuItem jMenuProveedores;
+    private javax.swing.JMenuItem jMenuUsuCon;
     private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
+    private javax.swing.JPopupMenu.Separator jSeparator11;
+    private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JPopupMenu.Separator jSeparator8;
+    private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JMenuBar jmbPrincipal;
     private javax.swing.JLabel lblEmpleado;
     private javax.swing.JLabel lblReloj;
@@ -608,14 +760,14 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem smEmpresa;
     private javax.swing.JMenuItem smImpresora;
     private javax.swing.JMenuItem smInventario;
-    private javax.swing.JMenuItem smProcImportar;
-    private javax.swing.JMenuItem smProcRespaldos;
+    private javax.swing.JMenuItem smProcExportar;
+    private javax.swing.JMenuItem smProcPrecios;
     private javax.swing.JMenuItem smProveedores;
-    private javax.swing.JMenuItem smReportArticulos;
+    private javax.swing.JMenuItem smReporCortes;
+    private javax.swing.JMenuItem smReportBodegas;
     private javax.swing.JMenuItem smReportClientes;
     private javax.swing.JMenuItem smReportCompras;
-    private javax.swing.JMenuItem smReportFarmacias;
-    private javax.swing.JMenuItem smReportProveedor;
+    private javax.swing.JMenuItem smReportPrecios;
     private javax.swing.JMenuItem smReportVentas;
     private javax.swing.JMenuItem smUnidades;
     private javax.swing.JMenuItem smVentas;

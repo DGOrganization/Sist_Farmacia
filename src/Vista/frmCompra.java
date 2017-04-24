@@ -280,6 +280,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jTableDetalleCompra.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jTableDetalleCompra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}

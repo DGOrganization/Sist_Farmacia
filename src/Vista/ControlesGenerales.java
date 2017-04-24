@@ -28,7 +28,5 @@ public class ControlesGenerales {
         public boolean isCellEditable(int rowIndex, int vColIndex) {
             return false;
         }
-    }
-    
-    
+    } 
 }

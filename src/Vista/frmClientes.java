@@ -125,7 +125,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Registro de Cliente");
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add32.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
@@ -156,7 +156,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(73, Short.MAX_VALUE)
+                .addContainerGap(75, Short.MAX_VALUE)
                 .addComponent(btnNuevo)
                 .addGap(50, 50, 50)
                 .addComponent(btnEditar)
@@ -185,6 +185,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
             }
         });
 
+        jtClientes.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jtClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null}

@@ -18,6 +18,7 @@ import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -208,7 +209,7 @@ public class Validaciones {
     public void duiFormato(JFormattedTextField txt, Component ventana){
         try{
             txt.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("########-#")));            
-        } catch(Exception ex){
+        } catch(ParseException ex){
             JOptionPane.showMessageDialog(ventana, "Error: " + ex.getMessage(), "Sistema de Compra y Ventas - Validaciones", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -216,7 +217,7 @@ public class Validaciones {
     public void nitFormato(JFormattedTextField txt, Component ventana){
         try{
             txt.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("####-######-###-#")));            
-        } catch(Exception ex){
+        } catch(ParseException ex){
             JOptionPane.showMessageDialog(ventana, "Error: " + ex.getMessage(), "Sistema de Compra y Ventas - Validaciones", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -224,7 +225,7 @@ public class Validaciones {
     public void nrcFormato(JFormattedTextField txt, Component ventana){
         try{
             txt.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("########")));            
-        } catch(Exception ex){
+        } catch(ParseException ex){
             JOptionPane.showMessageDialog(ventana, "Error: " + ex.getMessage(), "Sistema de Compra y Ventas - Validaciones", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -232,7 +233,7 @@ public class Validaciones {
     public void telefonoFormato(JFormattedTextField txt, Component ventana){
         try{
             txt.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("####-####")));            
-        } catch(Exception ex){
+        } catch(ParseException ex){
             JOptionPane.showMessageDialog(ventana, "Error: " + ex.getMessage(), "Sistema de Compra y Ventas - Validaciones", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -496,7 +497,7 @@ public class Validaciones {
             eject = true;
         } else {
             JOptionPane.showMessageDialog(componente,
-                    "Este correo no es valido, no se almacenara", "Sistema de Compras y Ventas - Validaciones",
+                    "Este correo no es valido", "Sistema de Compras y Ventas - Validaciones",
                     JOptionPane.ERROR_MESSAGE);
         }
         return eject;
@@ -515,15 +516,6 @@ public class Validaciones {
         }
         return eject;
     }
-    
-    /*public void SelectedItem(JComboBox cbo, Object value){
-        for(int i = 0; i < cbo.getItemCount(); i++){
-            if(cbo.getItemAt(i).toString().equals(value.toString())){
-                cbo.setSelectedIndex(i);
-                break;
-            }
-        }
-    }*/
     
     public String[] editarApellidos(String apellidos){
         int primero = apellidos.indexOf(" ");

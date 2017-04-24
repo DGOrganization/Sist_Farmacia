@@ -15,6 +15,7 @@ import controlador.Telefono_controlador;
 import entidades.Cliente;
 import entidades.Persona;
 import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Cliente_modelo {
     public List<Cliente> ListarClientes() {
         List<Cliente> lista = new ArrayList<>();
         try (
-                java.sql.Connection conn = new Conexion().getConnection();
+                Connection conn = new Conexion().getConnection();
                 CallableStatement cmd = conn.prepareCall("{ call obtenerclientes() }")) {
             if (cmd.execute()) {
                 try (ResultSet resultado = cmd.getResultSet()) {

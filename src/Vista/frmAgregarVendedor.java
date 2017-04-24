@@ -111,6 +111,7 @@ public class frmAgregarVendedor extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
+        jtUsuarios.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jtUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null}
