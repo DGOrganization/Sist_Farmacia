@@ -66,7 +66,11 @@ public class Telefono {
         this._tipo = _tipo;
     }
     
-    
+     public Telefono(long _id, String _numero, String _tipo) {
+        this._id = _id;
+        this._numero = _numero;
+        this._tipo = _tipo;
+    }
     
     @Override
     public String toString() {

@@ -13,8 +13,10 @@ import entidades.Departamento;
 import entidades.Municipio;
 import entidades.Telefono;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -36,6 +38,8 @@ public class frmNuevoCliente extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
+        new Validaciones().duiFormato(txtDUI, this);
+        new Validaciones().duiFormato(txtNIT, this);
     }
     
     public frmNuevoCliente(javax.swing.JDialog parent, boolean modal) {
@@ -43,6 +47,8 @@ public class frmNuevoCliente extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
+        new Validaciones().duiFormato(txtDUI, this);
+        new Validaciones().duiFormato(txtNIT, this);
     }
     
     private Departamento buscador(List<Departamento> deps){
@@ -57,6 +63,7 @@ public class frmNuevoCliente extends javax.swing.JDialog {
         }
         return encontrado;
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,7 +82,7 @@ public class frmNuevoCliente extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtNRC = new javax.swing.JFormattedTextField();
+        txtDUI = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         txtNIT = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -97,6 +104,8 @@ public class frmNuevoCliente extends javax.swing.JDialog {
         txtEmail = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         chkEstado = new javax.swing.JCheckBox();
+        txtApellidos = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
         jpAcciones = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -136,7 +145,7 @@ public class frmNuevoCliente extends javax.swing.JDialog {
         jLabel3.setText("Nombres:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("NRC:");
+        jLabel4.setText("DUI:");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("NIT:");
@@ -178,7 +187,11 @@ public class frmNuevoCliente extends javax.swing.JDialog {
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setText("Estado:");
 
+        chkEstado.setSelected(true);
         chkEstado.setText("Activo");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel15.setText("Apellidos:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -247,12 +260,17 @@ public class frmNuevoCliente extends javax.swing.JDialog {
                                 .addGap(23, 23, 23)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtNRC, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtDUI, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(197, 197, 197)
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtNIT))
-                                    .addComponent(txtNombre)))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(23, 23, 23)
+                                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -268,20 +286,27 @@ public class frmNuevoCliente extends javax.swing.JDialog {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(7, 7, 7)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(3, 3, 3)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtNRC)
+                                    .addComponent(txtDUI)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -308,7 +333,7 @@ public class frmNuevoCliente extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cboDepto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cboMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -403,31 +428,74 @@ public class frmNuevoCliente extends javax.swing.JDialog {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         Validaciones validar = new Validaciones();
-        boolean valido = validar.validarCamposTexto(txtNombre) && validar.validarCamposTexto(txtTelefono) && validar.validarCamposTexto(txtCelular)
-         && validar.validarCamposTexto(txtNIT) && validar.validarCamposTexto(txtDireccion)
-        && validar.validarFechas(jdcNacimiento);
-        if(valido){
+        if(txtNombre.getText().isEmpty() || txtApellidos.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this,
+                    "El nombre es un campo obligatorio", 
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.ERROR_MESSAGE);
+        } else {         
             cliente.setNombre(txtNombre.getText());
-//            String nombre[] = validar.editarApellidos(txtApellidos.getText());
-            List<Telefono> telefonos = new ArrayList<>();
-            telefonos.add(new Telefono(txtTelefono.getText(), "Casa"));
-            telefonos.add(new Telefono(txtCelular.getText(), "Movil"));
-//            if(nombre.length > 0){
-//                cliente.setApellidoPaterno(nombre[0]);
-//                cliente.setApellidoMaterno(nombre[1]);
-//            } else {
-//                cliente.setApellidoPaterno(nombre[0]);
-//            }
-            cliente.setNit(txtNIT.getText());
-            cliente.setSexo(cboSexo.getSelectedItem().toString().substring(0, 1));
-            cliente.setNacimiento(jdcNacimiento.getDate());
-            cliente.setDireccion(txtDireccion.getText());
-            cliente.setMunicipio((Municipio) cboMunicipio.getSelectedItem());
-            cliente.setTelefono(telefonos);
-            if(!txtEmail.equals("")){
-                if(validar.validarEmail(txtEmail.getText(), this)){
-                    cliente.setEmail(txtEmail.getText());
+            if (txtApellidos.getText().trim().split(" ").length > 0) {
+                String[] apellidos = validar.editarApellidos(txtApellidos.getText());
+                System.out.println(Arrays.toString(apellidos));cliente.setApellidoPaterno(apellidos[0]);
+                if (apellidos.length > 1) {
+                    cliente.setApellidoMaterno(apellidos[1]);
+                } else {
+                    cliente.setApellidoMaterno("");
                 }
+            } else {
+                cliente.setApellidoPaterno(txtApellidos.getText());
+            }
+            
+            if(!(txtDUI.getText().trim().equals("-") || txtDUI.getText().isEmpty())){
+                cliente.setDui(txtDUI.getText());
+            } else {
+                cliente.setDui("");
+            }
+            List<Telefono> telefonos = new ArrayList<>(); 
+            if(!(txtTelefono.getText().isEmpty() || txtTelefono.getText().trim().equals("-"))){
+                telefonos.add(new Telefono(txtTelefono.getText(), "Casa"));                
+            } else {
+                telefonos.add(new Telefono("", ""));  
+            }
+            if(!(txtCelular.getText().isEmpty() || txtCelular.getText().trim().equals("-"))){
+            telefonos.add(new Telefono(txtCelular.getText(), "Movil"));
+            } else {
+                telefonos.add(new Telefono("", ""));
+            }
+            if(!(txtNIT.getText().isEmpty() || txtNIT.getText().trim().equals("---"))){
+                cliente.setNit(txtNIT.getText());
+            } else {
+                cliente.setNit("");
+            }
+            cliente.setSexo(cboSexo.getSelectedItem().toString().substring(0, 1));
+            if(!(jdcNacimiento.getDate() == null)){
+                cliente.setNacimiento(jdcNacimiento.getDate());
+            } else {
+                cliente.setNacimiento(null);
+            }
+            if(!txtDireccion.getText().isEmpty()){
+                cliente.setDireccion(txtDireccion.getText());
+            } else {
+                cliente.setDireccion("");
+            }
+            cliente.setMunicipio((Municipio) cboMunicipio.getSelectedItem());
+            if(telefonos.isEmpty()){
+                cliente.setTelefono(null);
+            }else{
+                cliente.setTelefono(telefonos);
+            }
+            if(!txtEmail.getText().isEmpty()){
+                if(validar.validarEmail(txtEmail.getText())){
+                    cliente.setEmail(txtEmail.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                    "Este correo no es valido", 
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                cliente.setEmail("");
             }
             cliente.setEstado(chkEstado.isSelected());
             if(!isEditar()){
@@ -449,14 +517,7 @@ public class frmNuevoCliente extends javax.swing.JDialog {
                     }
                 }
             }
-//            ttxtNRCtVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(
-                null,
-                "Termina de ingresar los campos restantes",
-                new Gestionar().Leer("Empresa", "nombre"),
-                JOptionPane.ERROR_MESSAGE
-            );
+            this.setVisible(false);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -479,6 +540,7 @@ public class frmNuevoCliente extends javax.swing.JDialog {
          if(isEditar()){
             txtNombre.setText(cliente.getNombre());
             txtNIT.setText(cliente.getNit());
+            txtDUI.setText(cliente.getDui());
             cboSexo.setSelectedItem(cliente.getSexo());
             jdcNacimiento.setDate(cliente.getNacimiento());
             txtDireccion.setText(cliente.getDireccion());
@@ -528,17 +590,15 @@ public class frmNuevoCliente extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                frmNuevoCliente dialog = new frmNuevoCliente(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            frmNuevoCliente dialog = new frmNuevoCliente(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 
@@ -555,6 +615,7 @@ public class frmNuevoCliente extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -570,11 +631,12 @@ public class frmNuevoCliente extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField1;
     private com.toedter.calendar.JDateChooser jdcNacimiento;
     private javax.swing.JPanel jpAcciones;
+    private javax.swing.JTextField txtApellidos;
     private javax.swing.JFormattedTextField txtCelular;
+    private javax.swing.JFormattedTextField txtDUI;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JFormattedTextField txtNIT;
-    private javax.swing.JFormattedTextField txtNRC;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JFormattedTextField txtTelefono;
     // End of variables declaration//GEN-END:variables

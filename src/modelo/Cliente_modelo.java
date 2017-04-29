@@ -18,6 +18,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -110,22 +111,42 @@ public class Cliente_modelo {
             cmd.setString(1, pCliente.getNombre());
             cmd.setString(2, pCliente.getApellidoPaterno());
             cmd.setString(3, pCliente.getApellidoMaterno());
-            cmd.setString(4, pCliente.getDui());
-            cmd.setString(5, pCliente.getNit());
+            if(!pCliente.getDui().isEmpty()){
+                cmd.setString(4, pCliente.getDui());
+            } else {
+                cmd.setNull(4, Types.VARCHAR);
+            }
+            if(!pCliente.getNit().isEmpty()){
+                cmd.setString(5, pCliente.getNit());
+            } else {
+                cmd.setNull(5, Types.VARCHAR);
+            }
             cmd.setString(6, pCliente.getSexo());
-            cmd.setObject(7, pCliente.getNacimiento());
-            cmd.setString(8, pCliente.getDireccion());
+            if(!(pCliente.getNacimiento() == null)){
+                cmd.setDate(7, pCliente.getNacimiento());
+            } else {
+                cmd.setNull(7, Types.DATE);
+            }
+            if(!pCliente.getDireccion().isEmpty()){
+                cmd.setString(8, pCliente.getDireccion());
+            } else {
+                cmd.setString(8, null);
+            }
             JSONArray jsona = new JSONArray();
             pCliente.getTelefono().forEach(datos -> {
                 JSONObject jsono = new JSONObject();
-                jsono.put("num", datos.getNumero());
+                jsono.put("num", datos.getNumero().isEmpty() ? null : datos.getNumero());
                 jsono.put("tip", datos.getTipo());
                 jsona.put(jsono);
             });
             PGobject telefonos = new PGobject();
             telefonos.setType("json");
             telefonos.setValue(jsona.toString());
-            cmd.setString(9, pCliente.getEmail());
+            if(!pCliente.getEmail().isEmpty()){
+                cmd.setString(9, pCliente.getEmail());
+            } else {
+                 cmd.setNull(9, Types.VARCHAR);
+            }
             cmd.setInt(10, pCliente.getMunicipio().getId());
             cmd.setObject(11, telefonos);
             exito = cmd.execute();
@@ -137,6 +158,10 @@ public class Cliente_modelo {
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE
             );
+            System.out.println("Eror == " + ex.getMessage());
+            for (int i = 0; i < ex.getStackTrace().length; i++) {
+                System.err.println("ERROR: " + ex.getStackTrace()[i]);
+            }
         }
         return exito;
     }
@@ -150,22 +175,42 @@ public class Cliente_modelo {
             cmd.setString(2, pCliente.getNombre());
             cmd.setString(3, pCliente.getApellidoPaterno());
             cmd.setString(4, pCliente.getApellidoMaterno());
-            cmd.setString(5, pCliente.getDui());
-            cmd.setString(6, pCliente.getNit());
+            if(!pCliente.getDui().isEmpty()){
+                cmd.setString(5, pCliente.getDui());
+            } else {
+                cmd.setNull(5, Types.VARCHAR);
+            }
+            if(!pCliente.getNit().isEmpty()){
+                cmd.setString(6, pCliente.getNit());
+            } else {
+                cmd.setNull(6, Types.VARCHAR);
+            }
             cmd.setString(7, pCliente.getSexo());
-            cmd.setDate(8, pCliente.getNacimiento());
-            cmd.setString(9, pCliente.getDireccion());
+            if(!pCliente.getNacimiento().toString().isEmpty()){
+                cmd.setDate(8, pCliente.getNacimiento());
+            } else {
+                cmd.setNull(8, Types.VARCHAR);
+            }
+            if(!pCliente.getDireccion().isEmpty()){
+                cmd.setString(9, pCliente.getDireccion());
+            } else {
+                cmd.setNull(8, Types.LONGNVARCHAR);
+            }
             JSONArray jsona = new JSONArray();
             pCliente.getTelefono().forEach(datos -> {
                 JSONObject jsono = new JSONObject();
-                jsono.put("num", datos.getNumero());
+                jsono.put("num", datos.getNumero().isEmpty() ? null : datos.getNumero());
                 jsono.put("tip", datos.getTipo());
                 jsona.put(jsono);
             });
             PGobject telefonos = new PGobject();
             telefonos.setType("json");
             telefonos.setValue(jsona.toString());
-            cmd.setString(10, pCliente.getEmail());
+            if(!pCliente.getEmail().isEmpty()){
+                cmd.setString(10, pCliente.getEmail());
+            } else {
+                 cmd.setNull(10, Types.VARCHAR);
+            }
             cmd.setInt(11, pCliente.getMunicipio().getId());
             cmd.setObject(12, telefonos);
             exito = cmd.execute();

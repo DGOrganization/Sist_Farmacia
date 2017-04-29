@@ -88,7 +88,7 @@ public class Persona {
     }
 
     public void setNacimiento(java.util.Date _nacimiento) {
-        this._nacimiento = new java.sql.Date(_nacimiento.getTime());
+        this._nacimiento = (null == _nacimiento ? null : new java.sql.Date(_nacimiento.getTime()));
     }
 
     public String getDireccion() {

@@ -279,16 +279,32 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
             proveedor.setDomicilio(txtDireccion.getText());
             proveedor.setNIT(txtNIT.getText());
             proveedor.setTelefono(txtTelefono.getText());
-            proveedor.setCelular(txtCelular.getText());
+            if(!txtCelular.getText().isEmpty()){
+                proveedor.setCelular(txtCelular.getText());
+            } else {
+                proveedor.setCelular("");
+            }
             if(!txtEmail.getText().isEmpty()){
-                if(validar.validarEmail(txtEmail.getText(), this)){
+                if(validar.validarEmail(txtEmail.getText())){
                     proveedor.setEmail(txtEmail.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                    "Este correo no es valido", "Sistema de Compras y Ventas - Validaciones",
+                    JOptionPane.ERROR_MESSAGE);
                 }
+            } else {
+                proveedor.setEmail("");
             }
             if(!txtWeb.getText().isEmpty()){
-                if(validar.validarURL(txtWeb.getText(), this)){
+                if(validar.validarURL(txtWeb.getText())){
                     proveedor.setWebsite(txtWeb.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                    "Esta url no es valida, no se almacenara", "Sistema de Compras y Ventas - Validaciones",
+                    JOptionPane.ERROR_MESSAGE);
                 }
+            } else {
+                proveedor.setWebsite("");
             }
             if(editar == false){
                 if(controlador.Registrar(proveedor)){

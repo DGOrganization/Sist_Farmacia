@@ -21,6 +21,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JButton;
@@ -489,54 +490,48 @@ public class Validaciones {
         return exito;
     }
     
-    public boolean validarEmail(String correo, Component componente) {
+    public boolean validarEmail(String correo) {
         Pattern pat = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
         Matcher mat = pat.matcher(correo); 
         boolean eject = false;
         if (mat.find()) {
             eject = true;
-        } else {
-            JOptionPane.showMessageDialog(componente,
-                    "Este correo no es valido", "Sistema de Compras y Ventas - Validaciones",
-                    JOptionPane.ERROR_MESSAGE);
         }
         return eject;
     }
     
-    public boolean validarURL(String url, Component componente) {
+    public boolean validarURL(String url) {
         Pattern pat = Pattern.compile("^[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]");
         Matcher mat = pat.matcher(url); 
         boolean eject = false;
         if (mat.find()) {
             eject = true;
-        } else {
-            JOptionPane.showMessageDialog(componente,
-                    "Esta url no es valida, no se almacenara", "Sistema de Compras y Ventas - Validaciones",
-                    JOptionPane.ERROR_MESSAGE);
         }
         return eject;
     }
     
     public String[] editarApellidos(String apellidos){
-        int primero = apellidos.indexOf(" ");
-        int demas = apellidos.indexOf(" ", primero);
-        
-        String[] partirApellidos = null;
-        if(demas > 0){ 
-            partirApellidos = new String[]{
-                apellidos.substring(0, primero).trim(),
-                apellidos.substring(primero).trim()
-            };
+        String[] partir = null;
+        StringTokenizer token = new StringTokenizer(apellidos);
+        String paterno = token.nextToken();
+        String materno = "";
+        while(token.hasMoreTokens()){
+            materno += " " + token.nextToken();
         }
-        return partirApellidos;
+        if(materno.isEmpty()){
+            partir = new String[] { paterno };
+        } else {
+            partir = new String[]{ paterno, materno};
+        }
+        return partir;
     }
     
-    public static String[] procesarNombres(String nombreCompleto){
+    public String[] procesarNombres(String nombreCompleto){
         int nombre1 = nombreCompleto.indexOf(" ", 0);
         int nombre2 = nombreCompleto.indexOf(" ", nombre1+1);
         int apellido1 = nombreCompleto.indexOf(" ", nombre2+1);
         String[] partir = null;
-        if(nombre1 > 0){
+        if(nombre1 > -1){
             partir = new String[]{
                 nombreCompleto.substring(0, nombre2).trim(),
                 nombreCompleto.substring(nombre2, apellido1).trim(),

@@ -95,7 +95,6 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         if (fila > -1) {
             frmNuevoProveedor frm = new frmNuevoProveedor((JFrame) f, true);
             frm.setProveedor(proveedorList.get(proveedorList.indexOf((Proveedor) jtProveedores.getValueAt(fila, 0))));
-            System.out.println("Proveedor seleccionado" + frm.getProveedor());
             frm.setEditar(true);
             frm.setVisible(true);
             if (!frm.isVisible()) {

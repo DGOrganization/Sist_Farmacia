@@ -13,8 +13,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -141,7 +139,11 @@ public class Proveedor_modelo {
             cmd.setString(4, pProveedor.getDomicilio());
             cmd.setString(5, pProveedor.getNIT());
             cmd.setString(6, pProveedor.getTelefono());
-            cmd.setString(7, pProveedor.getCelular());
+            if(pProveedor.getCelular().isEmpty()){
+                cmd.setNull(7, Types.VARCHAR);
+            } else {
+                cmd.setString(7, pProveedor.getCelular());
+            }
             if (pProveedor.getEmail().isEmpty()) {
                 cmd.setNull(8, Types.VARCHAR);
             } else {

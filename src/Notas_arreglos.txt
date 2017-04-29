@@ -1,6 +1,6 @@
 Formulario Productos
 ---------
-1.)Mejorar el tiempo de carga en formulario Producto. Pendiente
+1.)Mejorar el tiempo de carga en formulario Producto. Ok
 2.)Los unicos campos obligatorios en Registro de Productos son:
 	-Nombre y Fecha de Vencimiento. OK
 El margen de utilidad es opcional dejarlo, pueden colocarse los precios manuales.
@@ -21,8 +21,8 @@ Formulario Ventas
 -------------------------
 *******************19-04-2017**********************
 GENERALES
--En la barra de tareas que no se pueda arrastrar. ok
--En los formularios de busqueda: al empezar a buscar algo, al momento de encontrarlo que lo seleccione.ok
+-En la barra de tareas que no se pueda arrastrar. OK
+-En los formularios de busqueda: al empezar a buscar algo, al momento de encontrarlo que lo seleccione. OK
     -Al estar seleccionado algo que al dar ENTER funcione de la misma forma que el boton seleccionar. 
 ---
 FORMULARIO PRODUCTOS
@@ -78,18 +78,27 @@ OBSERVACIONES   24-04-2017
 ------------Formulario Clientes-.-.-.-.-.-.-.-.
 -No actualiza Telefono ni Celular
 -Al actualizarlo, cerrar el formulario y limpiar los campos.
+-- Al cerrarse se hace un dispose para eliminar todo...
 -Validacion de campos vacíos por separado
+-- mmmmm eso va a implicar un monton de if
 -Sólo una validacion a la vez
 -Sólo son obligatorios los campos de:   Nombres y Sexo el estado ponerlo en Activo por defecto.
--Si no pone un correo no necesita mostrar la validacion que no es correcto (sólo en caso lo ponga).
+-- Si mas lo recuerdo ya lo habia puesto asi
+-Si no pone un correo no necesita mostrar la validacion que no es correcto (sólo en caso lo ponga). OK
 -Quitar lo de null.
+-- En que campo aparece?
 -Al guardar el Registro Salirse del formulario y limpiar los campos.
-
+-- Ya lo hace
+----NRC es para empresas o dueños de empresas el cliente no tiene porque tenerlo
 -.-.-.-.-.Formulario Proveedor-------------------
 -Al dar en Editar y borrar mandar el mensaje.
+-- Ya tiene los mensajes
 -Mostrar el NRC en el form
--Los campos que no son obligarorios son: Celular, email y sitio web.
+-- Ya lo hace
+-Los campos que no son obligarorios son: Celular, email y sitio web. OK
+-- El emil y sitio web ya estan opcionales
 -Verificar funcionamiento.
+-- Esta funcionando
 
 ---------Formulario Productos--------------------
 -La validacion de Campos vacíos que díga: Debes ingresar los datos necesarios
