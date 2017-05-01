@@ -7,10 +7,12 @@ package Vista;
 
 import controlador.Venta_controlador;
 import entidades.Venta;
+import java.awt.Frame;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -73,7 +75,17 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
                     return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase());
                 }
         ).collect(Collectors.toList());
-        
+
+        encontrado = encontrado.stream().filter(
+                datos -> {
+                    if(jdcFinal.getDate() != null && jdcInicio.getDate() != null)
+                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
+                        && datos.getFecha().after(jdcInicio.getDate())
+                        && datos.getFecha().before(jdcFinal.getDate());
+                    else
+                        return true;
+                }
+        ).collect(Collectors.toList());
         cargarDatos(encontrado);
     }
     
@@ -108,7 +120,7 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jdcInicio = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jdcFinal = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -117,7 +129,7 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtVentas = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        btnGuardar = new javax.swing.JButton();
+        btnDetalle = new javax.swing.JButton();
         btnAnular = new javax.swing.JButton();
 
         setClosable(true);
@@ -138,7 +150,12 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/fecha16.png"))); // NOI18N
         jLabel2.setText("Fecha Final:");
 
-        jDateChooser2.setDateFormatString("dd-MM-yyyy");
+        jdcFinal.setDateFormatString("dd-MM-yyyy");
+        jdcFinal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jdcFinalPropertyChange(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
@@ -190,7 +207,7 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
                                 .addGap(31, 31, 31)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jdcFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(10, 10, 10))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -208,7 +225,7 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jdcInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jdcFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
@@ -229,12 +246,12 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/show32.png"))); // NOI18N
-        btnGuardar.setText("Mostrar Detalles");
-        btnGuardar.setToolTipText("Seleccionar una Venta");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/show32.png"))); // NOI18N
+        btnDetalle.setText("Mostrar Detalles");
+        btnDetalle.setToolTipText("Seleccionar una Venta");
+        btnDetalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnDetalleActionPerformed(evt);
             }
         });
 
@@ -247,7 +264,7 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(148, Short.MAX_VALUE)
-                .addComponent(btnGuardar)
+                .addComponent(btnDetalle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
                 .addComponent(btnAnular)
                 .addContainerGap(147, Short.MAX_VALUE))
@@ -258,7 +275,7 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAnular, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -280,9 +297,15 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void btnDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardarActionPerformed
+        int fila = jtVentas.getSelectedRow();
+        if(fila > -1){
+            Frame frm = JOptionPane.getFrameForComponent(this);
+            frmDetalleVenta frmDetalle = new frmDetalleVenta(frm, true);
+            frmDetalle.setVenta_seleccionada(ventaList.get(ventaList.indexOf((Venta) jtVentas.getValueAt(fila, 0))));
+        }
+    }//GEN-LAST:event_btnDetalleActionPerformed
 
     private void cboEstadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboEstadoItemStateChanged
         // TODO add your handling code here:
@@ -292,16 +315,22 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
     private void jdcInicioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdcInicioPropertyChange
         // TODO add your handling code here:
         if(evt.getPropertyName().toUpperCase().equals("DATE")){
-            System.out.println("Se cambio el valor de la jDateChooser");
+            buscarTXT();
         }
     }//GEN-LAST:event_jdcInicioPropertyChange
+
+    private void jdcFinalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdcFinalPropertyChange
+        // TODO add your handling code here:
+        if(evt.getPropertyName().toUpperCase().equals("DATE")){
+            buscarTXT();
+        }
+    }//GEN-LAST:event_jdcFinalPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnular;
-    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnDetalle;
     private javax.swing.JComboBox<String> cboEstado;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -310,6 +339,7 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private com.toedter.calendar.JDateChooser jdcFinal;
     private com.toedter.calendar.JDateChooser jdcInicio;
     private javax.swing.JTable jtVentas;
     private javax.swing.JTextField txtBusqueda;

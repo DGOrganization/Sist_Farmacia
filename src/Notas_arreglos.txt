@@ -76,13 +76,12 @@ FORMULARIO VENTAS
 OBSERVACIONES   24-04-2017
 .........................
 ------------Formulario Clientes-.-.-.-.-.-.-.-.
--No actualiza Telefono ni Celular
+-No actualiza Telefono ni Celular OK
 -Al actualizarlo, cerrar el formulario y limpiar los campos.
 -- Al cerrarse se hace un dispose para eliminar todo...
--Validacion de campos vacíos por separado
--- mmmmm eso va a implicar un monton de if
--Sólo una validacion a la vez
--Sólo son obligatorios los campos de:   Nombres y Sexo el estado ponerlo en Activo por defecto.
+-Validacion de campos vacíos por separado OK
+-Sólo una validacion a la vez OK
+-Sólo son obligatorios los campos de:   Nombres y Sexo el estado ponerlo en Activo por defecto. OK
 -- Si mas lo recuerdo ya lo habia puesto asi
 -Si no pone un correo no necesita mostrar la validacion que no es correcto (sólo en caso lo ponga). OK
 -Quitar lo de null.

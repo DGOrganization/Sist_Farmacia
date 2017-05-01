@@ -16,7 +16,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
  */
 public final class Conexion {    
     private static final BasicDataSource pool = new BasicDataSource();
-    static{     
+    static {     
         pool.setDriverClassName("org.postgresql.Driver");
         pool.setUrl("jdbc:postgresql://localhost:5432/db_farmacia");        
         pool.setUsername("postgres");
