@@ -125,7 +125,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
-        setTitle("Registro de Cliente");
+        setTitle("Clientes");
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 

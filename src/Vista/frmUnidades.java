@@ -42,7 +42,7 @@ public class frmUnidades extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
-        setTitle("Unidad");
+        setTitle("Unidades de Medida");
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 

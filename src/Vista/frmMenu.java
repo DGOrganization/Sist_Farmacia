@@ -7,14 +7,17 @@ package Vista;
 
 import configuracion.Gestionar;
 import entidades.Usuario;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterJob;
 import java.beans.PropertyVetoException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -167,9 +170,19 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuInicio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         jMenuUsuCon.setText("Usuarios Conectados");
+        jMenuUsuCon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuUsuConActionPerformed(evt);
+            }
+        });
         jMenuInicio.add(jMenuUsuCon);
 
         jMenuCambiarUsu.setText("Cambiar de Usuario");
+        jMenuCambiarUsu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCambiarUsuActionPerformed(evt);
+            }
+        });
         jMenuInicio.add(jMenuCambiarUsu);
 
         jMenuCaja.setText("Cambiar de Caja");
@@ -248,6 +261,11 @@ public class frmMenu extends javax.swing.JFrame {
 
         jMenuAjustInv.setText("Ajuste de Inventario");
         jMenuAjustInv.setEnabled(false);
+        jMenuAjustInv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAjustInvActionPerformed(evt);
+            }
+        });
         menuOperaciones.add(jMenuAjustInv);
 
         smCorteCaja.setText("Corte de Caja");
@@ -304,10 +322,20 @@ public class frmMenu extends javax.swing.JFrame {
 
         jMenuConsCaja.setText("Caja");
         jMenuConsCaja.setEnabled(false);
+        jMenuConsCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuConsCajaActionPerformed(evt);
+            }
+        });
         menuConsultas.add(jMenuConsCaja);
 
         jMenuMovimiento.setText("Movimientos");
         jMenuMovimiento.setEnabled(false);
+        jMenuMovimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuMovimientoActionPerformed(evt);
+            }
+        });
         menuConsultas.add(jMenuMovimiento);
 
         jmbPrincipal.add(menuConsultas);
@@ -429,6 +457,11 @@ public class frmMenu extends javax.swing.JFrame {
 
         smImpresora.setText("Configurar Impresora");
         smImpresora.setEnabled(false);
+        smImpresora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smImpresoraActionPerformed(evt);
+            }
+        });
         menuSistema.add(smImpresora);
 
         smUnidades.setText("Unidades");
@@ -709,6 +742,19 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void jMenuCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCategoriasActionPerformed
         // TODO add your handling code here:
+        frmAjustarCategorias frmACa = new frmAjustarCategorias();
+        frmACa.pack();
+        desktop.add(frmACa);
+                if(frmACa.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmACa.setVisible(true);
+        }
+        try {
+            frmACa.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuCategoriasActionPerformed
 
     private void jMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalirActionPerformed
@@ -721,6 +767,62 @@ public class frmMenu extends javax.swing.JFrame {
                         System.exit( 0 ); 
                     }
     }//GEN-LAST:event_jMenuSalirActionPerformed
+
+    private void jMenuUsuConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuConActionPerformed
+        // TODO add your handling code here:
+        Frame fus = JOptionPane.getFrameForComponent(this);
+        frmUsuariosConec frm = new frmUsuariosConec((JFrame) fus, true);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuUsuConActionPerformed
+
+    static Vista.frmMenu aux;
+    static Vista.Sesion auxSes;
+    private void jMenuCambiarUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCambiarUsuActionPerformed
+        // TODO add your handling code here:
+       int respuesta = JOptionPane.showConfirmDialog(
+               null, "¿Desea cerrar sesión?", "Alerta!", JOptionPane.YES_NO_OPTION);
+           if (respuesta == JOptionPane.YES_OPTION)
+            {
+                auxSes = new Vista.Sesion();        
+                aux=new Vista.frmMenu();
+                aux.setVisible(false);
+                auxSes.setVisible(true);
+                this.setVisible(false);      
+            }       
+    }//GEN-LAST:event_jMenuCambiarUsuActionPerformed
+
+    private void jMenuAjustInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAjustInvActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuAjustInvActionPerformed
+
+    private void smImpresoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smImpresoraActionPerformed
+        // TODO add your handling code here:
+        PrinterJob.getPrinterJob().printDialog();
+    }//GEN-LAST:event_smImpresoraActionPerformed
+
+    private void jMenuConsCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuConsCajaActionPerformed
+        // TODO add your handling code here:
+        Frame fcaj = JOptionPane.getFrameForComponent(this);
+        frmConsultarCaja frm = new frmConsultarCaja((JFrame) fcaj, true);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuConsCajaActionPerformed
+
+    private void jMenuMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMovimientoActionPerformed
+        // TODO add your handling code here:
+        frmConsulMovi frmCMov = new frmConsulMovi();
+        frmCMov.pack();
+        desktop.add(frmCMov);
+                if(frmCMov.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmCMov.setVisible(true);
+        }
+        try {
+            frmCMov.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuMovimientoActionPerformed
 
     /**
      * @param args the command line arguments

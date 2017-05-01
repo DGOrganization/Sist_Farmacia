@@ -38,6 +38,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
 
         setClosable(true);
+        setTitle("Administracion de Usuarios");
+        setToolTipText("");
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 

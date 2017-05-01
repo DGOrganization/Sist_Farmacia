@@ -35,6 +35,9 @@ public class frmAjustarCategorias extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtInventario = new javax.swing.JTable();
 
+        setClosable(true);
+        setTitle("Ajuste de Categorias");
+
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
         btnNuevo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N

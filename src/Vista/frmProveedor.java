@@ -131,7 +131,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
-        setTitle("Proveedor");
+        setTitle("Proveedores");
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 

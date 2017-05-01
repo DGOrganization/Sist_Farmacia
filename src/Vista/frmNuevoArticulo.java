@@ -45,7 +45,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Gerard
  */
-public class frmNuevoProducto extends javax.swing.JDialog {
+public class frmNuevoArticulo extends javax.swing.JDialog {
     private Inventario inventario;
     private boolean editar = false;
     private final Inventario_controlador controlador;
@@ -57,7 +57,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public frmNuevoProducto(java.awt.Frame parent, boolean modal) {
+    public frmNuevoArticulo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
@@ -72,12 +72,12 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         validar.validarSoloNumeros(txtMargen2);
         validar.validarSoloNumeros(txtMargen3);
         validar.validarSoloDecimales(txtPrecioCompra);
-        validar.validarSoloDecimales(txtPrecio1);
-        validar.validarSoloDecimales(txtPrecio2);
-        validar.validarSoloDecimales(txtPrecio3);
-        validar.validarSoloDecimales(txtMayoreo1);
-        validar.validarSoloDecimales(txtMayoreo2);
-        validar.validarSoloDecimales(txtMayoreo3);
+//        validar.validarSoloDecimales(txtPrecio1);
+//        validar.validarSoloDecimales(txtPrecio2);
+//        validar.validarSoloDecimales(txtPrecio3);
+//        validar.validarSoloDecimales(txtMayoreo1);
+//        validar.validarSoloDecimales(txtMayoreo2);
+//        validar.validarSoloDecimales(txtMayoreo3);
         validar.validarSoloNumeros(txtStockMin);
         validar.validarSoloNumeros(txtStockMax);
         changeText(txtMargen1);
@@ -149,26 +149,26 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                     precioCompra = new BigDecimal(txtPrecioCompra.getText());
                     margen1 = new BigDecimal(txtMargen1.getText());
                     BigDecimal precio1 = precioCompra.add(precioCompra.multiply(margen1.divide(new BigDecimal(100))));
-                    txtPrecio1.setText(precio1.setScale(2, RoundingMode.HALF_UP).toString());
+//                    txtPrecio1.setText(precio1.setScale(2, RoundingMode.HALF_UP).toString());
                 }
 
                 if (txtMargen2.getText().isEmpty() == false) {
                     margen2 = new BigDecimal(txtMargen2.getText());
                     BigDecimal precio2 = precioCompra.add(precioCompra.multiply(margen2.divide(new BigDecimal(100))));
-                    txtPrecio2.setText(precio2.setScale(2, RoundingMode.HALF_UP).toString());
+//                    txtPrecio2.setText(precio2.setScale(2, RoundingMode.HALF_UP).toString());
                 }
 
                 if (txtMargen3.getText().isEmpty() == false) {
                     margen3 = new BigDecimal(txtMargen3.getText());
                     BigDecimal precio3 = precioCompra.add(precioCompra.multiply(margen3.divide(new BigDecimal(100))));
-                    txtPrecio3.setText(precio3.setScale(2, RoundingMode.HALF_UP).toString());
+//                    txtPrecio3.setText(precio3.setScale(2, RoundingMode.HALF_UP).toString());
                 }
             }
         } catch (Exception ex){
             JOptionPane.showMessageDialog(this, "El numero digitado no es valido");
-            txtPrecio1.setText("");
-            txtPrecio2.setText("");
-            txtPrecio3.setText("");
+//            txtPrecio1.setText("");
+//            txtPrecio2.setText("");
+//            txtPrecio3.setText("");
         }
     }
     
@@ -235,17 +235,10 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        txtPrecio1 = new javax.swing.JTextField();
-        txtPrecio2 = new javax.swing.JTextField();
-        txtPrecio3 = new javax.swing.JTextField();
-        jLabel30 = new javax.swing.JLabel();
-        txtMayoreo1 = new javax.swing.JTextField();
-        txtMayoreo2 = new javax.swing.JTextField();
-        txtMayoreo3 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
@@ -501,99 +494,50 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel25.setText("PRECIOS DE VENTA");
 
-        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel27.setText("Precio de Venta:");
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel10.setText("Lista Precios:");
 
-        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/price16.png"))); // NOI18N
-        jLabel26.setText("1");
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Precio 1", "Precio 2", "Precio de Caja", "Mayoreo 1", "Mayoreo 2", "Mayoreo 3" }));
 
-        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/price16.png"))); // NOI18N
-        jLabel28.setText("2");
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextField1.setText("0.00");
 
-        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/price16.png"))); // NOI18N
-        jLabel29.setText("Precio de Caja");
-        jLabel29.setToolTipText("");
-
-        txtPrecio1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        txtPrecio2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        txtPrecio3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel30.setText("Mayoreo");
-
-        txtMayoreo1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        txtMayoreo2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        txtMayoreo3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel11.setText("Precio:");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMayoreo3)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                            .addComponent(txtPrecio1))
-                        .addGap(30, 30, 30)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMayoreo2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPrecio2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                            .addComponent(txtPrecio3)
-                            .addComponent(txtMayoreo1))
-                        .addGap(11, 11, 11))))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel25)
-                .addGap(13, 13, 13)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel26)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(5, 5, 5)))
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtPrecio2)
-                    .addComponent(txtPrecio1)
-                    .addComponent(txtPrecio3))
-                .addGap(15, 15, 15)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtMayoreo1)
-                    .addComponent(txtMayoreo2)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtMayoreo3)
-                        .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -845,9 +789,10 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        boolean valido = validar.validarCamposTexto(txtProducto) && validar.validarCamposTexto(txtPrecio1) && validar.validarCamposTexto(txtPrecio2)
-                    && validar.validarCamposTexto(txtPrecio3) && validar.validarCamposTexto(txtMayoreo1) && validar.validarCamposTexto(txtMayoreo2)
-                    && validar.validarCamposTexto(txtMayoreo3);
+        boolean valido = validar.validarCamposTexto(txtProducto);
+//                && validar.validarCamposTexto(txtPrecio1) && validar.validarCamposTexto(txtPrecio2)
+//                    && validar.validarCamposTexto(txtPrecio3) && validar.validarCamposTexto(txtMayoreo1) && validar.validarCamposTexto(txtMayoreo2)
+//                    && validar.validarCamposTexto(txtMayoreo3);
         if(valido){
             inventario.setArticulo(new Articulo(0, txtProducto.getText(), txtDescripcion.getText(), true));
             inventario.setCategoria((Categoria) cboCategoria.getSelectedItem());
@@ -860,17 +805,17 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                 try {
                     inventario.setImagen(new Imagen(0, CopiarImagen()));
                 } catch (IOException ex) {
-                    Logger.getLogger(frmNuevoProducto.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(frmNuevoArticulo.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (!isEditar()) {
                 List<Precio> precios = new ArrayList<>();
-                precios.add(new Precio(0, new BigDecimal(txtPrecio1.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Venta 1", true));
-                precios.add(new Precio(0, new BigDecimal(txtPrecio2.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Venta 2", true));
-                precios.add(new Precio(0, new BigDecimal(txtPrecio3.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Venta Caja", true));
-                precios.add(new Precio(0, new BigDecimal(txtMayoreo1.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Mayoreo 1", true));
-                precios.add(new Precio(0, new BigDecimal(txtMayoreo2.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Mayoreo 2", true));
-                precios.add(new Precio(0, new BigDecimal(txtMayoreo3.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Mayoreo Caja", true));
+//                precios.add(new Precio(0, new BigDecimal(txtPrecio1.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Venta 1", true));
+//                precios.add(new Precio(0, new BigDecimal(txtPrecio2.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Venta 2", true));
+//                precios.add(new Precio(0, new BigDecimal(txtPrecio3.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Venta Caja", true));
+//                precios.add(new Precio(0, new BigDecimal(txtMayoreo1.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Mayoreo 1", true));
+//                precios.add(new Precio(0, new BigDecimal(txtMayoreo2.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Mayoreo 2", true));
+//                precios.add(new Precio(0, new BigDecimal(txtMayoreo3.getText()).setScale(2, BigDecimal.ROUND_DOWN), "Mayoreo Caja", true));
                 List<Inventario> compatibles = new ArrayList<>();
                 for (int i = 0; i < jtCompatibles.getRowCount(); i++) {
                     Inventario compatible = (Inventario) jtCompatibles.getValueAt(i, 0);
@@ -886,12 +831,12 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                inventario.getPrecio().get(0).setCantidad(new BigDecimal(txtPrecio1.getText()).setScale(2));
-                inventario.getPrecio().get(1).setCantidad(new BigDecimal(txtPrecio2.getText()).setScale(2));
-                inventario.getPrecio().get(2).setCantidad(new BigDecimal(txtPrecio3.getText()).setScale(2));
-                inventario.getPrecio().get(3).setCantidad(new BigDecimal(txtMayoreo1.getText()).setScale(2));
-                inventario.getPrecio().get(4).setCantidad(new BigDecimal(txtMayoreo2.getText()).setScale(2));
-                inventario.getPrecio().get(5).setCantidad(new BigDecimal(txtMayoreo3.getText()).setScale(2));
+//                inventario.getPrecio().get(0).setCantidad(new BigDecimal(txtPrecio1.getText()).setScale(2));
+//                inventario.getPrecio().get(1).setCantidad(new BigDecimal(txtPrecio2.getText()).setScale(2));
+//                inventario.getPrecio().get(2).setCantidad(new BigDecimal(txtPrecio3.getText()).setScale(2));
+//                inventario.getPrecio().get(3).setCantidad(new BigDecimal(txtMayoreo1.getText()).setScale(2));
+//                inventario.getPrecio().get(4).setCantidad(new BigDecimal(txtMayoreo2.getText()).setScale(2));
+//                inventario.getPrecio().get(5).setCantidad(new BigDecimal(txtMayoreo3.getText()).setScale(2));
                 List<Inventario> compatibles = inventario.getCompatibles();
                 for (int i = 0; i < jtCompatibles.getRowCount(); i++) {
                     Inventario compatible = (Inventario) jtCompatibles.getValueAt(i, 0);
@@ -924,7 +869,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
             // TODO add your handling code here:
             ObtenerImagen();
         } catch (IOException ex) {
-            Logger.getLogger(frmNuevoProducto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(frmNuevoArticulo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_lblSeleccionarMouseClicked
 
@@ -948,12 +893,12 @@ public class frmNuevoProducto extends javax.swing.JDialog {
             jdcVencimiento.setDate(new Date(inventario.getVencimiento().getTime()));
             txtStockMin.setText(String.valueOf(inventario.getStockMin()));
             txtStockMax.setText(String.valueOf(inventario.getStockMax()));
-            txtPrecio1.setText(inventario.getPrecio().get(0).getCantidad().toString());
-            txtPrecio2.setText(inventario.getPrecio().get(1).getCantidad().toString());
-            txtPrecio3.setText(inventario.getPrecio().get(2).getCantidad().toString());
-            txtMayoreo1.setText(inventario.getPrecio().get(3).getCantidad().toString());
-            txtMayoreo2.setText(inventario.getPrecio().get(4).getCantidad().toString());
-            txtMayoreo3.setText(inventario.getPrecio().get(5).getCantidad().toString());
+//            txtPrecio1.setText(inventario.getPrecio().get(0).getCantidad().toString());
+//            txtPrecio2.setText(inventario.getPrecio().get(1).getCantidad().toString());
+//            txtPrecio3.setText(inventario.getPrecio().get(2).getCantidad().toString());
+//            txtMayoreo1.setText(inventario.getPrecio().get(3).getCantidad().toString());
+//            txtMayoreo2.setText(inventario.getPrecio().get(4).getCantidad().toString());
+//            txtMayoreo3.setText(inventario.getPrecio().get(5).getCantidad().toString());
             setImagen(inventario.getImagen().getUrl());
             imagenURL = inventario.getImagen().getUrl();
             DefaultTableModel modelo = (DefaultTableModel) jtCompatibles.getModel();            
@@ -1049,14 +994,18 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmNuevoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmNuevoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmNuevoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmNuevoArticulo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -1065,7 +1014,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                frmNuevoProducto dialog = new frmNuevoProducto(new javax.swing.JFrame(), true);
+                frmNuevoArticulo dialog = new frmNuevoArticulo(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -1100,18 +1049,16 @@ public class frmNuevoProducto extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cboBodega;
     private javax.swing.JComboBox<String> cboCategoria;
     private javax.swing.JComboBox<String> cboUnidad;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1135,6 +1082,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
     private com.toedter.calendar.JDateChooser jdcVencimiento;
     private javax.swing.JPanel jpAcciones;
     private javax.swing.JTable jtCompatibles;
@@ -1145,12 +1093,6 @@ public class frmNuevoProducto extends javax.swing.JDialog {
     private javax.swing.JTextField txtMargen1;
     private javax.swing.JTextField txtMargen2;
     private javax.swing.JTextField txtMargen3;
-    private javax.swing.JTextField txtMayoreo1;
-    private javax.swing.JTextField txtMayoreo2;
-    private javax.swing.JTextField txtMayoreo3;
-    private javax.swing.JTextField txtPrecio1;
-    private javax.swing.JTextField txtPrecio2;
-    private javax.swing.JTextField txtPrecio3;
     private javax.swing.JTextField txtPrecioCompra;
     private javax.swing.JTextField txtProducto;
     private javax.swing.JTextField txtStockMax;
