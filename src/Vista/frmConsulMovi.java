@@ -109,6 +109,8 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
+        txtBusqueda.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
         jLabel2.setText("Total de Entradas:");
 
         jLabel3.setText("jLabel3");

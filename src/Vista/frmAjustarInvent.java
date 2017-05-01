@@ -69,15 +69,20 @@ public class frmAjustarInvent extends javax.swing.JDialog {
         lblProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblProducto.setText("jLabel1");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Existencia:");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Comentario:");
 
+        txtExistencia.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtExistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtExistenciaActionPerformed(evt);
             }
         });
+
+        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         btnAplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/okay16.png"))); // NOI18N
         btnAplicar.setText("Aplicar");
@@ -94,7 +99,7 @@ public class frmAjustarInvent extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(12, 12, 12)
                         .addComponent(jSeparator1))
                     .addComponent(lblProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -115,7 +120,7 @@ public class frmAjustarInvent extends javax.swing.JDialog {
                                 .addGap(271, 271, 271)
                                 .addComponent(btnAplicar)))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(12, 12, 12))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

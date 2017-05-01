@@ -102,6 +102,11 @@ public class frmProveedor extends javax.swing.JInternalFrame {
                 cargarDatos(proveedorList);
                 frm.dispose();
             }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -130,6 +135,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
+        btnNuevo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add32.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +144,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
             }
         });
 
+        btnEditarProveedor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEditarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit32.png"))); // NOI18N
         btnEditarProveedor.setText("Editar");
         btnEditarProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -146,6 +153,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete32.png"))); // NOI18N
         jButton3.setText("Borrar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -159,13 +167,13 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
+                .addContainerGap(59, Short.MAX_VALUE)
                 .addComponent(btnNuevo)
                 .addGap(50, 50, 50)
                 .addComponent(btnEditarProveedor)
                 .addGap(50, 50, 50)
                 .addComponent(jButton3)
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +195,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
             }
         });
 
-        jtProveedores.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jtProveedores.setFont(new java.awt.Font("Trebuchet MS", 0, 15)); // NOI18N
         jtProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -277,6 +285,11 @@ public class frmProveedor extends javax.swing.JInternalFrame {
                     }
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
