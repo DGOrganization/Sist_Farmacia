@@ -49,6 +49,7 @@ public class frmConsultarCaja extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Trebuchet MS", 1, 20)); // NOI18N
         jLabel4.setText("Total de Caja:");
 
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Caja 1" }));
 
         lblTotales.setFont(new java.awt.Font("Trebuchet MS", 1, 20)); // NOI18N
