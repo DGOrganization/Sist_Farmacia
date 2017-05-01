@@ -5,7 +5,6 @@
  */
 package Vista;
 
-import configuracion.Gestionar;
 import entidades.Usuario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,8 +44,6 @@ public class frmMenu extends javax.swing.JFrame {
         Timer t = new Timer(100, updateClockAction);
         t.start();
         tblSesion.setFloatable(false);
-        jMenuCaja.setVisible(false);
-        jMenuAyuda.setVisible(false);
     }
 
     /**
@@ -59,7 +56,6 @@ public class frmMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         tblSesion = new javax.swing.JToolBar();
-        jSeparator13 = new javax.swing.JToolBar.Separator();
         lblEmpleado = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         lblReloj = new javax.swing.JLabel();
@@ -70,7 +66,6 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuCambiarUsu = new javax.swing.JMenuItem();
         jMenuCaja = new javax.swing.JMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
-        jMenuSalir = new javax.swing.JMenuItem();
         menuOperaciones = new javax.swing.JMenu();
         smClientes = new javax.swing.JMenuItem();
         smProveedores = new javax.swing.JMenuItem();
@@ -121,10 +116,6 @@ public class frmMenu extends javax.swing.JFrame {
         smUnidades = new javax.swing.JMenuItem();
         jMenuAdCategorias = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
-        jMenuAyuda = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -133,15 +124,10 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
 
-        tblSesion.add(jSeparator13);
-
         lblEmpleado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblEmpleado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEmpleado.setText("jLabel1");
         tblSesion.add(lblEmpleado);
-
-        jSeparator1.setMaximumSize(new java.awt.Dimension(9, 32767));
-        jSeparator1.setPreferredSize(new java.awt.Dimension(9, 0));
         tblSesion.add(jSeparator1);
 
         lblReloj.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -159,7 +145,7 @@ public class frmMenu extends javax.swing.JFrame {
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 401, Short.MAX_VALUE)
+            .addGap(0, 402, Short.MAX_VALUE)
         );
 
         jMenuInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/open24.png"))); // NOI18N
@@ -175,14 +161,6 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuCaja.setText("Cambiar de Caja");
         jMenuInicio.add(jMenuCaja);
         jMenuInicio.add(jSeparator11);
-
-        jMenuSalir.setText("Salir del Sistema");
-        jMenuSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuSalirActionPerformed(evt);
-            }
-        });
-        jMenuInicio.add(jMenuSalir);
 
         jmbPrincipal.add(jMenuInicio);
 
@@ -452,28 +430,13 @@ public class frmMenu extends javax.swing.JFrame {
 
         jmbPrincipal.add(menuSistema);
 
-        jMenuAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Help_icon-32x32.png"))); // NOI18N
-        jMenuAyuda.setText("Ayuda");
-        jMenuAyuda.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-
-        jMenuItem1.setText("Manual de Usuario");
-        jMenuAyuda.add(jMenuItem1);
-
-        jMenuItem2.setText("Actualizaciones");
-        jMenuAyuda.add(jMenuItem2);
-
-        jMenuItem3.setText("Acerca De...");
-        jMenuAyuda.add(jMenuItem3);
-
-        jmbPrincipal.add(jMenuAyuda);
-
         setJMenuBar(jmbPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tblSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
+            .addComponent(tblSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
             .addComponent(desktop)
         );
         layout.setVerticalGroup(
@@ -711,17 +674,6 @@ public class frmMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuCategoriasActionPerformed
 
-    private void jMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalirActionPerformed
-        // TODO add your handling code here:
-        int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro que desea salir del Sistema?",
-            new Gestionar().Leer("Empresa", "nombre"),
-                    JOptionPane.YES_NO_OPTION);
-                if (respuesta == JOptionPane.YES_OPTION)
-                    {
-                        System.exit( 0 ); 
-                    }
-    }//GEN-LAST:event_jMenuSalirActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -763,26 +715,20 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuAdCategorias;
     private javax.swing.JMenuItem jMenuAjustInv;
     private javax.swing.JMenuItem jMenuAjusteInv;
-    private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenuItem jMenuCaja;
     private javax.swing.JMenuItem jMenuCambiarUsu;
     private javax.swing.JMenuItem jMenuCategorias;
     private javax.swing.JMenuItem jMenuConsCaja;
     private javax.swing.JMenuItem jMenuImportar;
     private javax.swing.JMenu jMenuInicio;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuMovimiento;
     private javax.swing.JMenuItem jMenuMovimientos;
     private javax.swing.JMenuItem jMenuProveedores;
-    private javax.swing.JMenuItem jMenuSalir;
     private javax.swing.JMenuItem jMenuUsuCon;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JPopupMenu.Separator jSeparator12;
-    private javax.swing.JToolBar.Separator jSeparator13;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;

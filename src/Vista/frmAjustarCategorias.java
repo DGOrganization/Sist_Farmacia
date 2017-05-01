@@ -37,7 +37,6 @@ public class frmAjustarCategorias extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
-        btnNuevo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/add32.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -46,7 +45,6 @@ public class frmAjustarCategorias extends javax.swing.JInternalFrame {
             }
         });
 
-        btnEditar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit32.png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -55,7 +53,6 @@ public class frmAjustarCategorias extends javax.swing.JInternalFrame {
             }
         });
 
-        btnEliminar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete32.png"))); // NOI18N
         btnEliminar.setText("Borrar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {

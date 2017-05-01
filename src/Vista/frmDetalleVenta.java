@@ -107,7 +107,6 @@ public class frmDetalleVenta extends javax.swing.JDialog {
         lblTotal.setForeground(new java.awt.Color(0, 102, 153));
         lblTotal.setText("jLabel5");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/print24.png"))); // NOI18N
         jButton1.setText("Imprimir");
 

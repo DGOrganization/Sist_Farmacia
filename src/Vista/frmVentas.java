@@ -227,7 +227,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/compras16.png"))); // NOI18N
         jLabel4.setText("REGISTRRO DE VENTAS");
 
-        lblReloj.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblReloj.setText("<Hora y Fecha>");
 
         txtNFactura.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -270,7 +269,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 153));
 
-        btnBuscarProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnBuscarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search24.png"))); // NOI18N
         btnBuscarProducto.setText("Buscar");
         btnBuscarProducto.setToolTipText("Buscar Producto");
@@ -280,7 +278,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
             }
         });
 
-        btnGuardarVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnGuardarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cerrarventa24.png"))); // NOI18N
         btnGuardarVenta.setText("Guardar");
         btnGuardarVenta.setToolTipText("Cerrar Venta");
@@ -290,7 +287,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
             }
         });
 
-        btnSeleccionarPrecio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSeleccionarPrecio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/numberp24.png"))); // NOI18N
         btnSeleccionarPrecio.setText("Precio");
         btnSeleccionarPrecio.setToolTipText("Cambiar el Numero de Precio");
@@ -300,7 +296,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
             }
         });
 
-        btnCambiarCant.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnCambiarCant.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cantidad24.png"))); // NOI18N
         btnCambiarCant.setText("Cantidad");
         btnCambiarCant.setToolTipText("Modificar Cantidad");
@@ -310,7 +305,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
             }
         });
 
-        btnHacerDescuento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnHacerDescuento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/percent24.png"))); // NOI18N
         btnHacerDescuento.setText("Descuento");
         btnHacerDescuento.setToolTipText("Aplicar Descuento");
@@ -320,17 +314,10 @@ public class frmVentas extends javax.swing.JInternalFrame {
             }
         });
 
-        btnQuitarProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnQuitarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/del24.png"))); // NOI18N
         btnQuitarProducto.setText("Quitar");
         btnQuitarProducto.setToolTipText("Remover Producto Seleccionado");
-        btnQuitarProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuitarProductoActionPerformed(evt);
-            }
-        });
 
-        btnBuscarCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/client24.png"))); // NOI18N
         btnBuscarCliente.setText("Cliente");
         btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -403,7 +390,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Documento:");
 
-        cboTipoVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cboTipoVenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ticket", "Factura", "Crédito Fiscal" }));
         cboTipoVenta.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -414,16 +400,10 @@ public class frmVentas extends javax.swing.JInternalFrame {
         jLabel7.setText("Cliente:");
 
         txtCliente.setEditable(false);
-        txtCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCliente.setText("-");
         txtCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtClienteMouseClicked(evt);
-            }
-        });
-        txtCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtClienteActionPerformed(evt);
             }
         });
 
@@ -462,7 +442,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
         jLabel10.setText("Empleado:");
 
         txtEmpleado.setEditable(false);
-        txtEmpleado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtEmpleado.setText("-");
         txtEmpleado.setEnabled(false);
 
@@ -479,8 +458,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
         txtDescuento.setText("0.00");
         txtDescuento.setToolTipText("Total Descontado");
         txtDescuento.setEnabled(false);
-
-        txtComentarios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         lblTotal.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblTotal.setText("0.00");
@@ -524,17 +501,17 @@ public class frmVentas extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(cboTipoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(cboTipoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addComponent(txtCliente)
-                                        .addGap(12, 12, 12))))
+                                        .addContainerGap())))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -547,7 +524,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
                                         .addComponent(lblProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(jSeparator2)
                                     .addComponent(jSeparator1))
-                                .addGap(12, 12, 12))))
+                                .addContainerGap())))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator3)
@@ -572,7 +549,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtIVA, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                                     .addComponent(txtDescuento))))
-                        .addGap(12, 12, 12))))
+                        .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -598,7 +575,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
                             .addComponent(lblProducto)
                             .addComponent(jLabel8))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
@@ -753,13 +730,12 @@ public class frmVentas extends javax.swing.JInternalFrame {
                         "Agrega al cliente",
                         new Gestionar().Leer("Empresa", "nombre"),
                         JOptionPane.WARNING_MESSAGE);
-                System.out.println("El Cliente");
             } else {
                 JOptionPane.showMessageDialog(this,
                         "Agrega Productos primero",
                         new Gestionar().Leer("Empresa", "nombre"),
                         JOptionPane.WARNING_MESSAGE);
-            }System.out.println("El Productos");
+            }
         }
         
         
@@ -871,22 +847,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
         }
         calcularTotal();
     }//GEN-LAST:event_cboTipoVentaItemStateChanged
-
-    private void txtClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClienteActionPerformed
-        // TODO add your handling code here:
-        Frame f = JOptionPane.getFrameForComponent(this);
-        frmAgregarCliente frm = new frmAgregarCliente(f, true);
-        frm.setVisible(true);
-        if (frm.isVisible() == false) {
-            clienteActual = frm.getCliente();
-            txtCliente.setText(clienteActual.toString());
-            frm.dispose();
-        }
-    }//GEN-LAST:event_txtClienteActionPerformed
-
-    private void btnQuitarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarProductoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnQuitarProductoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

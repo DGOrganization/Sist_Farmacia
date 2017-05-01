@@ -226,26 +226,26 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
         jPanel6 = new javax.swing.JPanel();
-        jLabel31 = new javax.swing.JLabel();
-        txtPrecioCompra = new javax.swing.JTextField();
-        jLabel24 = new javax.swing.JLabel();
-        txtMargen1 = new javax.swing.JTextField();
-        txtMargen2 = new javax.swing.JTextField();
         txtMargen3 = new javax.swing.JTextField();
+        txtMargen2 = new javax.swing.JTextField();
+        txtMargen1 = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jLabel25 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        txtPrecio1 = new javax.swing.JTextField();
-        txtPrecio2 = new javax.swing.JTextField();
         txtPrecio3 = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
-        txtMayoreo1 = new javax.swing.JTextField();
         txtMayoreo2 = new javax.swing.JTextField();
+        txtMayoreo1 = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        txtPrecio2 = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        txtPrecio1 = new javax.swing.JTextField();
         txtMayoreo3 = new javax.swing.JTextField();
+        jLabel31 = new javax.swing.JLabel();
+        txtPrecioCompra = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
@@ -272,7 +272,6 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 
         jpAcciones.setBackground(new java.awt.Color(88, 166, 137));
 
-        btnGuardar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save32.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setHideActionText(true);
@@ -286,7 +285,6 @@ public class frmNuevoProducto extends javax.swing.JDialog {
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel24.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setHideActionText(true);
@@ -365,7 +363,6 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 
         jLabel20.setText("Nombre:");
 
-        txtProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtProductoActionPerformed(evt);
@@ -472,46 +469,24 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Datos del Medicamento", jPanel1);
 
-        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel31.setText("Precio de Compra:");
-
-        txtPrecioCompra.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel24.setText("Margen de Utilidad %:");
-
-        txtMargen1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        txtMargen2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        txtMargen3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(204, 0, 0));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Los precios no incluyen I.V.A");
 
-        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel25.setText("PRECIOS DE VENTA");
-
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel27.setText("Precio de Venta:");
 
-        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/price16.png"))); // NOI18N
-        jLabel26.setText("1");
-
-        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/price16.png"))); // NOI18N
-        jLabel28.setText("2");
+        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel30.setText("Mayoreo");
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -519,20 +494,19 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         jLabel29.setText("Precio de Caja");
         jLabel29.setToolTipText("");
 
-        txtPrecio1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("PRECIOS DE VENTA");
 
-        txtPrecio2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/price16.png"))); // NOI18N
+        jLabel28.setText("2");
 
-        txtPrecio3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel30.setText("Mayoreo");
-
-        txtMayoreo1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        txtMayoreo2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        txtMayoreo3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/price16.png"))); // NOI18N
+        jLabel26.setText("1");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -595,6 +569,11 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel31.setText("Precio de Compra:");
+
+        txtPrecioCompra.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -629,9 +608,8 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                             .addComponent(jSeparator3)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel31)
-                                .addGap(32, 32, 32)
-                                .addComponent(txtPrecioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(27, 27, 27)
+                                .addComponent(txtPrecioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(14, 14, 14))
         );
         jPanel6Layout.setVerticalGroup(
@@ -659,7 +637,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
@@ -737,7 +715,6 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Imagen", jPanel3);
 
-        btnBuscarCompatible.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnBuscarCompatible.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search24.png"))); // NOI18N
         btnBuscarCompatible.setText("Buscar");
         btnBuscarCompatible.addActionListener(new java.awt.event.ActionListener() {
@@ -750,7 +727,6 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Medicamentos Compatibles");
 
-        btnQuitar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnQuitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete24.png"))); // NOI18N
         btnQuitar.setText("Eliminar Medicamento");
         btnQuitar.addActionListener(new java.awt.event.ActionListener() {
@@ -759,7 +735,6 @@ public class frmNuevoProducto extends javax.swing.JDialog {
             }
         });
 
-        jtCompatibles.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jtCompatibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -798,9 +773,8 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
                         .addComponent(btnBuscarCompatible)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnQuitar)))
@@ -826,14 +800,14 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addComponent(jTabbedPane1))
             .addComponent(jpAcciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addComponent(jTabbedPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpAcciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
