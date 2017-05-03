@@ -1152,3 +1152,58 @@ $BODY$
   LANGUAGE plpgsql;
 
 select * from obtenerventas();
+
+select * from obtenercompatibles(7);
+
+CREATE OR REPLACE FUNCTION public.anularventas(cod bigint) RETURNS void AS
+$BODY$	
+	BEGIN
+		UPDATE
+			ventas v
+		SET
+			estado = false
+		WHERE
+			id = $1;
+	END
+
+$BODY$
+  LANGUAGE plpgsql;
+
+select anularventas(3);
+
+CREATE OR REPLACE FUNCTION public.registrarcategoria(nom varchar) RETURNS void AS
+$BODY$
+	BEGIN
+		INSERT INTO
+			categorias(nombre)
+		VALUES
+			($1);
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION public.editarcategoria(nom varchar, cod int) RETURNS void AS
+$BODY$
+	BEGIN
+		UPDATE
+			categorias
+		SET
+			nombre = $1
+		WHERE
+			id = $2;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION public.eliminarcategoria(cod int) RETURNS void AS
+$BODY$
+	BEGIN
+		UPDATE
+			categorias
+		SET
+			estado = false
+		WHERE
+			id = $1;
+	END
+$BODY$
+  LANGUAGE plpgsql;
