@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import configuracion.Gestionar;
 import controlador.Venta_controlador;
 import entidades.Venta;
 import java.awt.Frame;
@@ -257,6 +258,11 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
 
         btnAnular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel32.png"))); // NOI18N
         btnAnular.setText("Anular Venta");
+        btnAnular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnularActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -304,6 +310,17 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
             Frame frm = JOptionPane.getFrameForComponent(this);
             frmDetalleVenta frmDetalle = new frmDetalleVenta(frm, true);
             frmDetalle.setVenta_seleccionada(ventaList.get(ventaList.indexOf((Venta) jtVentas.getValueAt(fila, 0))));
+            frmDetalle.setVisible(true);
+            if(frmDetalle.isVisible() == false){
+                ventaList = controlador.Obtener();
+                cargarDatos(ventaList);
+                frmDetalle.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona una venta primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnDetalleActionPerformed
 
@@ -325,6 +342,30 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
             buscarTXT();
         }
     }//GEN-LAST:event_jdcFinalPropertyChange
+
+    private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
+        // TODO add your handling code here:
+        int fila = jtVentas.getSelectedRow();
+        if (fila > -1) {
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de anular esta venta?", new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.YES_NO_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                if (controlador.Anular(ventaList.get(ventaList.indexOf((Venta) jtVentas.getValueAt(fila, 0))))) {
+                    ventaList = controlador.Obtener();
+                    cargarDatos(ventaList);
+                    JOptionPane.showMessageDialog(this,
+                            "El registro ha sido ingresado exitosamente",
+                            new Gestionar().Leer("Empresa", "nombre"),
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona ",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAnularActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

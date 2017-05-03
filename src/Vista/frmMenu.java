@@ -485,7 +485,6 @@ public class frmMenu extends javax.swing.JFrame {
 
         jmbPrincipal.add(menuSistema);
 
-        jMenuAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Help_icon-32x32.png"))); // NOI18N
         jMenuAyuda.setText("Ayuda");
         jMenuAyuda.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 

@@ -507,7 +507,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         Compra compra = new Compra();
-        if(jTableDetalleCompra.getRowCount() > 0 && prov_actual != null && !txtNFactura.getText().isEmpty()){
+        if(jTableDetalleCompra.getRowCount() > 0 && prov_actual.getId() > 0 && !txtNFactura.getText().isEmpty()){
             compra.setNumFactura(txtNFactura.getText());
             compra.setDescripcion("Nada");
             compra.setTotal(new BigDecimal(lblTotal.getText()));
@@ -534,12 +534,12 @@ public class frmCompra extends javax.swing.JInternalFrame {
                     lblTotalProd.setText("0");
                     prov_actual = new Proveedor();
             }
-        } else if(prov_actual == null){
+        } else if(prov_actual.getId() == 0){
             JOptionPane.showMessageDialog(this,
                     "Selecciona proveedor",
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.WARNING_MESSAGE);
-        } else if(prov_actual == null){
+        } else if(txtNFactura.getText().isEmpty()){
             JOptionPane.showMessageDialog(this,
                     "Ingresa el numero de factura entregada por el proveedor",
                     new Gestionar().Leer("Empresa", "nombre"),

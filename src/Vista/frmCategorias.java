@@ -5,22 +5,105 @@
  */
 package Vista;
 
+import configuracion.Gestionar;
+import controlador.Categoria_controlador;
+import entidades.Categoria;
+import entidades.Inventario;
 import java.awt.Frame;
+import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Gerard
  */
 public class frmCategorias extends javax.swing.JInternalFrame {
-
+    private List<Categoria> categoriaList;
+    private final Categoria_controlador controlador;
     /**
      * Creates new form frmUnidades
      */
     public frmCategorias() {
         initComponents();
+        categoriaList = new ArrayList<>();
+        controlador = new Categoria_controlador();
+        categoriaList = controlador.Obtener();
+        cargarDatos(categoriaList);
+        changeText();
     }
 
+    private void cargarDatos(List<Categoria> lista){
+        String[] columnas = {"Categoria"};
+        ControlesGenerales.reiniciarJTable(jtCategoria);
+        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        modelo.setColumnIdentifiers(columnas);
+        lista.forEach(datos -> {
+            Object[] nuevaFila= {
+                datos
+            };
+            if(datos.isEstado()){
+                modelo.addRow(nuevaFila);
+            }
+        });
+        jtCategoria.setModel(modelo);
+    }
+    
+    private void buscarTXT() {      
+        List<Categoria> encontrado = categoriaList.stream().filter(datos ->{
+            return datos.toString().toUpperCase().contains(txtBusqueda.getText().trim().toUpperCase());
+        }).collect(Collectors.toList());
+       
+        cargarDatos(encontrado);
+        if(jtCategoria.getRowCount() == 1){
+            jtCategoria.setRowSelectionInterval(0, 0);
+        }
+    }
+    
+    private void changeText(){
+        txtBusqueda.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                buscarTXT();
+            }
+        });
+    }
+    
+    private void Editar(){
+        int fila = jtCategoria.getSelectedRow();
+        if (fila > -1) {
+            Frame f = JOptionPane.getFrameForComponent(this);
+            frmNuevaCategoria dialog = new frmNuevaCategoria(f, true);
+            dialog.setEditar(true);
+            dialog.setCategoria(categoriaList.get(categoriaList.indexOf((Categoria) jtCategoria.getValueAt(fila, 0))));
+            dialog.setVisible(true);
+            if (dialog.isVisible() == false) {
+                categoriaList = controlador.Obtener();
+                cargarDatos(categoriaList);
+                dialog.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,13 +119,13 @@ public class frmCategorias extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtCategoria = new javax.swing.JTable();
 
         setClosable(true);
         setMaximizable(true);
-        setTitle("Unidad");
+        setTitle("Categorias");
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -67,6 +150,11 @@ public class frmCategorias extends javax.swing.JInternalFrame {
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete32.png"))); // NOI18N
         jButton3.setText("Borrar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -96,18 +184,24 @@ public class frmCategorias extends javax.swing.JInternalFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtBusqueda.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jTable1.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtCategoria.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jtCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null},
                 {null}
             },
             new String [] {
                 "Categorias"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jtCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtCategoriaKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtCategoria);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,7 +214,7 @@ public class frmCategorias extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -129,7 +223,7 @@ public class frmCategorias extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                 .addContainerGap())
@@ -158,12 +252,52 @@ public class frmCategorias extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
         frmNuevaCategoria dialog = new frmNuevaCategoria(f, true);
-        dialog.show();
+        dialog.setEditar(false);
+        dialog.setVisible(true);
+        if(dialog.isVisible() == false){
+            categoriaList = controlador.Obtener();
+            cargarDatos(categoriaList);
+            dialog.dispose();
+        }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
+        Editar();
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int fila = jtCategoria.getSelectedRow();
+        if (fila > -1) {
+            if (jtCategoria.getValueAt(fila, 0) instanceof Categoria) {
+                int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
+                        JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    if (controlador.Eliminar(categoriaList.get(categoriaList.indexOf((Categoria) jtCategoria.getValueAt(fila, 0))))) {
+                        JOptionPane.showMessageDialog(this,
+                                "El registro ha sido eliminado exitosamente",
+                                "Sistema de Ventas - Categoria",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        categoriaList = controlador.Obtener();
+                        cargarDatos(categoriaList);
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jtCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtCategoriaKeyPressed
+        // TODO add your handling code here:
+         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            Editar();
+        }
+    }//GEN-LAST:event_jtCategoriaKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -174,7 +308,7 @@ public class frmCategorias extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jtCategoria;
+    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }

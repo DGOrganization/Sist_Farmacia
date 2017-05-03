@@ -845,10 +845,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        boolean valido = validar.validarCamposTexto(txtProducto) && validar.validarCamposTexto(txtPrecio1) && validar.validarCamposTexto(txtPrecio2)
-                    && validar.validarCamposTexto(txtPrecio3) && validar.validarCamposTexto(txtMayoreo1) && validar.validarCamposTexto(txtMayoreo2)
-                    && validar.validarCamposTexto(txtMayoreo3);
-        if(valido){
+        if(txtProducto.getText().isEmpty() == false && jdcVencimiento.getDate() != null){
             inventario.setArticulo(new Articulo(0, txtProducto.getText(), txtDescripcion.getText(), true));
             inventario.setCategoria((Categoria) cboCategoria.getSelectedItem());
             inventario.setBodega((Bodega) cboBodega.getSelectedItem());
@@ -911,6 +908,12 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                 }
             }
             this.setVisible(false);
+        } else {
+            if (txtProducto.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debes ingresar un nombre de articulo", new Gestionar().Leer("Empresa", "nombre"), JOptionPane.WARNING_MESSAGE);
+            } else if (jdcVencimiento.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Debes ingresar la fecha", new Gestionar().Leer("Empresa", "nombre"), JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

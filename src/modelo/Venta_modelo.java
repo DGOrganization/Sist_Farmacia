@@ -16,8 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -127,5 +125,24 @@ public class Venta_modelo {
         }
         return lista;
     }
-
+    
+    public boolean Anular(Venta pVenta) {
+        boolean exito = false;
+        try (
+            java.sql.Connection conn = new Conexion().getConnection();
+            CallableStatement cmd = conn.prepareCall("{ call anularventas(?) }")){
+            cmd.setLong(1, pVenta.getId());
+            exito = cmd.execute();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "No se han cargado datos debido al error: \n" + ex.getMessage()
+                    + "\nFavor contacte al desarrollador",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return exito;
+    }
+    
 }

@@ -959,7 +959,6 @@ public class frmNuevoArticulo extends javax.swing.JDialog {
         // TODO add your handling code here:
         int fila = jtCompatibles.getSelectedRow();
         if(fila > -1){
-            System.out.println("Compatibles == " + inventario.getCompatibles().size());
             if(editar){
                 inventario.getCompatibles().get(inventario.getCompatibles().indexOf((Inventario) jtCompatibles.getValueAt(fila, 0))).setEstado(false);
             } else {                
@@ -1012,17 +1011,15 @@ public class frmNuevoArticulo extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                frmNuevoArticulo dialog = new frmNuevoArticulo(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            frmNuevoArticulo dialog = new frmNuevoArticulo(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
     public Inventario getInventario() {

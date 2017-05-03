@@ -46,14 +46,6 @@ public class frmProducto extends javax.swing.JInternalFrame {
 //        lblTotalProd.setText(String.valueOf(jtInventario.getRowCount()));
     }
 
-    private void nombre_personaKeyPressed(java.awt.event.KeyEvent evt) { 
-
-        System.out.println(evt.getKeyCode()); 
-        if (evt.getKeyCode() == KeyEvent.VK_F5 || evt.getKeyCode() == KeyEvent.VK_SPACE) { 
-        System.out.println("PULSO ENTER"); 
-    } 
-
-    }
     private void cargarDatos(List<Inventario> lista){
         String[] columnas = {"Producto", "Stock Actual", "Ubicacion"};
         ControlesGenerales.reiniciarJTable(jtInventario);

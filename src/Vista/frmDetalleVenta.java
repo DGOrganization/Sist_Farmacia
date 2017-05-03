@@ -6,6 +6,7 @@
 package Vista;
 
 import entidades.Venta;
+import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,6 +23,8 @@ public class frmDetalleVenta extends javax.swing.JDialog {
     public frmDetalleVenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(this);
+        this.setTitle("Detalle de la venta");
     }
 
     /**
@@ -92,7 +95,7 @@ public class frmDetalleVenta extends javax.swing.JDialog {
         jtDetalles.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         jtDetalles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Producto", "Cantidad", "Unidad", "Precio", "Importe"
@@ -151,7 +154,7 @@ public class frmDetalleVenta extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -231,6 +234,7 @@ public class frmDetalleVenta extends javax.swing.JDialog {
             lblDocumento.setText(venta_seleccionada.getNFactura().isEmpty() ? "Ticket": "Factura");
             lblNumero.setText(venta_seleccionada.getNFactura().isEmpty() ? "N/T": venta_seleccionada.getNFactura());
             lblCliente.setText(venta_seleccionada.getCliente().toString());
+            lblFecha.setText(new SimpleDateFormat("dd 'de' MMMM 'de' yyyy - hh:mm:ss a").format(venta_seleccionada.getFecha()));
             DefaultTableModel modelo = (DefaultTableModel) jtDetalles.getModel();
             venta_seleccionada.getDetalle().stream().forEach(datos->{
                 Object[] nuevaFila = {
@@ -245,7 +249,7 @@ public class frmDetalleVenta extends javax.swing.JDialog {
             jtDetalles.setModel(modelo);
             lblTotal.setText(venta_seleccionada.getTotal().toString());
             lblEmpleado.setText(venta_seleccionada.getEmpleado().toString());
-            lblAnulada.setText(venta_seleccionada.isEstado() ? "SI" : "NO");
+            lblAnulada.setText(venta_seleccionada.isEstado() ? "NO" : "SI");
         }
     }//GEN-LAST:event_formWindowOpened
 

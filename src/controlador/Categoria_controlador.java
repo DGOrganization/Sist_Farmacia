@@ -26,4 +26,16 @@ public class Categoria_controlador {
     public Categoria Obtener(Categoria pCategoria) {
         return new Categoria_modelo().ListarCategoria(pCategoria);
     }
+    
+    public boolean Registrar(Categoria pCategoria){
+        return new Categoria_modelo().Registrar(pCategoria);
+    }
+    
+    public boolean Editar(Categoria pCategoria){
+        return new Categoria_modelo().Editar(pCategoria);
+    }
+    
+    public boolean Eliminar(Categoria pCategoria){
+        return new Categoria_modelo().Eliminar(pCategoria);
+    }
 }

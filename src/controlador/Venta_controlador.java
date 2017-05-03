@@ -27,4 +27,8 @@ public class Venta_controlador {
         });
         return lista;
     }
+    
+    public boolean Anular(Venta pVenta){
+        return new Venta_modelo().Anular(pVenta);
+    }
 }

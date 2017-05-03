@@ -100,21 +100,35 @@ OBSERVACIONES   24-04-2017
 -- Esta funcionando
 
 ---------Formulario Productos--------------------
--La validacion de Campos vacíos que díga: Debes ingresar los datos necesarios
--Los campos obligatorios son: Nombre, fecha de vencimiento
+-La validacion de Campos vacíos que díga: Debes ingresar los datos necesarios OK
+-Los campos obligatorios son: Nombre, fecha de vencimiento OK
 -En Margen de utilidad, al cambiarse a Precio de compra (Recalcular el  precio de Venta) segun el margen de utilidad
+--- Aun no entiendo el proposito de este cambio
 -Permitir sólo el valor de 0 a 100 en margen de utilidad.
+--- Ya lo hacia
 -Poner un check al final en la tabla (si tiene o no imagen).
+--- No lo veo necesario ya que no es un campo obligatorio
 -En la consulta tomar en cuenta las Farmacias existentes para que los filtros funcionen bien. (no está mostrando todos los existentes, excluye 1 de la bd).
+--- No se me especifico antes ese filtro espero este el combobox o list o lo que se utilizara para hacer el filtro y lo excluye porque esta eliminado
+--- No esta el combobox ni componente para la bodega
 -Los productos que poseen stock ponerlos de color negro.
+--- Entonces para que es el campo de Stock Maximo y Minimo no entiendo.
 
 -----------Formulario Compras----------------------
 -Está fallando una validacion, al querer registrarla manda q 1ero agregue prods. aunque hayan.
+---Ya se comprobo y esta funcionando
 
 ------------Formulario Ventas----------------------
 -Falla al intentar Registrar
+---Ya se comprobo y esta funcionando
 
 --------------Formulario Consultar Ventas-----------
 -El boton mostrar detalles servirá para mostrar los productos que se hallan vendido con la fact. seleccionada.
 -Al hacer uso de los filtros que se vaya actualizando los resultados.
 -Falta anulacion de facturas y validar q seleccione algo.
+--- Todo esto ya estaba funcionando
+
+---------------------Correciones Generales por hacer--------------------------------------------------
+-Agregar .trim() a todos los campos de texto donde se pasan los valores de cadena
+-Revisar la propiedad title de los formularios ya que se genera un error al abrirlos.
+

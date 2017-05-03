@@ -28,7 +28,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
@@ -456,6 +455,9 @@ public class frmVentas extends javax.swing.JInternalFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableDetalleVentaMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTableDetalleVentaMouseEntered(evt);
+            }
         });
         jScrollPane1.setViewportView(jTableDetalleVenta);
 
@@ -770,7 +772,11 @@ public class frmVentas extends javax.swing.JInternalFrame {
         int fila = jTableDetalleVenta.getSelectedRow();
         if (fila > -1) {
             Inventario inv = (Inventario) jTableDetalleVenta.getValueAt(fila, 0);
-            setImagen(inv.getImagen().getUrl());
+            if(inv.getImagen().getUrl().isEmpty()){
+                lblImagen.setText("Este producto no tiene imagen");
+            } else {
+                setImagen(inv.getImagen().getUrl());
+            }
             lblProducto.setText(inv.getArticulo().toString());
             lblCodigo.setText(inv.getCodigoInterno());
             int columna = jTableDetalleVenta.getSelectedColumn();
@@ -887,6 +893,10 @@ public class frmVentas extends javax.swing.JInternalFrame {
     private void btnQuitarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarProductoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnQuitarProductoActionPerformed
+
+    private void jTableDetalleVentaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDetalleVentaMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableDetalleVentaMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

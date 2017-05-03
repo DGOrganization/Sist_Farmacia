@@ -5,19 +5,43 @@
  */
 package Vista;
 
+import controlador.Categoria_controlador;
+import entidades.Categoria;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gerard
  */
 public class frmAjustarCategorias extends javax.swing.JInternalFrame {
-
+    List<Categoria> categoriaList;
+    Categoria_controlador controlador;
     /**
      * Creates new form frmAjustarCategorias
      */
     public frmAjustarCategorias() {
         initComponents();
+        controlador = new Categoria_controlador();
+        categoriaList = controlador.Obtener();
+        cargarDatos(categoriaList);
     }
 
+    private void cargarDatos(List<Categoria> lista){
+        String[] columnas = {"Categoria"};
+        //ControlesGenerales.reiniciarJTable(jtCategoria);
+        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        modelo.setColumnIdentifiers(columnas);
+        lista.forEach(datos -> {
+            Object[] nuevaFila= {
+                datos
+            };
+            if(datos.isEstado()){
+                modelo.addRow(nuevaFila);
+            }
+        });
+        //jtCategoria.setModel(modelo);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
