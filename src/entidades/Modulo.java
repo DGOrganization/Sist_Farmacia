@@ -9,12 +9,10 @@ package entidades;
  *
  * @author dakrpastiursSennin
  */
-public class Menu {
+public class Modulo {
     private int _id;
     private String _nombre;
-    private boolean _permiso;
-    private Modulo _modulo;
-
+    
     public int getId() {
         return _id;
     }
@@ -31,33 +29,12 @@ public class Menu {
         this._nombre = _nombre;
     }
 
-    public boolean isPermiso() {
-        return _permiso;
+    public Modulo() {
     }
 
-    public void setPermiso(boolean _permiso) {
-        this._permiso = _permiso;
-    }
-
-    public Modulo getModulo() {
-        return _modulo;
-    }
-
-    public void setModulo(Modulo _modulo) {
-        this._modulo = _modulo;
-    }
-    
-    public Menu() {
-    }
-
-    public Menu(int _id) {
-        this._id = _id;
-    }
-
-    public Menu(int _id, String _nombre, boolean _permiso) {
+    public Modulo(int _id, String _nombre) {
         this._id = _id;
         this._nombre = _nombre;
-        this._permiso = _permiso;
     }
 
     @Override

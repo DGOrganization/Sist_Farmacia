@@ -10,6 +10,7 @@ package modelo;
  * @author dakrpastiursSennin
  */
 import configuracion.Gestionar;
+import controlador.Nivel_controlador;
 import entidades.Empleado;
 import entidades.Nivel;
 import entidades.Usuario;
@@ -60,6 +61,7 @@ public class Usuario_modelo {
                         Usuario usuario = new Usuario();
                         usuario.setUsername(resultado.getString("nickname"));
                         usuario.setEmpleado(new Empleado_modelo().ListarEmpleado(new Empleado(resultado.getInt("idempleado"))));
+                        usuario.setNivel(new Nivel_controlador().Obtener(new Nivel(resultado.getInt("idnivel")), true));
                         usuario.setEstado(resultado.getBoolean("estado"));
                         lista.add(usuario);
                     }
@@ -88,7 +90,7 @@ public class Usuario_modelo {
                     while (resultado.next()) {
                         usuario.setUsername(resultado.getString("nickname"));
                         usuario.setEmpleado(new Empleado_modelo().ListarEmpleado(new Empleado(resultado.getInt("idempleado"))));
-                        usuario.setNivel(new Nivel_modelo().ListarNivel(new Nivel(resultado.getInt("idnivel")), true));
+                        usuario.setNivel(new Nivel_controlador().Obtener(new Nivel(resultado.getInt("idnivel")), true));
                         usuario.setEstado(resultado.getBoolean("estado"));
                     }
                 }

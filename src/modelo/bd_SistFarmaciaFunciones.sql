@@ -1207,3 +1207,121 @@ $BODY$
 	END
 $BODY$
   LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION public.obtenerniveles()
+  RETURNS TABLE(codigo int, nivel character varying, est boolean) AS
+$BODY$
+	BEGIN
+		RETURN QUERY
+			SELECT
+				n.id, n.nombre, n.estado
+			FROM
+				admin_niveles AS n;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION public.obtenermenus()
+  RETURNS TABLE(codigo int, menu character varying) AS
+$BODY$
+	BEGIN
+		RETURN QUERY
+			SELECT
+				m.id, m.nombre
+			FROM
+				admin_menus AS m;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+  
+DROP FUNCTION obtenermodulos();
+CREATE OR REPLACE FUNCTION public.obtenermodulos()
+  RETURNS TABLE(codigo int, modulo character varying) AS
+$BODY$
+	BEGIN
+		RETURN QUERY
+			SELECT
+				m.id, m.nombre
+			FROM
+				admin_modulos AS m;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+  
+DROP FUNCTION obtenermodulo(int);
+CREATE OR REPLACE FUNCTION public.obtenermodulo(cod int)
+  RETURNS TABLE(codigo int, modulo character varying) AS
+$BODY$
+	BEGIN
+		RETURN QUERY
+			SELECT
+				m.id, m.nombre
+			FROM
+				admin_modulos AS m
+			WHERE
+				m.id = (SELECT idmodulo FROM admin_menus WHERE id = $1);
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+DROP FUNCTION insertarpermisos(int, int, boolean);
+ CREATE OR REPLACE FUNCTION public.insertarpermisos(codlvl int, men json) RETURNS void AS
+ $BODY$
+	BEGIN
+		IF NOT EXISTS (Select * from admin_permisos where idnivel= $1) THEN
+			INSERT INTO
+				admin_permisos(idnivel, idmenu, permiso)
+			SELECT
+				$1, *
+			FROM json_to_recordset($2) AS tbl(codmenu int, perm boolean);
+		ELSE
+			UPDATE
+				admin_permisos ap
+			SET
+				permiso = tbl.perm
+			FROM
+				json_to_recordset($2) AS tbl(codmenu int, perm boolean)
+			WHERE 
+				idnivel = $1 AND idmenu = tbl.codmenu;
+		END IF;
+	END
+ $BODY$ LANGUAGE plpgsql;
+
+select count(*) from admin_permisos where permiso = true and idnivel = 2;
+
+CREATE OR REPLACE FUNCTION public.registrarnivel(nom varchar) RETURNS void AS
+$BODY$
+	BEGIN
+		INSERT INTO
+			admin_niveles(nombre)
+		VALUES
+			($1);
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+ CREATE OR REPLACE FUNCTION public.editarnivel(nom varchar, cod int) RETURNS void AS
+$BODY$
+	BEGIN
+		UPDATE
+			admin_niveles an
+		SET
+			nombre = $1
+		WHERE
+			id = $2;
+	END
+$BODY$
+  LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION public.eliminarnivel(cod int) RETURNS void AS
+$BODY$
+	BEGIN
+		UPDATE
+			admin_niveles an
+		SET
+			estado = false
+		WHERE
+			id = $1;
+	END
+$BODY$
+  LANGUAGE plpgsql;

@@ -12,6 +12,7 @@ import entidades.Categoria;
 import entidades.Departamento;
 import entidades.Menu;
 import entidades.Municipio;
+import entidades.Nivel;
 import entidades.Unidad;
 import entidades.Usuario;
 import java.awt.Component;
@@ -160,7 +161,7 @@ public class Validaciones {
     }
     
     public void iniciarSesion(Usuario pUsuario, MenuElement[] menus){
-        if(pUsuario.getNivel().isEstado()){
+        if(pUsuario.getNivel().isEstado() && pUsuario.getNivel().isEstado()){
             for (MenuElement menu : menus) {
                 if (menu.getSubElements().length > 0) {
                     if (menu instanceof JPopupMenu) {
@@ -359,12 +360,13 @@ public class Validaciones {
         }
     }
     
-    /*public void cargarNiveles(JComboBox cbo, List<Nivel> pNiveles){
+    public void cargarNiveles(JComboBox cbo, List<Nivel> pNiveles){
+        cbo.removeAllItems();
         pNiveles.stream().forEach((nivel) -> {
             if((!nivel.getNombre().toUpperCase().contains("administrador".toUpperCase())) && nivel.isEstado())
                 cbo.addItem(nivel);
         });
-    }*/
+    }
     public void cboDepto(JComboBox cboPrincipal, List<Departamento> pDepto){
         pDepto.forEach(datos -> {
             cboPrincipal.addItem(datos);

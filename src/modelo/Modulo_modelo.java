@@ -6,6 +6,7 @@
 package modelo;
 
 import entidades.Menu;
+import entidades.Modulo;
 import entidades.Nivel;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -18,23 +19,19 @@ import javax.swing.JOptionPane;
  *
  * @author dakrpastiursSennin
  */
-public class Menu_modelo {
-
-    public List<Menu> obtenerMenus(Nivel pNivel) {
-        List<Menu> menus = new ArrayList<>();
+public class Modulo_modelo {
+    
+    public Modulo obtenerModulo(Menu pMenu) {
+        Modulo modulo = new Modulo();
         try (
                 java.sql.Connection conn = new Conexion().getConnection();
-                CallableStatement cmd = conn.prepareCall("{ call cargarpermisos(?) }")) {
-            cmd.setInt(1, pNivel.getId());
+                CallableStatement cmd = conn.prepareCall("{ call obtenermodulo(?) }")) {
+            cmd.setInt(1, pMenu.getId());
             if (cmd.execute()) {
                 try (ResultSet resultado = cmd.getResultSet()) {
                     while (resultado.next()) {
-                        Menu menu = new Menu();
-                        menu.setId(resultado.getInt("codigo"));
-                        menu.setNombre(resultado.getString("menu"));
-                        menu.setPermiso(resultado.getBoolean("permiso"));
-                        menu.setModulo(new Modulo_modelo().obtenerModulo(menu));
-                        menus.add(menu);
+                        modulo.setId(resultado.getInt("codigo"));
+                        modulo.setNombre(resultado.getString("modulo"));
                     }
                 }
             }
@@ -47,23 +44,21 @@ public class Menu_modelo {
                     JOptionPane.ERROR_MESSAGE
             );
         }
-        return menus;
+        return modulo;
     }
     
-    public List<Menu> obtenerMenus() {
-        List<Menu> menus = new ArrayList<>();
+    public List<Modulo> obtenerModulos() {
+        List<Modulo> lista = new ArrayList<>();
         try (
                 java.sql.Connection conn = new Conexion().getConnection();
-                CallableStatement cmd = conn.prepareCall("{ call obtenermenus() }")) {
+                CallableStatement cmd = conn.prepareCall("{ call obtenermodulos() }")) {
             if (cmd.execute()) {
                 try (ResultSet resultado = cmd.getResultSet()) {
                     while (resultado.next()) {
-                        Menu menu = new Menu();
-                        menu.setId(resultado.getInt("codigo"));
-                        menu.setNombre(resultado.getString("menu"));
-                        menu.setPermiso(false);
-                        menu.setModulo(new Modulo_modelo().obtenerModulo(menu));
-                        menus.add(menu);
+                        Modulo modulo = new Modulo();
+                        modulo.setId(resultado.getInt("codigo"));
+                        modulo.setNombre(resultado.getString("modulo"));
+                        lista.add(modulo);
                     }
                 }
             }
@@ -76,6 +71,6 @@ public class Menu_modelo {
                     JOptionPane.ERROR_MESSAGE
             );
         }
-        return menus;
+        return lista;
     }
 }
