@@ -36,8 +36,8 @@ public class Inventario_controlador {
         return new Inventario_modelo().Editar(pInventario);
     }
     
-    public boolean EditarStock(Inventario pInventario){
-        return new Inventario_modelo().CambiarStock(pInventario);
+    public boolean EditarStock(Inventario pInventario, String comentario){
+        return new Inventario_modelo().CambiarStock(pInventario, comentario);
     }
     
     public boolean Eliminar(Inventario pInventario){

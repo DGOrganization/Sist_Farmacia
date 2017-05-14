@@ -248,13 +248,14 @@ public class Inventario_modelo {
         return exito;
     }
 
-    public boolean CambiarStock(Inventario pInventario) {
+    public boolean CambiarStock(Inventario pInventario, String Comentario) {
         boolean exito = false;
         try (
                 java.sql.Connection conn = new Conexion().getConnection();
-                CallableStatement cmd = conn.prepareCall("{ call editarstockinventario(?,?) }")) {
+                CallableStatement cmd = conn.prepareCall("{ call editarstockinventario(?,?,?) }")) {
             cmd.setInt(1, pInventario.getId());
             cmd.setBigDecimal(2, pInventario.getStock());
+            cmd.setString(3, Comentario);
             exito = cmd.execute();
 
         } catch (SQLException ex) {

@@ -5,17 +5,31 @@
  */
 package Vista;
 
+import controlador.Movimiento_controlador;
+import entidades.Movimiento;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Gerard
  */
 public class frmMovimientos extends javax.swing.JInternalFrame {
 
+    private List<Movimiento> movimientoList;
+    private final Movimiento_controlador controlador;
     /**
      * Creates new form frmMovimientos
      */
     public frmMovimientos() {
         initComponents();
+        controlador = new Movimiento_controlador();
+        movimientoList = new ArrayList<>();
+        movimientoList = controlador.Obtener();
+    }
+    
+    private void cargarDatos(List<Movimiento> lista){
+        
     }
 
     /**

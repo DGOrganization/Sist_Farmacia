@@ -5,17 +5,56 @@
  */
 package Vista;
 
+import controlador.Movimiento_controlador;
+import entidades.Movimiento;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gerard
  */
 public class frmConsulMovi extends javax.swing.JInternalFrame {
-
+    private List<Movimiento> movimientoList;
+    private final Movimiento_controlador controlador;
     /**
      * Creates new form frmConsulMovi
      */
     public frmConsulMovi() {
         initComponents();
+        controlador = new Movimiento_controlador();
+        movimientoList = new ArrayList<>();
+        movimientoList = controlador.Obtener();
+        cargarDatos(movimientoList);
+    }
+    
+    private void cargarDatos(List<Movimiento> lista){
+        String[] columnas = {"Fecha", "Movimiento", "Comentario", "Productos", "Total"};
+        ControlesGenerales.reiniciarJTable(jtMovimientos);
+        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        modelo.setColumnIdentifiers(columnas);
+        BigDecimal[] in = {BigDecimal.ZERO}, out={BigDecimal.ZERO};
+        lista.stream().forEach(datos ->{
+            Object[] nuevaFila = {
+                datos.getFecha(),
+                datos.getCantidad().compareTo(BigDecimal.ZERO) < 0 ? "Entrada" : "Salida",
+                datos.getComentario(),
+                datos.getInventario(),
+                datos.getTotal()
+            }; 
+            if(!(datos.getCantidad().compareTo(BigDecimal.ZERO) < 0)){
+                out[0] = out[0].add(datos.getTotal());
+            } else {
+                in[0] = in[0].add(datos.getTotal());
+            }
+            modelo.addRow(nuevaFila);
+        });
+        jtMovimientos.setModel(modelo);
+        txtTotalIn.setText(in[0].toString());
+        txtTotalOut.setText(out[0].toString());
+        txtDiff.setText(in[0].subtract(out[0]).toString());
     }
 
     /**
@@ -33,18 +72,18 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
         btnEditar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtMovimientos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        txtTotalIn = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        txtTotalOut = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        txtDiff = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
@@ -95,7 +134,7 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtMovimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null}
             },
@@ -103,7 +142,7 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
                 "Fecha", "Mov", "N° Doc", "Usuario", "Entradas", "Salidas", "Saldo"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtMovimientos);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search16.png"))); // NOI18N
@@ -113,15 +152,15 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Total de Entradas:");
 
-        jLabel3.setText("jLabel3");
+        txtTotalIn.setText("jLabel3");
 
         jLabel4.setText("Total de Salidas:");
 
-        jLabel5.setText("jLabel5");
+        txtTotalOut.setText("jLabel5");
 
         jLabel6.setText("Diferencia:");
 
-        jLabel7.setText("jLabel7");
+        txtDiff.setText("jLabel7");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -142,15 +181,15 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(46, 46, 46)
-                        .addComponent(jLabel3)
+                        .addComponent(txtTotalIn)
                         .addGap(81, 81, 81)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
+                        .addComponent(txtTotalOut)
                         .addGap(57, 57, 57)
                         .addComponent(jLabel6)
                         .addGap(32, 32, 32)
-                        .addComponent(jLabel7)
+                        .addComponent(txtDiff)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator4))
                 .addGap(12, 12, 12))
@@ -174,11 +213,11 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
+                    .addComponent(txtTotalIn)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5)
+                    .addComponent(txtTotalOut)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel7))
+                    .addComponent(txtDiff))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -213,11 +252,8 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -225,7 +261,10 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtMovimientos;
     private javax.swing.JTextField txtBusqueda;
+    private javax.swing.JLabel txtDiff;
+    private javax.swing.JLabel txtTotalIn;
+    private javax.swing.JLabel txtTotalOut;
     // End of variables declaration//GEN-END:variables
 }

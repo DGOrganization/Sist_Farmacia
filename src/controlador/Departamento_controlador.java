@@ -6,8 +6,6 @@
 package controlador;
 
 import entidades.Departamento;
-import entidades.Municipio;
-import java.util.ArrayList;
 import java.util.List;
 import modelo.Departamento_modelo;
 
