@@ -41,14 +41,8 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
                 datos.getFecha(),
                 datos.getCantidad().compareTo(BigDecimal.ZERO) < 0 ? "Entrada" : "Salida",
                 datos.getComentario(),
-                datos.getInventario(),
-                datos.getTotal()
+                datos.getInventario()
             }; 
-            if(!(datos.getCantidad().compareTo(BigDecimal.ZERO) < 0)){
-                out[0] = out[0].add(datos.getTotal());
-            } else {
-                in[0] = in[0].add(datos.getTotal());
-            }
             modelo.addRow(nuevaFila);
         });
         jtMovimientos.setModel(modelo);

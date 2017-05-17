@@ -36,7 +36,6 @@ public class Movimiento_modelo {
                         movimiento.setFecha(resultado.getDate("fech"));
                         movimiento.setInventario(new Inventario_controlador().Obtener(new Inventario(resultado.getInt("codinv"))));
                         movimiento.setEstado(resultado.getBoolean("est"));
-                        movimiento.setTotal(resultado.getBigDecimal("tot"));
                         lista.add(movimiento);
                     }
                 }

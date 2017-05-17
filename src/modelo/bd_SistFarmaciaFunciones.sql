@@ -879,6 +879,15 @@ $BODY$
 			as tbl(idinv int, cant numeric)
 		WHERE
 			id = tbl.idinv;
+
+		INSERT INTO
+			movimientos(cantidad, comentario, idinventario, total)
+		SELECT
+			0 - cant, 'Venta', idinv, (cant * precio)
+		FROM
+			json_to_recordset($7) 
+			as tbl(idinv int, cant numeric, precio numeric);
+			
 		
 	END
 
@@ -1080,6 +1089,14 @@ $BODY$
 			as tbl(idinv int, cant numeric)
 		WHERE
 			id = tbl.idinv;
+
+		INSERT INTO
+			movimientos(cantidad, comentario, idinventario)
+		SELECT
+			cant, 'Compra', idinv
+		FROM
+			json_to_recordset($6) 
+			as tbl(idinv int, cant numeric, precio numeric);
 		
 	END
 
@@ -1105,16 +1122,32 @@ $BODY$
 
 select * from obtenerdetallescompra(2);
 
-CREATE OR REPLACE FUNCTION public.editarstockinventario(cod int, stck numeric)
+DROP FUNCTION public.editarstockinventario(int,numeric);
+CREATE OR REPLACE FUNCTION public.editarstockinventario(cod int, stck numeric, comentar varchar)
   RETURNS void AS 
 $BODY$
+	DECLARE
+		stockA numeric;
+		idinv int;
 	BEGIN
+		SELECT
+			stock INTO stockA
+		FROM
+			inventario
+		WHERE
+			id = $1;
+		
 		UPDATE
 			inventario
 		SET
 			stock = $2
 		WHERE
 			id = $1;
+			
+		INSERT INTO
+			movimientos(cantidad, comentario, idinventario)
+		VALUES
+			(($2 - stockA), $3, $1);
 	END
 $BODY$
   LANGUAGE plpgsql;
@@ -1325,3 +1358,18 @@ $BODY$
 	END
 $BODY$
   LANGUAGE plpgsql;
+  
+DROP FUNCTION public.obtenermovimientos();
+CREATE OR REPLACE FUNCTION public.obtenermovimientos() 
+RETURNS TABLE(codigo bigint, cantidad numeric(20,2), comenta varchar, fech timestamp, codinv int, est boolean)  AS
+$BODY$
+	BEGIN
+		RETURN QUERY
+			SELECT
+				m.id, m.cantidad, m.comentario, m.fecha, m.idinventario, m.estado
+			FROM
+				movimientos as m;
+	END
+$BODY$ LANGUAGE plpgsql;
+
+select * from obtenermovimientos();

@@ -18,7 +18,6 @@ public class Movimiento {
     private String _comentario;
     private Inventario _inventario;
     private java.sql.Date _fecha;
-    private BigDecimal _total;
     private boolean _estado;
 
     public long getId() {
@@ -60,14 +59,6 @@ public class Movimiento {
     public void setFecha(java.sql.Date _fecha) {
         this._fecha = _fecha;
     }
-
-    public BigDecimal getTotal() {
-        return _total;
-    }
-
-    public void setTotal(BigDecimal _total) {
-        this._total = _total;
-    }
     
     public boolean isEstado() {
         return _estado;
@@ -82,15 +73,6 @@ public class Movimiento {
 
     public Movimiento(long _id) {
         this._id = _id;
-    }
-
-    public Movimiento(long _id, BigDecimal _cantidad, String _comentario, Inventario _inventario, Date _fecha, boolean _estado) {
-        this._id = _id;
-        this._cantidad = _cantidad;
-        this._comentario = _comentario;
-        this._inventario = _inventario;
-        this._fecha = _fecha;
-        this._estado = _estado;
     }
 
 }

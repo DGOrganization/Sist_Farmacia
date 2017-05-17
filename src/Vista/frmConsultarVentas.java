@@ -39,7 +39,7 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
     }
     
     private void cargarDatos(List<Venta> lista){
-        String[] columnas = {"N° Factura", "Fecha", "Total", "Cambio", "Empleado"};
+        String[] columnas = {"N° Factura", "Fecha", "Total", "Cambio", "Empleado", "Estado"};
         ControlesGenerales.reiniciarJTable(jtVentas);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
@@ -49,7 +49,8 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
                 new SimpleDateFormat("dd-MM-yyyy HH:mm:ss a").format(datos.getFecha().getTime()),
                 datos.getTotal(),
                 datos.getCambio(),
-                datos.getEmpleado()
+                datos.getEmpleado(),
+                datos.isEstado() ? "Vigente" : "Anulada"
             };
             switch (cboEstado.getSelectedIndex()) {
                 case 0:
