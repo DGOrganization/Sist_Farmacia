@@ -6,6 +6,7 @@
 package controlador;
 
 import entidades.Inventario;
+import java.math.BigDecimal;
 import modelo.Inventario_modelo;
 import java.util.Collections;
 import java.util.List;
@@ -36,8 +37,8 @@ public class Inventario_controlador {
         return new Inventario_modelo().Editar(pInventario);
     }
     
-    public boolean EditarStock(Inventario pInventario, String comentario){
-        return new Inventario_modelo().CambiarStock(pInventario, comentario);
+    public boolean EditarStock(Inventario pInventario, BigDecimal Diff, String Comentario){
+        return new Inventario_modelo().CambiarStock(pInventario, Diff, Comentario);
     }
     
     public boolean Eliminar(Inventario pInventario){

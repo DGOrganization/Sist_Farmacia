@@ -310,6 +310,7 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
         if(fila > -1){
             Frame frm = JOptionPane.getFrameForComponent(this);
             frmDetalleVenta frmDetalle = new frmDetalleVenta(frm, true);
+            frmDetalle.setLocationRelativeTo(null);
             frmDetalle.setVenta_seleccionada(ventaList.get(ventaList.indexOf((Venta) jtVentas.getValueAt(fila, 0))));
             frmDetalle.setVisible(true);
             if(frmDetalle.isVisible() == false){

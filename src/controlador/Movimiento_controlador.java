@@ -19,7 +19,7 @@ public class Movimiento_controlador {
     public List<Movimiento> Obtener(){
         List<Movimiento> lista = new Movimiento_modelo().ListarMovimientos();
         lista =lista.stream().sorted((Movimiento m1, Movimiento m2) -> {
-            return Long.compare(m1.getId(), m2.getId());
+            return m2.getFecha().compareTo(m1.getFecha());
         }).collect(Collectors.toList());
         return lista;
     }

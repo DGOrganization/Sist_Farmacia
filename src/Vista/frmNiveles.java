@@ -32,7 +32,6 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         nivelList = new ArrayList<>();
         controlador = new Nivel_controlador();
         nivelList = controlador.Obtener(true);
-        //new Validaciones().cargarNiveles(cboNiveles, nivelList);
         cargarDatos(nivelList);
     }
 

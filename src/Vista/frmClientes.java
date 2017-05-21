@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Vista;
+
 import com.sun.glass.events.KeyEvent;
 import configuracion.Gestionar;
 import controlador.Cliente_controlador;
@@ -17,13 +18,16 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gerard
  */
 public class frmClientes extends javax.swing.JInternalFrame {
+
     private List<Cliente> clienteList;
     private final Cliente_controlador controlador;
+
     /**
      * Creates new form frmClientes
      */
@@ -36,41 +40,43 @@ public class frmClientes extends javax.swing.JInternalFrame {
         txtBusqueda.grabFocus();
 //        txtBusqueda.requestFocus(true);
     }
-    private void cargarDatos(List<Cliente> lista){
+
+    private void cargarDatos(List<Cliente> lista) {
         String[] columnas = {"Nombre", "Telefono", "Direccion"};
         ControlesGenerales.reiniciarJTable(jtClientes);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.forEach(datos -> {
-            Object[] nuevaFila= {
+            Object[] nuevaFila = {
                 datos,
                 datos.getTelefono().get(0),
                 datos.getDireccion()
             };
-            if(datos.isEstado()){
+            if (datos.isEstado()) {
                 modelo.addRow(nuevaFila);
             }
         });
         jtClientes.setModel(modelo);
     }
-    
-    private void buscarTXT(){
+
+    private void buscarTXT() {
         List<Cliente> encontrado = new ArrayList<>();
         encontrado = clienteList.stream().filter(
                 datos -> datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
         ).collect(Collectors.toList());
         cargarDatos(encontrado);
-        if(jtClientes.getRowCount() == 1){
+        if (jtClientes.getRowCount() == 1) {
             jtClientes.setRowSelectionInterval(0, 0);
         }
     }
-    
-    private void changeText(){
-        txtBusqueda.getDocument().addDocumentListener(new DocumentListener(){
+
+    private void changeText() {
+        txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent de) {
                 buscarTXT();
             }
+
             @Override
             public void removeUpdate(DocumentEvent de) {
                 buscarTXT();
@@ -80,13 +86,14 @@ public class frmClientes extends javax.swing.JInternalFrame {
             public void changedUpdate(DocumentEvent de) {
                 buscarTXT();
             }
-        
+
         });
     }
-    
-    private void Editar(){
+
+    private void Editar() {
         Frame f = JOptionPane.getFrameForComponent(this);
         frmNuevoCliente frm = new frmNuevoCliente((JFrame) f, true);
+        frm.setLocationRelativeTo(null);
         int fila = jtClientes.getSelectedRow();
         if (fila > -1) {
             frm.setCliente(clienteList.get(clienteList.indexOf(jtClientes.getValueAt(fila, 0))));
@@ -99,11 +106,12 @@ public class frmClientes extends javax.swing.JInternalFrame {
             }
         } else {
             JOptionPane.showMessageDialog(this,
-                "Selecciona primero",
-                new Gestionar().Leer("Empresa", "nombre"),
-                JOptionPane.WARNING_MESSAGE);
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -253,9 +261,10 @@ public class frmClientes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
         frmNuevoCliente frm = new frmNuevoCliente((JFrame) f, true);
+        frm.setLocationRelativeTo(null);
         frm.setVisible(true);
-        if(frm.isVisible() == false){
-            if(!frm.getCliente().equals(new Cliente())){
+        if (frm.isVisible() == false) {
+            if (!frm.getCliente().equals(new Cliente())) {
                 clienteList = controlador.Obtener();
                 cargarDatos(clienteList);
             }
@@ -274,13 +283,13 @@ public class frmClientes extends javax.swing.JInternalFrame {
         if (fila > -1) {
             if (jtClientes.getValueAt(fila, 0) instanceof Cliente) {
                 int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
-                    JOptionPane.YES_NO_OPTION);
+                        JOptionPane.YES_NO_OPTION);
                 if (respuesta == JOptionPane.YES_OPTION) {
                     if (controlador.Eliminar(clienteList.get(clienteList.indexOf(jtClientes.getValueAt(fila, 0))))) {
                         JOptionPane.showMessageDialog(this,
-                            "El registro ha sido eliminado exitosamente",
-                            "Sistema de Compras y Ventas - Categoria",
-                            JOptionPane.INFORMATION_MESSAGE);
+                                "El registro ha sido eliminado exitosamente",
+                                "Sistema de Compras y Ventas - Categoria",
+                                JOptionPane.INFORMATION_MESSAGE);
                         clienteList = controlador.Obtener();
                         cargarDatos(clienteList);
                     }
@@ -288,15 +297,15 @@ public class frmClientes extends javax.swing.JInternalFrame {
             }
         } else {
             JOptionPane.showMessageDialog(this,
-                "Selecciona primero",
-                new Gestionar().Leer("Empresa", "nombre"),
-                JOptionPane.WARNING_MESSAGE);
+                    "Selecciona primero",
+                    new Gestionar().Leer("Empresa", "nombre"),
+                    JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             Editar();
         }
     }//GEN-LAST:event_txtBusquedaKeyPressed

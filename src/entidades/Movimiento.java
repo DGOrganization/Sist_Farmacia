@@ -6,7 +6,7 @@
 package entidades;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -17,7 +17,7 @@ public class Movimiento {
     private BigDecimal _cantidad;
     private String _comentario;
     private Inventario _inventario;
-    private java.sql.Date _fecha;
+    private Timestamp _fecha;
     private boolean _estado;
 
     public long getId() {
@@ -52,11 +52,11 @@ public class Movimiento {
         this._inventario = _inventario;
     }
 
-    public java.sql.Date getFecha() {
+    public Timestamp getFecha() {
         return _fecha;
     }
 
-    public void setFecha(java.sql.Date _fecha) {
+    public void setFecha(Timestamp _fecha) {
         this._fecha = _fecha;
     }
     

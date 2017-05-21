@@ -13,7 +13,6 @@ import entidades.Departamento;
 import entidades.Municipio;
 import entidades.Telefono;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -22,39 +21,35 @@ import javax.swing.JOptionPane;
  * @author dakrpastiursSennin
  */
 public class frmNuevoCliente extends javax.swing.JDialog {
+
     private Cliente cliente;
     private boolean editar;
     private List<Departamento> deptos;
     private Departamento_controlador controlador_depto;
     private Cliente_controlador controlador;
+
     /**
      * Creates new form frmRegistrarCliente
+     *
      * @param parent
      * @param modal
      */
     public frmNuevoCliente(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
-        new Validaciones().duiFormato(txtDUI, this);
-        new Validaciones().duiFormato(txtNIT, this);
     }
-    
+
     public frmNuevoCliente(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
-        new Validaciones().duiFormato(txtDUI, this);
-        new Validaciones().duiFormato(txtNIT, this);
+        //this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
     }
-    
-    private Departamento buscador(List<Departamento> deps){
+
+    private Departamento buscador(List<Departamento> deps) {
         Departamento encontrado = new Departamento();
-        for(Departamento dep : deps){
-            for(Municipio muni : dep.getMunicipios()){
-                if(muni.toString().equals(cliente.getMunicipio().toString())){
+        for (Departamento dep : deps) {
+            for (Municipio muni : dep.getMunicipios()) {
+                if (cliente.getMunicipio().getId() == muni.getId()) {
                     encontrado = dep;
                     break;
                 }
@@ -62,7 +57,7 @@ public class frmNuevoCliente extends javax.swing.JDialog {
         }
         return encontrado;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,6 +105,7 @@ public class frmNuevoCliente extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(new Gestionar().Leer("Empresa", "nombre"));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -452,95 +448,94 @@ public class frmNuevoCliente extends javax.swing.JDialog {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         Validaciones validar = new Validaciones();
-        if(txtNombre.getText().isEmpty() || txtApellidos.getText().isEmpty()){
+        if (txtNombre.getText().isEmpty() || txtApellidos.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                    "El nombre y apellido es un campo obligatorio", 
+                    "El nombre y apellido es un campo obligatorio",
                     new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.ERROR_MESSAGE);
-        } else {         
+        } else {
             cliente.setNombre(txtNombre.getText());
             if (txtApellidos.getText().trim().split(" ").length > 0) {
                 String[] apellidos = validar.editarApellidos(txtApellidos.getText());
-                System.out.println(Arrays.toString(apellidos));
-                cliente.setApellidoPaterno(apellidos[0]);
+                cliente.setApellidoPaterno(apellidos[0].trim());
                 txtApellidos.grabFocus();
                 if (apellidos.length > 1) {
-                    cliente.setApellidoMaterno(apellidos[1]);
+                    cliente.setApellidoMaterno(apellidos[1].trim());
                 } else {
                     cliente.setApellidoMaterno("");
                 }
             } else {
                 cliente.setApellidoPaterno(txtApellidos.getText());
             }
-            
-            if(!(txtDUI.getText().trim().equals("-") || txtDUI.getText().isEmpty())){
+
+            if (!(txtDUI.getText().trim().equals("-") || txtDUI.getText().isEmpty())) {
                 cliente.setDui(txtDUI.getText());
                 txtDUI.grabFocus();
             } else {
                 cliente.setDui("");
             }
-            List<Telefono> telefonos = new ArrayList<>(); 
-            if(!(txtTelefono.getText().isEmpty() || txtTelefono.getText().trim().equals("-"))){
-                telefonos.add(new Telefono(txtTelefono.getText(), "Casa"));                
-            } else {
-                telefonos.add(new Telefono("", ""));  
-            }
-            if(!(txtCelular.getText().isEmpty() || txtCelular.getText().trim().equals("-"))){
-            telefonos.add(new Telefono(txtCelular.getText(), "Movil"));
+            List<Telefono> telefonos = new ArrayList<>();
+            if (!(txtTelefono.getText().isEmpty() || txtTelefono.getText().trim().equals("-"))) {
+                telefonos.add(new Telefono(txtTelefono.getText(), "Casa"));
             } else {
                 telefonos.add(new Telefono("", ""));
             }
-            if(!(txtNIT.getText().isEmpty() || txtNIT.getText().trim().equals("---"))){
+            if (!(txtCelular.getText().isEmpty() || txtCelular.getText().trim().equals("-"))) {
+                telefonos.add(new Telefono(txtCelular.getText(), "Movil"));
+            } else {
+                telefonos.add(new Telefono("", ""));
+            }
+            if (!(txtNIT.getText().isEmpty() || txtNIT.getText().trim().equals("---"))) {
                 cliente.setNit(txtNIT.getText());
             } else {
                 cliente.setNit("");
             }
             cliente.setSexo(cboSexo.getSelectedItem().toString().substring(0, 1));
-            if(!(jdcNacimiento.getDate() == null)){
+            if (!(jdcNacimiento.getDate() == null)) {
                 cliente.setNacimiento(jdcNacimiento.getDate());
             } else {
                 cliente.setNacimiento(null);
             }
-            if(!txtDireccion.getText().isEmpty()){
+            if (!txtDireccion.getText().isEmpty()) {
                 cliente.setDireccion(txtDireccion.getText());
             } else {
                 cliente.setDireccion("");
             }
             cliente.setMunicipio((Municipio) cboMunicipio.getSelectedItem());
-            if(telefonos.isEmpty()){
+            if (telefonos.isEmpty()) {
                 cliente.setTelefono(null);
-            }else{
+            } else {
                 cliente.setTelefono(telefonos);
             }
-            if(!txtEmail.getText().isEmpty()){
-                if(validar.validarEmail(txtEmail.getText())){
+            if (!txtEmail.getText().isEmpty()) {
+                if (validar.validarEmail(txtEmail.getText())) {
                     cliente.setEmail(txtEmail.getText());
                 } else {
                     JOptionPane.showMessageDialog(this,
-                    "Este correo no es valido", 
-                    new Gestionar().Leer("Empresa", "nombre"),
-                    JOptionPane.ERROR_MESSAGE);
+                            "Este correo no es valido",
+                            new Gestionar().Leer("Empresa", "nombre"),
+                            JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 cliente.setEmail("");
             }
             cliente.setEstado(chkEstado.isSelected());
-            if(!isEditar()){
-                if(controlador.Registrar(cliente)){
+            if (!isEditar()) {
+                if (controlador.Registrar(cliente)) {
                     JOptionPane.showMessageDialog(this,
-                        "El registro ha sido ingresado exitosamente",
-                        new Gestionar().Leer("Empresa", "nombre"),
-                        JOptionPane.INFORMATION_MESSAGE);
+                            "El registro ha sido ingresado exitosamente",
+                            new Gestionar().Leer("Empresa", "nombre"),
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
                 int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de editar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
-                    JOptionPane.YES_NO_OPTION);
+                        JOptionPane.YES_NO_OPTION);
                 if (respuesta == JOptionPane.YES_OPTION) {
                     if (controlador.Editar(cliente)) {
                         JOptionPane.showMessageDialog(this,
-                            "El registro ha sido actualizado exitosamente",
-                            new Gestionar().Leer("Empresa", "nombre"),
-                            JOptionPane.INFORMATION_MESSAGE);
+                                "El registro ha sido actualizado exitosamente",
+                                new Gestionar().Leer("Empresa", "nombre"),
+                                JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
@@ -555,24 +550,34 @@ public class frmNuevoCliente extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        new Validaciones().nitFormato(txtNIT, this);
-        new Validaciones().telefonoFormato(txtTelefono, this);
-        new Validaciones().telefonoFormato(txtCelular, this);
+        Validaciones validar = new Validaciones();
+        validar.nitFormato(txtNIT, this);
+        validar.telefonoFormato(txtTelefono, this);
+        validar.telefonoFormato(txtCelular, this);
+        validar.duiFormato(txtDUI, this);
         deptos = new ArrayList<>();
         controlador_depto = new Departamento_controlador();
         deptos = controlador_depto.Obtener();
         controlador = new Cliente_controlador();
-        new Validaciones().cboDepto(cboDepto, deptos);
-        new Validaciones().cboMuni(cboMunicipio, deptos.get(deptos.indexOf(cboDepto.getSelectedItem())).getMunicipios());
-         if(isEditar()){
+        deptos.stream().forEach(cboDepto::addItem);
+        deptos.get(deptos.indexOf(cboDepto.getSelectedItem())).getMunicipios().stream().forEach(cboMunicipio::addItem);
+
+        if (isEditar()) {
             txtNombre.setText(cliente.getNombre());
+            txtApellidos.setText(cliente.getApellidoPaterno().trim() + " " + cliente.getApellidoMaterno().trim());
             txtNIT.setText(cliente.getNit());
             txtDUI.setText(cliente.getDui());
             cboSexo.setSelectedItem(cliente.getSexo());
             jdcNacimiento.setDate(cliente.getNacimiento());
             txtDireccion.setText(cliente.getDireccion());
             cboDepto.setSelectedItem(buscador(deptos));
-            cboMunicipio.setSelectedItem(cliente.getMunicipio());
+            for (int i = 0; i < cboMunicipio.getItemCount() - 1; i++) {
+                System.out.println("Municipio cbo == " + cboMunicipio.getItemAt(i));
+                if (cliente.getMunicipio().getId() == cboMunicipio.getItemAt(i).getId()) {
+                    cboMunicipio.setSelectedIndex(i);
+                    break;
+                }
+            }
             txtTelefono.setText(cliente.getTelefono().get(0).getNumero());
             txtCelular.setText(cliente.getTelefono().get(1).getNumero());
             txtEmail.setText(cliente.getEmail());
@@ -585,7 +590,7 @@ public class frmNuevoCliente extends javax.swing.JDialog {
     private void cboDeptoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboDeptoItemStateChanged
         // TODO add your handling code here:
         cboMunicipio.removeAllItems();
-        new Validaciones().cboMuni(cboMunicipio, deptos.get(deptos.indexOf(cboDepto.getSelectedItem())).getMunicipios());
+        deptos.get(deptos.indexOf(cboDepto.getSelectedItem())).getMunicipios().stream().forEach(cboMunicipio::addItem);
     }//GEN-LAST:event_cboDeptoItemStateChanged
 
     /**
@@ -604,15 +609,12 @@ public class frmNuevoCliente extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(frmNuevoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        
         //</editor-fold>
         //</editor-fold>
 
@@ -632,8 +634,8 @@ public class frmNuevoCliente extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> cboDepto;
-    private javax.swing.JComboBox<String> cboMunicipio;
+    private javax.swing.JComboBox<Departamento> cboDepto;
+    private javax.swing.JComboBox<Municipio> cboMunicipio;
     private javax.swing.JComboBox<String> cboSexo;
     private javax.swing.JCheckBox chkEstado;
     private javax.swing.JLabel jLabel1;

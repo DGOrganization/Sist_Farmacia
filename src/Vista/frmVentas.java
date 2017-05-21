@@ -659,6 +659,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
         frmAgregarProducto frm = new frmAgregarProducto(f, true);
+        frm.setLocationRelativeTo(null);
         frm.setVisible(true);
         if (frm.isVisible() == false) {
             if (frm.getInv_seleccion().getStock().compareTo(BigDecimal.ZERO) > 0) {
@@ -733,6 +734,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
             venta.setNFactura(txtNFactura.getText());
             if (jTableDetalleVenta.getRowCount() > 0 || clienteActual.getId() > 0) {
                 frm.setVentaActual(venta);
+                frm.setLocationRelativeTo(null);
                 frm.setVisible(true);
                 if (frm.isVisible() == false) {
                     if(frm.getVentaActual().getCambio().compareTo(BigDecimal.ZERO) > -1){
@@ -846,8 +848,10 @@ public class frmVentas extends javax.swing.JInternalFrame {
         frmAgregarCliente frm = new frmAgregarCliente(f, true);
         frm.setVisible(true);
         if (frm.isVisible() == false) {
-            clienteActual = frm.getCliente();
-            txtCliente.setText(clienteActual.toString());
+            if(frm.getCliente().getId() != 0){
+                clienteActual = frm.getCliente();
+                txtCliente.setText(clienteActual.toString());
+            }
             frm.dispose();
         }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed

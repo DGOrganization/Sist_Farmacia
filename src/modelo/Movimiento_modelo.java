@@ -33,7 +33,7 @@ public class Movimiento_modelo {
                         movimiento.setId(resultado.getLong("codigo"));
                         movimiento.setCantidad(resultado.getBigDecimal("cantidad"));
                         movimiento.setComentario(resultado.getString("comenta"));
-                        movimiento.setFecha(resultado.getDate("fech"));
+                        movimiento.setFecha(resultado.getTimestamp("fech"));
                         movimiento.setInventario(new Inventario_controlador().Obtener(new Inventario(resultado.getInt("codinv"))));
                         movimiento.setEstado(resultado.getBoolean("est"));
                         lista.add(movimiento);

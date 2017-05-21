@@ -360,49 +360,49 @@ public class Validaciones {
         }
     }
     
-    public void cargarNiveles(JComboBox cbo, List<Nivel> pNiveles){
-        cbo.removeAllItems();
-        pNiveles.stream().forEach((nivel) -> {
-            if((!nivel.getNombre().toUpperCase().contains("administrador".toUpperCase())) && nivel.isEstado())
-                cbo.addItem(nivel);
-        });
-    }
-    public void cboDepto(JComboBox cboPrincipal, List<Departamento> pDepto){
-        pDepto.forEach(datos -> {
-            cboPrincipal.addItem(datos);
-        });        
-    }
-    
-    public void cboMuni(JComboBox cboPrincipal, List<Municipio> pDepto){
-        pDepto.forEach(datos -> {
-            cboPrincipal.addItem(datos);
-        });        
-    }
-    
-    public void cboCategoria(JComboBox cbo, List<Categoria> pLista){
-        pLista.stream().forEach(datos -> {
-            cbo.addItem(datos);
-        });
-    }
-    
-    public void cboCategoria2(JComboBox cbo, List<Categoria> pLista){
-        cbo.addItem(new Categoria(0, "Todas", true));
-        pLista.stream().forEach(datos -> {
-            cbo.addItem(datos);
-        });
-    }
-    
-    public void cboBodega(JComboBox cbo, List<Bodega> pLista){
-        pLista.stream().forEach(datos -> {
-            cbo.addItem(datos);
-        });
-    }
-     
-     public void cboUnidades(JComboBox cbo, List<Unidad> pLista){
-        pLista.stream().forEach(datos -> {
-            cbo.addItem(datos);
-        });
-    }
+//    public void cargarNiveles(JComboBox cbo, List<Nivel> pNiveles){
+//        cbo.removeAllItems();
+//        pNiveles.stream().forEach((nivel) -> {
+//            if((!nivel.getNombre().toUpperCase().contains("administrador".toUpperCase())) && nivel.isEstado())
+//                cbo.addItem(nivel);
+//        });
+//    }
+//    public void cboDepto(JComboBox cboPrincipal, List<Departamento> pDepto){
+//        pDepto.forEach(datos -> {
+//            cboPrincipal.addItem(datos);
+//        });        
+//    }
+//    
+//    public void cboMuni(JComboBox cboPrincipal, List<Municipio> pDepto){
+//        pDepto.forEach(datos -> {
+//            cboPrincipal.addItem(datos);
+//        });        
+//    }
+//    
+//    public void cboCategoria(JComboBox cbo, List<Categoria> pLista){
+//        pLista.stream().forEach(datos -> {
+//            cbo.addItem(datos);
+//        });
+//    }
+//    
+//    public void cboCategoria2(JComboBox cbo, List<Categoria> pLista){
+//        cbo.addItem(new Categoria(0, "Todas", true));
+//        pLista.stream().forEach(datos -> {
+//            cbo.addItem(datos);
+//        });
+//    }
+//    
+//    public void cboBodega(JComboBox cbo, List<Bodega> pLista){
+//        pLista.stream().forEach(datos -> {
+//            cbo.addItem(datos);
+//        });
+//    }
+//     
+//     public void cboUnidades(JComboBox cbo, List<Unidad> pLista){
+//        pLista.stream().forEach(datos -> {
+//            cbo.addItem(datos);
+//        });
+//    }
     
     public boolean validarCamposTexto(JTextField text){
         if(!text.getText().trim().equals("")){

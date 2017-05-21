@@ -17,6 +17,7 @@ import entidades.Articulo;
 import entidades.Bodega;
 import entidades.Categoria;
 import entidades.Unidad;
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -248,13 +249,13 @@ public class Inventario_modelo {
         return exito;
     }
 
-    public boolean CambiarStock(Inventario pInventario, String Comentario) {
+    public boolean CambiarStock(Inventario pInventario,BigDecimal Diff, String Comentario) {
         boolean exito = false;
         try (
                 java.sql.Connection conn = new Conexion().getConnection();
                 CallableStatement cmd = conn.prepareCall("{ call editarstockinventario(?,?,?) }")) {
             cmd.setInt(1, pInventario.getId());
-            cmd.setBigDecimal(2, pInventario.getStock());
+            cmd.setBigDecimal(2, Diff);
             cmd.setString(3, Comentario);
             exito = cmd.execute();
 

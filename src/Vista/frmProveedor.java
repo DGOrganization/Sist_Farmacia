@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmProveedor extends javax.swing.JInternalFrame {
 
-    private Proveedor_controlador controlador;
+    private final Proveedor_controlador controlador;
     private List<Proveedor> proveedorList;
 
     /**
@@ -95,6 +95,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         if (fila > -1) {
             frmNuevoProveedor frm = new frmNuevoProveedor((JFrame) f, true);
             frm.setProveedor(proveedorList.get(proveedorList.indexOf((Proveedor) jtProveedores.getValueAt(fila, 0))));
+            frm.setLocationRelativeTo(null);
             frm.setEditar(true);
             frm.setVisible(true);
             if (!frm.isVisible()) {
@@ -254,6 +255,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
         frmNuevoProveedor frm = new frmNuevoProveedor((JFrame) f, true);
+        frm.setLocationRelativeTo(null);
         frm.setVisible(true);
         if (!frm.isVisible()) {
             proveedorList = controlador.Obtener();
@@ -295,7 +297,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
 
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             Editar();
         }
     }//GEN-LAST:event_txtBusquedaKeyPressed

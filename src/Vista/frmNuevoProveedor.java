@@ -15,12 +15,15 @@ import javax.swing.JOptionPane;
  * @author Gerard
  */
 public class frmNuevoProveedor extends javax.swing.JDialog {
+
     private Proveedor proveedor;
     private boolean editar;
     private final Validaciones validar;
     private final Proveedor_controlador controlador;
+
     /**
      * Creates new form frmNuevoProveedor
+     *
      * @param parent
      * @param modal
      */
@@ -28,12 +31,7 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         super(parent, modal);
         this.validar = new Validaciones();
         initComponents();
-        setLocationRelativeTo(null);
         controlador = new Proveedor_controlador();
-        validar.telefonoFormato(txtTelefono, this);
-        validar.telefonoFormato(txtCelular, this);
-        validar.nitFormato(txtNIT, this);
-        setTitle(new Gestionar().Leer("Empresa", "Nombre"));
     }
 
     /**
@@ -72,6 +70,7 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(new Gestionar().Leer("Empresa", "nombre"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -269,59 +268,59 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        boolean valido = validar.validarCamposTexto(txtRepresentante) && validar.validarCamposTexto(txtNombre) 
+        boolean valido = validar.validarCamposTexto(txtRepresentante) && validar.validarCamposTexto(txtNombre)
                 && validar.validarCamposTexto(txtNRC) && validar.validarCamposTexto(txtDireccion) && validar.validarCamposTexto(txtTelefono)
                 && validar.validarCamposTexto(txtCelular) && validar.validarCamposTexto(txtNIT);
-        if(valido == true){
+        if (valido == true) {
             proveedor.setRespresentante(txtRepresentante.getText());
             proveedor.setNombre(txtNombre.getText());
             proveedor.setNRC(txtNRC.getText());
             proveedor.setDomicilio(txtDireccion.getText());
             proveedor.setNIT(txtNIT.getText());
             proveedor.setTelefono(txtTelefono.getText());
-            if(!txtCelular.getText().isEmpty()){
+            if (!txtCelular.getText().isEmpty()) {
                 proveedor.setCelular(txtCelular.getText());
             } else {
                 proveedor.setCelular("");
             }
-            if(!txtEmail.getText().isEmpty()){
-                if(validar.validarEmail(txtEmail.getText())){
+            if (!txtEmail.getText().isEmpty()) {
+                if (validar.validarEmail(txtEmail.getText())) {
                     proveedor.setEmail(txtEmail.getText());
                 } else {
                     JOptionPane.showMessageDialog(this,
-                    "Este correo no es valido", "Sistema de Compras y Ventas - Validaciones",
-                    JOptionPane.ERROR_MESSAGE);
+                            "Este correo no es valido", "Sistema de Compras y Ventas - Validaciones",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 proveedor.setEmail("");
             }
-            if(!txtWeb.getText().isEmpty()){
-                if(validar.validarURL(txtWeb.getText())){
+            if (!txtWeb.getText().isEmpty()) {
+                if (validar.validarURL(txtWeb.getText())) {
                     proveedor.setWebsite(txtWeb.getText());
                 } else {
                     JOptionPane.showMessageDialog(this,
-                    "Esta url no es valida, no se almacenara", "Sistema de Compras y Ventas - Validaciones",
-                    JOptionPane.ERROR_MESSAGE);
+                            "Esta url no es valida, no se almacenara", "Sistema de Compras y Ventas - Validaciones",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 proveedor.setWebsite("");
             }
-            if(editar == false){
-                if(controlador.Registrar(proveedor)){
+            if (editar == false) {
+                if (controlador.Registrar(proveedor)) {
                     JOptionPane.showMessageDialog(this,
-                        "El registro ha sido ingresado exitosamente",
-                        new Gestionar().Leer("Empresa", "nombre"),
-                        JOptionPane.INFORMATION_MESSAGE);
+                            "El registro ha sido ingresado exitosamente",
+                            new Gestionar().Leer("Empresa", "nombre"),
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
                 int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de editar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
-                    JOptionPane.YES_NO_OPTION);
+                        JOptionPane.YES_NO_OPTION);
                 if (respuesta == JOptionPane.YES_OPTION) {
                     if (controlador.Editar(proveedor)) {
                         JOptionPane.showMessageDialog(this,
-                            "El registro ha sido actualizado exitosamente",
-                            new Gestionar().Leer("Empresa", "nombre"),
-                            JOptionPane.INFORMATION_MESSAGE);
+                                "El registro ha sido actualizado exitosamente",
+                                new Gestionar().Leer("Empresa", "nombre"),
+                                JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
@@ -336,7 +335,10 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        if(isEditar()){
+        validar.telefonoFormato(txtTelefono, this);
+        validar.telefonoFormato(txtCelular, this);
+        validar.nitFormato(txtNIT, this);
+        if (isEditar()) {
             txtRepresentante.setText(proveedor.getRespresentante());
             txtNombre.setText(proveedor.getNombre());
             txtNRC.setText(proveedor.getNRC());
@@ -367,15 +369,11 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(frmNuevoProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
         //</editor-fold>
 
         /* Create and display the dialog */

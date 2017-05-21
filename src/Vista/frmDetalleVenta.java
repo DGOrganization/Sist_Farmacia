@@ -23,8 +23,6 @@ public class frmDetalleVenta extends javax.swing.JDialog {
     public frmDetalleVenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(this);
-        this.setTitle("Detalle de la venta");
     }
 
     /**
@@ -58,6 +56,7 @@ public class frmDetalleVenta extends javax.swing.JDialog {
         lblAnulada = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Detalle de la venta");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {

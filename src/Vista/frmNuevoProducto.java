@@ -41,29 +41,30 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gerard
  */
 public class frmNuevoProducto extends javax.swing.JDialog {
+
     private Inventario inventario;
     private boolean editar = false;
     private final Inventario_controlador controlador;
     private final Validaciones validar;
     private String imagenURL;
-    
+
     /**
      * Creates new form frmNuevoArticulo
+     *
      * @param parent
      * @param modal
      */
     public frmNuevoProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setLocationRelativeTo(null);
         controlador = new Inventario_controlador();
         validar = new Validaciones();
-        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
         Object[] columnas = {"Producto", "Localizacion", "Stock", "Precio ($)"};
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
@@ -82,38 +83,38 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         validar.validarSoloNumeros(txtStockMax);
         changeText(txtMargen1);
         changeText(txtMargen2);
-        changeText(txtMargen3);        
+        changeText(txtMargen3);
         changeText(txtPrecioCompra);
 //        TableColumn tc = jtCompatibles.getColumnModel().getColumn(4);
 //        tc.setCellEditor(jtCompatibles.getDefaultEditor(Boolean.class));
 //        tc.setCellRenderer(jtCompatibles.getDefaultRenderer(Boolean.class)); 
     }
-    
-    private void ObtenerImagen() throws FileNotFoundException, IOException{
+
+    private void ObtenerImagen() throws FileNotFoundException, IOException {
         JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fc.setCurrentDirectory(new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Pictures"));
         fc.setAcceptAllFileFilterUsed(false);
         fc.addChoosableFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png", "jpge"));
         int ventana = fc.showDialog(this, "Seleccionar");
-        if(ventana == JFileChooser.APPROVE_OPTION){
+        if (ventana == JFileChooser.APPROVE_OPTION) {
             File archivo = fc.getSelectedFile();
             setImagen(archivo.getPath());
             imagenURL = archivo.getPath();
         }
     }
-    
-    private void setImagen(String url){
+
+    private void setImagen(String url) {
         ImageIcon imagen = new ImageIcon(url);
         ImageIcon icono = new ImageIcon(imagen.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), 0));
         lblImagen.setText("");
         lblImagen.setIcon(icono);
     }
-    
-    private String CopiarImagen() throws IOException {        
+
+    private String CopiarImagen() throws IOException {
         String urlSalida = System.getProperty("user.dir") + "\\Recursos\\Productos";
         File dir = new File(urlSalida);
-        if(!dir.exists()){            
+        if (!dir.exists()) {
             if (dir.mkdirs()) {
                 System.out.println("Si funciona");
             }
@@ -137,14 +138,14 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         }
         return urlSalida;
     }
-    
-    private void CalcularMargenTXT(){
+
+    private void CalcularMargenTXT() {
         BigDecimal margen1 = new BigDecimal(0);
         BigDecimal margen2 = new BigDecimal(0);
         BigDecimal margen3 = new BigDecimal(0);
         BigDecimal precioCompra = new BigDecimal(0);
-        try{
-            if(txtPrecioCompra.getText().isEmpty() == false){
+        try {
+            if (txtPrecioCompra.getText().isEmpty() == false) {
                 if (txtMargen1.getText().isEmpty() == false) {
                     precioCompra = new BigDecimal(txtPrecioCompra.getText());
                     margen1 = new BigDecimal(txtMargen1.getText());
@@ -164,20 +165,21 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                     txtPrecio3.setText(precio3.setScale(2, RoundingMode.HALF_UP).toString());
                 }
             }
-        } catch (Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "El numero digitado no es valido");
             txtPrecio1.setText("");
             txtPrecio2.setText("");
             txtPrecio3.setText("");
         }
     }
-    
-    private void changeText(JTextField txt){
-        txt.getDocument().addDocumentListener(new DocumentListener(){
+
+    private void changeText(JTextField txt) {
+        txt.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent de) {
                 CalcularMargenTXT();
             }
+
             @Override
             public void removeUpdate(DocumentEvent de) {
                 CalcularMargenTXT();
@@ -187,9 +189,10 @@ public class frmNuevoProducto extends javax.swing.JDialog {
             public void changedUpdate(DocumentEvent de) {
                 CalcularMargenTXT();
             }
-        
+
         });
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -263,6 +266,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         jtCompatibles = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(new Gestionar().Leer("Empresa", "nombre"));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -845,7 +849,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if(txtProducto.getText().isEmpty() == false && jdcVencimiento.getDate() != null){
+        if (txtProducto.getText().isEmpty() == false && jdcVencimiento.getDate() != null) {
             inventario.setArticulo(new Articulo(0, txtProducto.getText(), txtDescripcion.getText(), true));
             inventario.setCategoria((Categoria) cboCategoria.getSelectedItem());
             inventario.setBodega((Bodega) cboBodega.getSelectedItem());
@@ -853,7 +857,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
             inventario.setStockMin(Integer.parseInt(txtStockMin.getText()));
             inventario.setStockMax(Integer.parseInt(txtStockMax.getText()));
             inventario.setVencimiento(jdcVencimiento.getDate());
-            if(imagenURL != null || !imagenURL.isEmpty()){                
+            if (imagenURL != null || !imagenURL.isEmpty()) {
                 try {
                     inventario.setImagen(new Imagen(0, CopiarImagen()));
                 } catch (IOException ex) {
@@ -897,13 +901,13 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                 }
                 inventario.setCompatibles(compatibles);
                 int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de editar estos datos?", new Gestionar().Leer("Empresa", "nombre"),
-                    JOptionPane.YES_NO_OPTION);
+                        JOptionPane.YES_NO_OPTION);
                 if (respuesta == JOptionPane.YES_OPTION) {
                     if (controlador.Editar(inventario)) {
                         JOptionPane.showMessageDialog(this,
-                            "El registro ha sido actualizado exitosamente",
-                            new Gestionar().Leer("Empresa", "nombre"),
-                            JOptionPane.INFORMATION_MESSAGE);
+                                "El registro ha sido actualizado exitosamente",
+                                new Gestionar().Leer("Empresa", "nombre"),
+                                JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }
@@ -939,9 +943,9 @@ public class frmNuevoProducto extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        new Validaciones().cboCategoria(cboCategoria, new Categoria_controlador().Obtener());
-        new Validaciones().cboBodega(cboBodega, new Bodega_controlador().Obtener());
-        new Validaciones().cboUnidades(cboUnidad, new Unidad_controlador().Obtener());
+        new Categoria_controlador().Obtener().stream().forEach(cboCategoria::addItem);
+        new Bodega_controlador().Obtener().stream().forEach(cboBodega::addItem);
+        new Unidad_controlador().Obtener().stream().forEach(cboUnidad::addItem);
         if (isEditar()) {
             txtProducto.setText(inventario.getArticulo().getNombre());
             txtDescripcion.setText(inventario.getArticulo().getDescripcion());
@@ -959,7 +963,7 @@ public class frmNuevoProducto extends javax.swing.JDialog {
             txtMayoreo3.setText(inventario.getPrecio().get(5).getCantidad().toString());
             setImagen(inventario.getImagen().getUrl());
             imagenURL = inventario.getImagen().getUrl();
-            DefaultTableModel modelo = (DefaultTableModel) jtCompatibles.getModel();            
+            DefaultTableModel modelo = (DefaultTableModel) jtCompatibles.getModel();
             inventario.getCompatibles().stream().forEach(datos -> {
                 if (datos.isEstado()) {
                     Object[] nuevaFila = {
@@ -986,16 +990,16 @@ public class frmNuevoProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
         frmAgregarProducto frm = new frmAgregarProducto((JFrame) f, true);
-        if(inventario.getId() != 0){
+        if (inventario.getId() != 0) {
             frm.setInv_seleccion(inventario);
         }
         frm.setVisible(true);
-        if(!frm.isVisible() && frm.getInv_seleccion().getId() != 0){
+        if (!frm.isVisible() && frm.getInv_seleccion().getId() != 0) {
             DefaultTableModel modelo = (DefaultTableModel) jtCompatibles.getModel();
             Object[] nuevaFila = {
-                frm.getInv_seleccion(), 
-                frm.getInv_seleccion().getBodega(), 
-                frm.getInv_seleccion().getStock(), 
+                frm.getInv_seleccion(),
+                frm.getInv_seleccion().getBodega(),
+                frm.getInv_seleccion().getStock(),
                 frm.getInv_seleccion().getPrecio().get(3),
                 false
             };
@@ -1016,14 +1020,12 @@ public class frmNuevoProducto extends javax.swing.JDialog {
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
         // TODO add your handling code here:
         int fila = jtCompatibles.getSelectedRow();
-        if(fila > -1){
-            System.out.println("Compatibles == " + inventario.getCompatibles().size());
-            if(editar){
+        if (fila > -1) {
+            if (editar) {
                 inventario.getCompatibles().get(inventario.getCompatibles().indexOf((Inventario) jtCompatibles.getValueAt(fila, 0))).setEstado(false);
-            } else {                
+            } else {
                 inventario.getCompatibles().remove(inventario.getCompatibles().indexOf((Inventario) jtCompatibles.getValueAt(fila, 0)));
             }
-            System.out.println("Compatibles == " + inventario.getCompatibles().size());
             DefaultTableModel modelo = (DefaultTableModel) jtCompatibles.getModel();
             modelo.removeRow(fila);
             jtCompatibles.setModel(modelo);
@@ -1051,34 +1053,32 @@ public class frmNuevoProducto extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmNuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(frmNuevoProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                frmNuevoProducto dialog = new frmNuevoProducto(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            frmNuevoProducto dialog = new frmNuevoProducto(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
+
     public Inventario getInventario() {
         return inventario;
     }
@@ -1094,15 +1094,15 @@ public class frmNuevoProducto extends javax.swing.JDialog {
     public void setEditar(boolean editar) {
         this.editar = editar;
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarCompatible;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnQuitar;
-    private javax.swing.JComboBox<String> cboBodega;
-    private javax.swing.JComboBox<String> cboCategoria;
-    private javax.swing.JComboBox<String> cboUnidad;
+    private javax.swing.JComboBox<Bodega> cboBodega;
+    private javax.swing.JComboBox<Categoria> cboCategoria;
+    private javax.swing.JComboBox<Unidad> cboUnidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;

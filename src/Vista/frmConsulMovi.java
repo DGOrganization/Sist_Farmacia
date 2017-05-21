@@ -8,8 +8,10 @@ package Vista;
 import controlador.Movimiento_controlador;
 import entidades.Movimiento;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,24 +33,31 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
     }
     
     private void cargarDatos(List<Movimiento> lista){
-        String[] columnas = {"Fecha", "Movimiento", "Comentario", "Productos", "Total"};
+        String[] columnas = {"Fecha", "Cantidad", "Movimiento", "Comentario", "Productos"};
         ControlesGenerales.reiniciarJTable(jtMovimientos);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
-        BigDecimal[] in = {BigDecimal.ZERO}, out={BigDecimal.ZERO};
+        AtomicInteger totalIn = new AtomicInteger(0);
+        AtomicInteger totalOut = new AtomicInteger(0);
         lista.stream().forEach(datos ->{
             Object[] nuevaFila = {
-                datos.getFecha(),
-                datos.getCantidad().compareTo(BigDecimal.ZERO) < 0 ? "Entrada" : "Salida",
+                new SimpleDateFormat("dd-MM-yyyy HH:mm:ss a").format(datos.getFecha()),
+                datos.getCantidad(),
+                datos.getCantidad().compareTo(BigDecimal.ZERO) > 0 ? "Entrada" : "Salida",
                 datos.getComentario(),
                 datos.getInventario()
             }; 
             modelo.addRow(nuevaFila);
+            if(datos.getCantidad().compareTo(BigDecimal.ZERO) > 0){
+                totalIn.updateAndGet(n -> n + datos.getCantidad().intValue());
+            } else {
+                totalOut.updateAndGet(n -> n+ datos.getCantidad().multiply(new BigDecimal(-1)).intValue());
+            }
         });
         jtMovimientos.setModel(modelo);
-        txtTotalIn.setText(in[0].toString());
-        txtTotalOut.setText(out[0].toString());
-        txtDiff.setText(in[0].subtract(out[0]).toString());
+        txtTotalIn.setText(totalIn.toString());
+        txtTotalOut.setText(totalOut.toString());
+        txtDiff.setText(String.valueOf(totalIn.updateAndGet(n -> n - totalOut.intValue())));
     }
 
     /**
@@ -79,6 +88,8 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         txtDiff = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
+
+        setClosable(true);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 

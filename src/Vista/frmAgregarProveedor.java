@@ -24,11 +24,13 @@ import javax.swing.table.DefaultTableModel;
  * @author Gerard
  */
 public class frmAgregarProveedor extends javax.swing.JDialog {
-    private Proveedor_controlador controlador;
+    private final Proveedor_controlador controlador;
     private List<Proveedor> proveedorList;
     private Proveedor proveedor_sel;
     /**
      * Creates new form frmAgregarProveedor
+     * @param parent
+     * @param modal
      */
     public frmAgregarProveedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -38,8 +40,6 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
         proveedorList = controlador.Obtener();
         cargarDatos(proveedorList);
         changeText();
-        this.setLocationRelativeTo(null);
-        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
     }
     
     private void cargarDatos(List<Proveedor> lista){
@@ -125,6 +125,7 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
         btnSelecciona = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(new Gestionar().Leer("Empresa", "nombre"));
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -286,29 +287,23 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(frmAgregarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                frmAgregarProveedor dialog = new frmAgregarProveedor(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            frmAgregarProveedor dialog = new frmAgregarProveedor(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 

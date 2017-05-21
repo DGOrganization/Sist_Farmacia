@@ -155,6 +155,11 @@ public class frmCompra extends javax.swing.JInternalFrame {
         btnEditarProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEditarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit32.png"))); // NOI18N
         btnEditarProducto.setText("Editar");
+        btnEditarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarProductoActionPerformed(evt);
+            }
+        });
 
         btnQuitarProducto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnQuitarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/del24.png"))); // NOI18N
@@ -427,6 +432,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
         frmAgregarProducto frm = new frmAgregarProducto((JFrame) f, true);
+        frm.setLocationRelativeTo(null);
         frm.setVisible(true);
         if (frm.isVisible() == false) {
             if(frm.getInv_seleccion().getId() != 0){
@@ -441,9 +447,10 @@ public class frmCompra extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
         frmAgregarProveedor frm = new frmAgregarProveedor((JFrame) f, true);
+        frm.setLocationRelativeTo(null);
         frm.setVisible(true);
         if(!frm.isVisible()){
-            if(!frm.getProveedor_sel().equals(new Proveedor())){                
+            if(frm.getProveedor_sel().getId() != 0){                
                 prov_actual = frm.getProveedor_sel();
                 frm.dispose();
                 txtProveedor.setText(prov_actual.getNombre() + " - " + prov_actual.getRespresentante());
@@ -565,6 +572,10 @@ public class frmCompra extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_txtProveedorActionPerformed
+
+    private void btnEditarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarProductoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

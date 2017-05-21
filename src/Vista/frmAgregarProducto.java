@@ -28,38 +28,39 @@ import javax.swing.table.DefaultTableModel;
  * @author dakrpastiursSennin
  */
 public class frmAgregarProducto extends javax.swing.JDialog {
+
     private List<Inventario> inventarioList;
     private final Inventario_controlador controlador;
     private Inventario inv_seleccion;
-    
+
     /**
      * Creates new form frmAgregarProducto
+     *
      * @param parent
      * @param modal
      */
     public frmAgregarProducto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
         inventarioList = new ArrayList<>();
         controlador = new Inventario_controlador();
         inventarioList = controlador.Obtener();
         inv_seleccion = new Inventario();
         changeText();
-        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
         jtInventario.setDefaultRenderer(Object.class, new RenderizadoColor());
         jbgrExistencia.add(jrbExistencia1);
         jbgrExistencia.add(jrbExistencia2);
         jbgrExistencia.add(jrbTodos);
-        new Validaciones().cboCategoria2(cboCategorias, new Categoria_controlador().Obtener());
+        cboCategorias.addItem(new Categoria(0, "Todas", true));
+        new Categoria_controlador().Obtener().stream().forEach(cboCategorias::addItem);
     }
-    
-    private void cargarDatos(List<Inventario> lista){
+
+    private void cargarDatos(List<Inventario> lista) {
         String[] columnas = {"Producto", "Descripcion", "Existencia", "Precio", "Bodega"};
         ControlesGenerales.reiniciarJTable(jtInventario);
         DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
-        lista.forEach((Inventario datos)->{
+        lista.forEach((Inventario datos) -> {
             Object[] nuevafila = {
                 datos,
                 datos.getArticulo().getDescripcion(),
@@ -67,31 +68,30 @@ public class frmAgregarProducto extends javax.swing.JDialog {
                 datos.getPrecio().get(0).getCantidad(),
                 datos.getBodega()
             };
-            if(datos.isEstado() && datos.getId() != inv_seleccion.getId()){
+            if (datos.isEstado() && datos.getId() != inv_seleccion.getId()) {
                 //if(datos.getStock().compareTo(BigDecimal.ZERO) > 0){                    
-                    modelo.addRow(nuevafila);
+                modelo.addRow(nuevafila);
                 //}
             }
-            
+
             /*if (datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) < 1) {
                 System.err.println("El producto " + datos.getArticulo().getNombre() + " casi no tiene existencia");
             }*/
-            
         });
         jtInventario.setModel(modelo);
         //jtInventario.setDefaultRenderer(Object.class, new RenderizadoColor());
     }
-    
-    private void buscarTXT(){
+
+    private void buscarTXT() {
         Categoria cat = ((Categoria) cboCategorias.getSelectedItem());
         List<Inventario> encontrado = inventarioList.stream().filter(
                 datos -> {
-                    if(jrbExistencia1.isSelected() == true && jrbExistencia2.isSelected() == false){
-                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase()) 
-                                && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) > 0 ;
-                    } else if(jrbExistencia1.isSelected() == false && jrbExistencia2.isSelected() == true) {
-                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase()) 
-                                && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) <= 0;
+                    if (jrbExistencia1.isSelected() == true && jrbExistencia2.isSelected() == false) {
+                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
+                        && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) > 0;
+                    } else if (jrbExistencia1.isSelected() == false && jrbExistencia2.isSelected() == true) {
+                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
+                        && datos.getStock().compareTo(new BigDecimal(datos.getStockMin())) <= 0;
                     } else {
                         return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase());
                     }
@@ -99,26 +99,27 @@ public class frmAgregarProducto extends javax.swing.JDialog {
         ).collect(Collectors.toList());
         encontrado = encontrado.stream().filter(
                 datos -> {
-                    if(cat.getId() > 0){
-                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase()) 
-                                && datos.getCategoria().getId() == cat.getId() ;
+                    if (cat.getId() > 0) {
+                        return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase())
+                        && datos.getCategoria().getId() == cat.getId();
                     } else {
                         return datos.toString().toUpperCase().contains(txtBusqueda.getText().toUpperCase());
                     }
-                }                
+                }
         ).collect(Collectors.toList());
         cargarDatos(encontrado);
-        if(jtInventario.getRowCount() == 1){
+        if (jtInventario.getRowCount() == 1) {
             jtInventario.setRowSelectionInterval(0, 0);
         }
     }
-    
-    private void changeText(){
-        txtBusqueda.getDocument().addDocumentListener(new DocumentListener(){
+
+    private void changeText() {
+        txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent de) {
                 buscarTXT();
             }
+
             @Override
             public void removeUpdate(DocumentEvent de) {
                 buscarTXT();
@@ -128,10 +129,10 @@ public class frmAgregarProducto extends javax.swing.JDialog {
             public void changedUpdate(DocumentEvent de) {
                 buscarTXT();
             }
-        
+
         });
     }
-    
+
     private void SeleccionarInventario() {
         int fila = jtInventario.getSelectedRow();
         if (fila > -1) {
@@ -176,6 +177,7 @@ public class frmAgregarProducto extends javax.swing.JDialog {
         btnSeleccionar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(new Gestionar().Leer("Empresa", "nombre"));
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -361,8 +363,9 @@ public class frmAgregarProducto extends javax.swing.JDialog {
         // TODO add your handling code here:
         Frame f = JOptionPane.getFrameForComponent(this);
         frmNuevoProducto frm = new frmNuevoProducto((JFrame) f, true);
+        frm.setLocationRelativeTo(null);
         frm.setVisible(true);
-        if(!frm.isVisible()){
+        if (!frm.isVisible()) {
             if (frm.getInventario().equals(new Inventario())) {
                 inventarioList.add(frm.getInventario());
                 Collections.sort(inventarioList, (Inventario inv1, Inventario inv2) -> {
@@ -380,6 +383,7 @@ public class frmAgregarProducto extends javax.swing.JDialog {
         Frame f = JOptionPane.getFrameForComponent(this);
         frmNuevoProducto frm = new frmNuevoProducto((JFrame) f, true);
         if (fila > -1) {
+            frm.setLocationRelativeTo(null);
             if (jtInventario.getValueAt(fila, 0) instanceof Inventario) {
                 frm.setInventario(inventarioList.get(inventarioList.indexOf(jtInventario.getValueAt(fila, 0))));
                 frm.setEditar(true);
@@ -392,9 +396,9 @@ public class frmAgregarProducto extends javax.swing.JDialog {
             }
         } else {
             JOptionPane.showMessageDialog(
-                    this, 
-                    "Selecciona un producto primero.", 
-                    new Gestionar().Leer("Empresa", "nombre"), 
+                    this,
+                    "Selecciona un producto primero.",
+                    new Gestionar().Leer("Empresa", "nombre"),
                     JOptionPane.WARNING_MESSAGE
             );
         }
@@ -412,14 +416,14 @@ public class frmAgregarProducto extends javax.swing.JDialog {
 
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             SeleccionarInventario();
         }
     }//GEN-LAST:event_txtBusquedaKeyPressed
 
     private void jtInventarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtInventarioKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             SeleccionarInventario();
         }
     }//GEN-LAST:event_jtInventarioKeyPressed
@@ -460,29 +464,23 @@ public class frmAgregarProducto extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(frmAgregarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
+        //</editor-fold>
+
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                frmAgregarProducto dialog = new frmAgregarProducto(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            frmAgregarProducto dialog = new frmAgregarProducto(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 
@@ -490,7 +488,7 @@ public class frmAgregarProducto extends javax.swing.JDialog {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSeleccionar;
-    private javax.swing.JComboBox<String> cboCategorias;
+    private javax.swing.JComboBox<Categoria> cboCategorias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -513,5 +511,5 @@ public class frmAgregarProducto extends javax.swing.JDialog {
         System.out.println("Datos 2 :: " + inv_seleccion.getId());
         this.inv_seleccion = inv_seleccion;
     }
-    
+
 }

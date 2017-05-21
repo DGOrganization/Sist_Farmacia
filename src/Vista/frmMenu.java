@@ -313,11 +313,21 @@ public class frmMenu extends javax.swing.JFrame {
 
         smConsClientes.setText("Clientes");
         smConsClientes.setEnabled(false);
+        smConsClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smConsClientesActionPerformed(evt);
+            }
+        });
         menuConsultas.add(smConsClientes);
         menuConsultas.add(jSeparator9);
 
         jMenuAjusteInv.setText("Ajuste de Inventario");
         jMenuAjusteInv.setEnabled(false);
+        jMenuAjusteInv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAjusteInvActionPerformed(evt);
+            }
+        });
         menuConsultas.add(jMenuAjusteInv);
 
         jMenuConsCaja.setText("Caja");
@@ -453,6 +463,11 @@ public class frmMenu extends javax.swing.JFrame {
 
         smEmpresa.setText("Datos de Empresa");
         smEmpresa.setEnabled(false);
+        smEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smEmpresaActionPerformed(evt);
+            }
+        });
         menuSistema.add(smEmpresa);
 
         smImpresora.setText("Configurar Impresora");
@@ -822,6 +837,18 @@ public class frmMenu extends javax.swing.JFrame {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuMovimientoActionPerformed
+
+    private void smConsClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smConsClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smConsClientesActionPerformed
+
+    private void jMenuAjusteInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAjusteInvActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuAjusteInvActionPerformed
+
+    private void smEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smEmpresaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smEmpresaActionPerformed
 
     /**
      * @param args the command line arguments

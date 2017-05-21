@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class frmAjustarInvent extends javax.swing.JDialog {
     private Inventario inv;
-    private Inventario_controlador controlador;
+    private final Inventario_controlador controlador;
 
     public Inventario getInv() {
         return inv;
@@ -28,13 +28,13 @@ public class frmAjustarInvent extends javax.swing.JDialog {
     }
     /**
      * Creates new form frmAjustarInvent
+     * @param parent
+     * @param modal
      */
     public frmAjustarInvent(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         this.controlador = new Inventario_controlador();
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.setTitle(new Gestionar().Leer("Empresa", "nombre"));
         inv = new Inventario();
     }
 
@@ -61,6 +61,7 @@ public class frmAjustarInvent extends javax.swing.JDialog {
         lblActual = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(new Gestionar().Leer("Empresa", "nombre"));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -131,9 +132,7 @@ public class frmAjustarInvent extends javax.swing.JDialog {
                                 .addComponent(jLabel4)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblActual)
-                                .addGap(456, 456, 456))
+                            .addComponent(lblActual)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtExistencia, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -195,10 +194,11 @@ public class frmAjustarInvent extends javax.swing.JDialog {
                         new Gestionar().Leer("Empresa", "nombre"), 
                         JOptionPane.INFORMATION_MESSAGE);
         } else {
-            /*BigDecimal actual = new BigDecimal(lblActual.getText());
-            BigDecimal nuevo = new BigDecimal(txtExistencia.getText());*/
-            inv.setStock(new BigDecimal(txtExistencia.getText()));
-            if(controlador.EditarStock(inv, txtComentario.getText())){
+            BigDecimal diff = new BigDecimal(txtExistencia.getText());
+            if(cboTipo.getSelectedIndex() == 0){
+                diff = BigDecimal.ZERO.subtract(diff);
+            }
+            if(controlador.EditarStock(inv, diff, txtComentario.getText())){
                 JOptionPane.showMessageDialog(
                         this, 
                         "Se ha modificado la existencia", 
@@ -231,29 +231,23 @@ public class frmAjustarInvent extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmAjustarInvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmAjustarInvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmAjustarInvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(frmAjustarInvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                frmAjustarInvent dialog = new frmAjustarInvent(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            frmAjustarInvent dialog = new frmAjustarInvent(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 

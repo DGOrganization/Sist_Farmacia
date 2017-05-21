@@ -40,7 +40,9 @@ public class frmProducto extends javax.swing.JInternalFrame {
         chkExistencias.add(jrbExistencia1);
         chkExistencias.add(jrbExistencia2);
         chkExistencias.add(jrbTodos);
-        new Validaciones().cboCategoria2(cboCategorias, new Categoria_controlador().Obtener());
+        cboCategorias.addItem(new Categoria(0, "Todas", true));
+        new Categoria_controlador().Obtener().stream().forEach(cboCategorias::addItem);
+        //new Validaciones().cboCategoria2(cboCategorias, new Categoria_controlador().Obtener());
         jrbTodos.setSelected(true);
         jtInventario.setDefaultRenderer(Object.class, new RenderizadoColor());
 //        lblTotalProd.setText(String.valueOf(jtInventario.getRowCount()));
@@ -117,6 +119,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
     public void Editar(){
         Frame f = JOptionPane.getFrameForComponent(this);
         frmNuevoProducto frm = new frmNuevoProducto((JFrame) f, true);
+        frm.setLocationRelativeTo(null);
         int fila = jtInventario.getSelectedRow();
         if (fila > -1) {
             frm.setInventario(inventarioList.get(inventarioList.indexOf(jtInventario.getValueAt(fila, 0))));
@@ -389,7 +392,8 @@ public class frmProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Frame frmP = JOptionPane.getFrameForComponent(this);
         frmNuevoProducto dialog = new frmNuevoProducto(frmP, true);
-        dialog.show();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
         if(!frmP.isVisible()){
             inventarioList = controlador.Obtener();
             cargarDatos(inventarioList);
@@ -431,6 +435,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Frame frmP = JOptionPane.getFrameForComponent(this);
         frmAjustarInvent dialog = new frmAjustarInvent((JFrame)frmP, true);
+        dialog.setLocationRelativeTo(null);
         int fila = jtInventario.getSelectedRow();
         if (fila > -1) {
             dialog.setInv(inventarioList.get(inventarioList.indexOf(jtInventario.getValueAt(fila, 0))));
@@ -481,7 +486,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnStock;
-    private javax.swing.JComboBox<String> cboCategorias;
+    private javax.swing.JComboBox<Categoria> cboCategorias;
     private javax.swing.ButtonGroup chkExistencias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
