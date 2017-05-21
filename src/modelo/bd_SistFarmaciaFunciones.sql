@@ -1127,32 +1127,24 @@ CREATE OR REPLACE FUNCTION public.editarstockinventario(cod int, stck numeric, c
   RETURNS void AS 
 $BODY$
 	DECLARE
-		stockA numeric;
 		idinv int;
 	BEGIN
-		SELECT
-			stock INTO stockA
-		FROM
-			inventario
-		WHERE
-			id = $1;
-		
 		UPDATE
 			inventario
 		SET
-			stock = $2
+			stock = stock - $2
 		WHERE
 			id = $1;
 			
 		INSERT INTO
 			movimientos(cantidad, comentario, idinventario)
 		VALUES
-			(($2 - stockA), $3, $1);
+			(-$2, $3, $1);
 	END
 $BODY$
   LANGUAGE plpgsql;
 
-select editarstockinventario(7, 10.00);
+select editarstockinventario(7, 10.00, 'Se quito');
 
 DROP FUNCTION obtenerventas();
 CREATE OR REPLACE FUNCTION public.obtenerventas() RETURNS TABLE(
