@@ -1047,8 +1047,8 @@ public class frmNuevoArticulo extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnQuitar;
-    private javax.swing.JComboBox<String> cboBodega;
-    private javax.swing.JComboBox<String> cboCategoria;
+    private javax.swing.JComboBox<Bodega> cboBodega;
+    private javax.swing.JComboBox<Categoria> cboCategoria;
     private javax.swing.JComboBox<String> cboUnidad;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
