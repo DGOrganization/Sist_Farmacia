@@ -207,7 +207,7 @@ public class frmNuevoProveedor extends javax.swing.JDialog {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel2.setBackground(new java.awt.Color(88, 166, 137));
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save32.png"))); // NOI18N
         btnGuardar.setText("Guardar");

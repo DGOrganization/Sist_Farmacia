@@ -15,14 +15,6 @@
             </Property>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuUsuCon">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Usuarios Conectados"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuUsuConActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuCambiarUsu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cambiar de Usuario"/>
@@ -117,18 +109,9 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="smInventarioActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuAjustInv">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Ajuste de Inventario"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuAjustInvActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="smCorteCaja">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Corte de Caja"/>
+                <Property name="text" type="java.lang.String" value="Caja"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -168,24 +151,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="smConsVentasActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="smConsProveedores">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Proveedores"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="smConsProveedoresActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="smConsClientes">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Clientes"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="smConsClientesActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator9">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuAjusteInv">
@@ -199,7 +164,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuConsCaja">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Caja"/>
+                <Property name="text" type="java.lang.String" value="Corte de Caja"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -233,6 +198,9 @@
                 <Property name="text" type="java.lang.String" value="Actualizacion de Precios"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="smProcPreciosActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="smProcExportar">
               <Properties>
@@ -350,15 +318,6 @@
                 </Property>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="smAdmEmpleado">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Empleados"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="smAdmEmpleadoActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="smAdmUsuarios">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Usuarios"/>

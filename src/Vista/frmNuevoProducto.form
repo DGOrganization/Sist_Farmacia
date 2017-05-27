@@ -32,9 +32,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <Component id="jTabbedPane1" pref="0" max="32767" attributes="0"/>
           </Group>
-          <Component id="jpAcciones" alignment="0" max="32767" attributes="0"/>
+          <Component id="jpAcciones" alignment="0" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -60,11 +60,11 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                  <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                   <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="243" max="-2" attributes="0"/>
+                  <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -187,7 +187,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="cboCategoria" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <EmptySpace pref="20" max="32767" attributes="0"/>
+                                      <EmptySpace pref="22" max="32767" attributes="0"/>
                                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="cboBodega" min="-2" pref="170" max="-2" attributes="0"/>
@@ -466,7 +466,7 @@
                                       <EmptySpace min="25" pref="25" max="-2" attributes="0"/>
                                       <Component id="txtMargen2" min="-2" pref="125" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                                      <Component id="txtMargen3" pref="121" max="32767" attributes="0"/>
+                                      <Component id="txtMargen3" pref="123" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -797,9 +797,9 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="138" max="32767" attributes="0"/>
+                      <EmptySpace pref="139" max="32767" attributes="0"/>
                       <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="138" max="32767" attributes="0"/>
+                      <EmptySpace pref="139" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -912,7 +912,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" pref="556" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="558" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Component id="btnBuscarCompatible" min="-2" max="-2" attributes="0"/>

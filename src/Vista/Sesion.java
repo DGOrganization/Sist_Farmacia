@@ -63,7 +63,7 @@ public class Sesion extends javax.swing.JFrame {
         jLabel1.setText("USUARIO");
 
         txtUsuario.setBackground(new java.awt.Color(227, 227, 227));
-        txtUsuario.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        txtUsuario.setFont(new java.awt.Font("Trebuchet MS", 0, 16)); // NOI18N
         txtUsuario.setText("darkps");
         txtUsuario.setAlignmentX(1.0F);
         txtUsuario.setAlignmentY(1.0F);
@@ -73,7 +73,8 @@ public class Sesion extends javax.swing.JFrame {
         jLabel2.setText("CONTRASEÑA");
 
         txtPassword.setBackground(new java.awt.Color(227, 227, 227));
-        txtPassword.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        txtPassword.setFont(new java.awt.Font("Trebuchet MS", 0, 16)); // NOI18N
+        txtPassword.setForeground(new java.awt.Color(102, 102, 102));
         txtPassword.setText("admin");
 
         btnEntrar.setBackground(new java.awt.Color(175, 175, 175));
@@ -81,7 +82,7 @@ public class Sesion extends javax.swing.JFrame {
         btnEntrar.setForeground(new java.awt.Color(51, 51, 51));
         btnEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/login_24x24.png"))); // NOI18N
         btnEntrar.setText("Entrar");
-        btnEntrar.setToolTipText("");
+        btnEntrar.setToolTipText("Iniciar Sesion");
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntrarActionPerformed(evt);
@@ -130,9 +131,9 @@ public class Sesion extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

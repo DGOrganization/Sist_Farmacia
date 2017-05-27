@@ -149,7 +149,7 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
             }
         });
 
-        jtProveedores.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jtProveedores.setFont(new java.awt.Font("Trebuchet MS", 0, 16)); // NOI18N
         jtProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -167,9 +167,10 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
-        btnSelecciona.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnSelecciona.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSelecciona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/select24.png"))); // NOI18N
         btnSelecciona.setText("Seleccionar");
+        btnSelecciona.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/okay16.png"))); // NOI18N
         btnSelecciona.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnSelecciona.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSelecciona.addActionListener(new java.awt.event.ActionListener() {
@@ -191,7 +192,7 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(12, Short.MAX_VALUE)
-                .addComponent(btnSelecciona, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSelecciona, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
         );
 

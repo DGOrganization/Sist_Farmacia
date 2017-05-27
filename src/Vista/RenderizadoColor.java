@@ -34,5 +34,4 @@ public class RenderizadoColor extends DefaultTableCellRenderer {
         }
         return c;
     }
-
 }

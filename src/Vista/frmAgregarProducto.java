@@ -191,7 +191,7 @@ public class frmAgregarProducto extends javax.swing.JDialog {
             }
         });
 
-        jtInventario.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jtInventario.setFont(new java.awt.Font("Trebuchet MS", 0, 16)); // NOI18N
         jtInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -313,11 +313,11 @@ public class frmAgregarProducto extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
-        btnSeleccionar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/select24.png"))); // NOI18N
         btnSeleccionar.setText("Seleccionar");
         btnSeleccionar.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        btnSeleccionar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        btnSeleccionar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/okay16.png"))); // NOI18N
         btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSeleccionarActionPerformed(evt);
@@ -329,7 +329,7 @@ public class frmAgregarProducto extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(580, Short.MAX_VALUE)
+                .addContainerGap(572, Short.MAX_VALUE)
                 .addComponent(btnSeleccionar)
                 .addGap(25, 25, 25))
         );
@@ -337,7 +337,7 @@ public class frmAgregarProducto extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

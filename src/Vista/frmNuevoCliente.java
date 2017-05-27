@@ -408,11 +408,11 @@ public class frmNuevoCliente extends javax.swing.JDialog {
         jpAccionesLayout.setHorizontalGroup(
             jpAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpAccionesLayout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(btnCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(100, 100, 100)
                 .addComponent(btnGuardar)
-                .addGap(75, 75, 75))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelar)
+                .addGap(100, 100, 100))
         );
         jpAccionesLayout.setVerticalGroup(
             jpAccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

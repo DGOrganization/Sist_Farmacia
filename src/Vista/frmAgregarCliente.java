@@ -138,7 +138,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
             }
         });
 
-        jtClientes.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
+        jtClientes.setFont(new java.awt.Font("Trebuchet MS", 0, 16)); // NOI18N
         jtClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -221,10 +221,10 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 255), new java.awt.Color(255, 255, 255), new java.awt.Color(51, 153, 255), new java.awt.Color(204, 204, 204)));
 
         btnSeleccionar.setBackground(new java.awt.Color(175, 175, 175));
-        btnSeleccionar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/select24.png"))); // NOI18N
         btnSeleccionar.setText("Seleccionar");
-        btnSeleccionar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        btnSeleccionar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/okay16.png"))); // NOI18N
         btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSeleccionarActionPerformed(evt);
@@ -236,7 +236,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(481, Short.MAX_VALUE)
+                .addContainerGap(473, Short.MAX_VALUE)
                 .addComponent(btnSeleccionar)
                 .addGap(25, 25, 25))
         );
@@ -244,7 +244,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(12, Short.MAX_VALUE)
-                .addComponent(btnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -259,7 +259,7 @@ public class frmAgregarCliente extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 254, Short.MAX_VALUE)
+                .addGap(0, 249, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()

@@ -69,7 +69,6 @@ public class frmMenu extends javax.swing.JFrame {
         desktop = new javax.swing.JDesktopPane();
         jmbPrincipal = new javax.swing.JMenuBar();
         jMenuInicio = new javax.swing.JMenu();
-        jMenuUsuCon = new javax.swing.JMenuItem();
         jMenuCambiarUsu = new javax.swing.JMenuItem();
         jMenuCaja = new javax.swing.JMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
@@ -83,14 +82,11 @@ public class frmMenu extends javax.swing.JFrame {
         smVentas = new javax.swing.JMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
         smInventario = new javax.swing.JMenuItem();
-        jMenuAjustInv = new javax.swing.JMenuItem();
         smCorteCaja = new javax.swing.JMenuItem();
         jSeparator12 = new javax.swing.JPopupMenu.Separator();
         menuConsultas = new javax.swing.JMenu();
         smConsCompras = new javax.swing.JMenuItem();
         smConsVentas = new javax.swing.JMenuItem();
-        smConsProveedores = new javax.swing.JMenuItem();
-        smConsClientes = new javax.swing.JMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         jMenuAjusteInv = new javax.swing.JMenuItem();
         jMenuConsCaja = new javax.swing.JMenuItem();
@@ -115,7 +111,6 @@ public class frmMenu extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         menuSistema = new javax.swing.JMenu();
         smAdministrar = new javax.swing.JMenu();
-        smAdmEmpleado = new javax.swing.JMenuItem();
         smAdmUsuarios = new javax.swing.JMenuItem();
         smAdRoles = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
@@ -168,14 +163,6 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/open24.png"))); // NOI18N
         jMenuInicio.setText("Inicio");
         jMenuInicio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-
-        jMenuUsuCon.setText("Usuarios Conectados");
-        jMenuUsuCon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuUsuConActionPerformed(evt);
-            }
-        });
-        jMenuInicio.add(jMenuUsuCon);
 
         jMenuCambiarUsu.setText("Cambiar de Usuario");
         jMenuCambiarUsu.addActionListener(new java.awt.event.ActionListener() {
@@ -259,16 +246,7 @@ public class frmMenu extends javax.swing.JFrame {
         });
         menuOperaciones.add(smInventario);
 
-        jMenuAjustInv.setText("Ajuste de Inventario");
-        jMenuAjustInv.setEnabled(false);
-        jMenuAjustInv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuAjustInvActionPerformed(evt);
-            }
-        });
-        menuOperaciones.add(jMenuAjustInv);
-
-        smCorteCaja.setText("Corte de Caja");
+        smCorteCaja.setText("Caja");
         smCorteCaja.setEnabled(false);
         smCorteCaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,24 +279,6 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         menuConsultas.add(smConsVentas);
-
-        smConsProveedores.setText("Proveedores");
-        smConsProveedores.setEnabled(false);
-        smConsProveedores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                smConsProveedoresActionPerformed(evt);
-            }
-        });
-        menuConsultas.add(smConsProveedores);
-
-        smConsClientes.setText("Clientes");
-        smConsClientes.setEnabled(false);
-        smConsClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                smConsClientesActionPerformed(evt);
-            }
-        });
-        menuConsultas.add(smConsClientes);
         menuConsultas.add(jSeparator9);
 
         jMenuAjusteInv.setText("Ajuste de Inventario");
@@ -330,7 +290,7 @@ public class frmMenu extends javax.swing.JFrame {
         });
         menuConsultas.add(jMenuAjusteInv);
 
-        jMenuConsCaja.setText("Caja");
+        jMenuConsCaja.setText("Corte de Caja");
         jMenuConsCaja.setEnabled(false);
         jMenuConsCaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,6 +316,11 @@ public class frmMenu extends javax.swing.JFrame {
 
         smProcPrecios.setText("Actualizacion de Precios");
         smProcPrecios.setEnabled(false);
+        smProcPrecios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smProcPreciosActionPerformed(evt);
+            }
+        });
         menuProcesos.add(smProcPrecios);
 
         smProcExportar.setText("Exportar a Excel");
@@ -430,15 +395,6 @@ public class frmMenu extends javax.swing.JFrame {
         smAdministrar.setText("Administrar");
         smAdministrar.setEnabled(false);
         smAdministrar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-
-        smAdmEmpleado.setText("Empleados");
-        smAdmEmpleado.setEnabled(false);
-        smAdmEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                smAdmEmpleadoActionPerformed(evt);
-            }
-        });
-        smAdministrar.add(smAdmEmpleado);
 
         smAdmUsuarios.setText("Usuarios");
         smAdmUsuarios.setEnabled(false);
@@ -651,10 +607,29 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void smCorteCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smCorteCajaActionPerformed
         // TODO add your handling code here:
+        Frame f = JOptionPane.getFrameForComponent(this);
+        frmIniciarCaja dialog = new frmIniciarCaja(f, true);
+        dialog.setVisible(true);
+        if (dialog.isVisible() == false) {
+            dialog.dispose();
+        }
     }//GEN-LAST:event_smCorteCajaActionPerformed
 
     private void smConsComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smConsComprasActionPerformed
         // TODO add your handling code here:
+        frmConsultarCompras frmCC = new frmConsultarCompras();
+        frmCC.pack();
+        desktop.add(frmCC);
+                if(frmCC.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmCC.setVisible(true);
+        }
+        try {
+            frmCC.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_smConsComprasActionPerformed
 
     private void smConsVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smConsVentasActionPerformed
@@ -673,10 +648,6 @@ public class frmMenu extends javax.swing.JFrame {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_smConsVentasActionPerformed
-
-    private void smConsProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smConsProveedoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_smConsProveedoresActionPerformed
 
     private void smUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smUnidadesActionPerformed
         // TODO add your handling code here:
@@ -714,6 +685,19 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void smInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smInventarioActionPerformed
         // TODO add your handling code here:
+        frmInvInicial frmInv = new frmInvInicial();
+        frmInv.pack();
+        desktop.add(frmInv);
+                if(frmInv.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmInv.setVisible(true);
+        }
+        try {
+            frmInv.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_smInventarioActionPerformed
 
     private void smAdmUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smAdmUsuariosActionPerformed
@@ -750,10 +734,6 @@ public class frmMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuAdCategoriasActionPerformed
 
-    private void smAdmEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smAdmEmpleadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_smAdmEmpleadoActionPerformed
-
     private void jMenuCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCategoriasActionPerformed
         // TODO add your handling code here:
         frmAjustarCategorias frmACa = new frmAjustarCategorias();
@@ -782,13 +762,6 @@ public class frmMenu extends javax.swing.JFrame {
                     }
     }//GEN-LAST:event_jMenuSalirActionPerformed
 
-    private void jMenuUsuConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuConActionPerformed
-        // TODO add your handling code here:
-        Frame fus = JOptionPane.getFrameForComponent(this);
-        frmUsuariosConec frm = new frmUsuariosConec((JFrame) fus, true);
-        frm.setVisible(true);
-    }//GEN-LAST:event_jMenuUsuConActionPerformed
-
     static Vista.frmMenu aux;
     static Vista.Sesion auxSes;
     private void jMenuCambiarUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCambiarUsuActionPerformed
@@ -805,20 +778,26 @@ public class frmMenu extends javax.swing.JFrame {
             }       
     }//GEN-LAST:event_jMenuCambiarUsuActionPerformed
 
-    private void jMenuAjustInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAjustInvActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuAjustInvActionPerformed
-
     private void smImpresoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smImpresoraActionPerformed
         // TODO add your handling code here:
         PrinterJob.getPrinterJob().printDialog();
     }//GEN-LAST:event_smImpresoraActionPerformed
 
     private void jMenuConsCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuConsCajaActionPerformed
-        // TODO add your handling code here:
-        Frame fcaj = JOptionPane.getFrameForComponent(this);
-        frmConsultarCaja frm = new frmConsultarCaja((JFrame) fcaj, true);
-        frm.setVisible(true);
+        // TODO add your handling code here:       
+        frmcorteCaja frmCo = new frmcorteCaja();
+        frmCo.pack();
+        desktop.add(frmCo);
+                if(frmCo.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmCo.setVisible(true);
+        }
+        try {
+            frmCo.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuConsCajaActionPerformed
 
     private void jMenuMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMovimientoActionPerformed
@@ -838,17 +817,35 @@ public class frmMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuMovimientoActionPerformed
 
-    private void smConsClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smConsClientesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_smConsClientesActionPerformed
-
     private void jMenuAjusteInvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAjusteInvActionPerformed
         // TODO add your handling code here:
+        frmConsultAjustInv frmAI = new frmConsultAjustInv();
+        frmAI.pack();
+        desktop.add(frmAI);
+                if(frmAI.isVisible()){
+            System.out.println("Esta abierto");
+        } else {            
+            frmAI.setVisible(true);
+        }
+        try {
+            frmAI.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuAjusteInvActionPerformed
 
     private void smEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smEmpresaActionPerformed
         // TODO add your handling code here:
+        frmNuevoCliente frmE = new frmNuevoCliente(this, true);
+        frmE.setVisible(true);
+        if(frmE.isVisible() == false){
+            frmE.dispose();
+        }
     }//GEN-LAST:event_smEmpresaActionPerformed
+
+    private void smProcPreciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smProcPreciosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smProcPreciosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -889,7 +886,6 @@ public class frmMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktop;
     private javax.swing.JMenuItem jMenuAdCategorias;
-    private javax.swing.JMenuItem jMenuAjustInv;
     private javax.swing.JMenuItem jMenuAjusteInv;
     private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenuItem jMenuCaja;
@@ -905,7 +901,6 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuMovimientos;
     private javax.swing.JMenuItem jMenuProveedores;
     private javax.swing.JMenuItem jMenuSalir;
-    private javax.swing.JMenuItem jMenuUsuCon;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
@@ -929,14 +924,11 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenu menuSistema;
     private javax.swing.JMenuItem miProducto;
     private javax.swing.JMenuItem smAdRoles;
-    private javax.swing.JMenuItem smAdmEmpleado;
     private javax.swing.JMenuItem smAdmUsuarios;
     private javax.swing.JMenu smAdministrar;
     private javax.swing.JMenuItem smClientes;
     private javax.swing.JMenuItem smCompras;
-    private javax.swing.JMenuItem smConsClientes;
     private javax.swing.JMenuItem smConsCompras;
-    private javax.swing.JMenuItem smConsProveedores;
     private javax.swing.JMenuItem smConsVentas;
     private javax.swing.JMenuItem smCorteCaja;
     private javax.swing.JMenuItem smEmpresa;

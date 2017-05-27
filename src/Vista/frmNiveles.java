@@ -47,6 +47,7 @@ public class frmNiveles extends javax.swing.JInternalFrame {
     private void cargarSubmenus() {
         DefaultListModel modeloOp = new DefaultListModel();
         DefaultListModel modeloCo = new DefaultListModel();
+        DefaultListModel modeloPro = new DefaultListModel();
         DefaultListModel modeloRe = new DefaultListModel();
         DefaultListModel modeloAd = new DefaultListModel();
         if (cboNiveles.getSelectedIndex() > -1) {
@@ -55,6 +56,8 @@ public class frmNiveles extends javax.swing.JInternalFrame {
                 if (datos.getModulo().getNombre().toUpperCase().equals("operaciones".toUpperCase())) {
                     modeloOp.addElement(datos);
                 } else if (datos.getModulo().getNombre().toUpperCase().equals("consultas".toUpperCase())) {
+                    modeloCo.addElement(datos);
+                } else if (datos.getModulo().getNombre().toUpperCase().equals("procesos".toUpperCase())) {
                     modeloCo.addElement(datos);
                 } else if (datos.getModulo().getNombre().toUpperCase().equals("reportes".toUpperCase())) {
                     modeloRe.addElement(datos);
@@ -65,11 +68,13 @@ public class frmNiveles extends javax.swing.JInternalFrame {
             
         }
         jlOperaciones.setModel(modeloOp);
-        jlConsultas.setModel(modeloCo);
+        jlConsultas.setModel(modeloCo);       
+        jlProcesos.setModel(modeloPro); 
         jlReportes.setModel(modeloRe);
         jlAdministracion.setModel(modeloAd);
         chkPermisoOp.setSelected(false);
         chkPermisoCo.setSelected(false);
+        chkPermisoPro.setSelected(false);
         chkPermisoRe.setSelected(false);
         chkPermisoAd.setSelected(false);
     }
@@ -88,20 +93,19 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
-        jpBotones = new javax.swing.JPanel();
-        btnAnterior1 = new javax.swing.JButton();
-        btnSiguiente1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jtpModulos = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
         jlOperaciones = new javax.swing.JList<>();
-        jLabel5 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jPanel18 = new javax.swing.JPanel();
         chkPermisoOp = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jSeparator1 = new javax.swing.JSeparator();
+        jCheckBox7 = new javax.swing.JCheckBox();
+        jCheckBox10 = new javax.swing.JCheckBox();
+        jSeparator5 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -117,10 +121,10 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         jPanel10 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jlReportes = new javax.swing.JList<>();
+        jlProcesos = new javax.swing.JList<>();
         jLabel9 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
-        chkPermisoRe = new javax.swing.JCheckBox();
+        chkPermisoPro = new javax.swing.JCheckBox();
         jCheckBox8 = new javax.swing.JCheckBox();
         jCheckBox9 = new javax.swing.JCheckBox();
         jSeparator3 = new javax.swing.JSeparator();
@@ -128,13 +132,24 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         jPanel12 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jlAdministracion = new javax.swing.JList<>();
+        jlReportes = new javax.swing.JList<>();
         jLabel11 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
-        chkPermisoAd = new javax.swing.JCheckBox();
+        chkPermisoRe = new javax.swing.JCheckBox();
         jCheckBox11 = new javax.swing.JCheckBox();
         jCheckBox12 = new javax.swing.JCheckBox();
         jSeparator4 = new javax.swing.JSeparator();
+        jPanel14 = new javax.swing.JPanel();
+        jPanel16 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jlAdministracion = new javax.swing.JList<>();
+        jLabel15 = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        chkPermisoAd = new javax.swing.JCheckBox();
+        jCheckBox15 = new javax.swing.JCheckBox();
+        jCheckBox16 = new javax.swing.JCheckBox();
+        jSeparator6 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cboNiveles = new javax.swing.JComboBox<>();
@@ -177,6 +192,12 @@ public class frmNiveles extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/select32.png"))); // NOI18N
+        jLabel2.setText("Marcar Todos");
+        jLabel2.setToolTipText("Marca todos los Permisos Disponibles");
+        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -190,6 +211,8 @@ public class frmNiveles extends javax.swing.JInternalFrame {
                 .addComponent(btnEditar)
                 .addGap(40, 40, 40)
                 .addComponent(btnEliminar)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -198,61 +221,24 @@ public class frmNiveles extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEditar)
-                            .addComponent(btnEliminar)
-                            .addComponent(btnNuevo))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEditar)
+                        .addComponent(btnEliminar)
+                        .addComponent(btnNuevo)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
-        btnAnterior1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back24.png"))); // NOI18N
-        btnAnterior1.setText("Anterior");
-        btnAnterior1.setEnabled(false);
-        btnAnterior1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnterior1ActionPerformed(evt);
-            }
-        });
+        jtpModulos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jtpModulos.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jtpModulos.setOpaque(true);
 
-        btnSiguiente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/next24.png"))); // NOI18N
-        btnSiguiente1.setText("Siguiente");
-        btnSiguiente1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSiguiente1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jpBotonesLayout = new javax.swing.GroupLayout(jpBotones);
-        jpBotones.setLayout(jpBotonesLayout);
-        jpBotonesLayout.setHorizontalGroup(
-            jpBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpBotonesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnAnterior1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSiguiente1)
-                .addContainerGap())
-        );
-        jpBotonesLayout.setVerticalGroup(
-            jpBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpBotonesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAnterior1)
-                    .addComponent(btnSiguiente1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jtpModulos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        jLabel4.setBackground(new java.awt.Color(102, 153, 255));
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("SubMenus");
-        jLabel4.setOpaque(true);
+        jLabel12.setBackground(new java.awt.Color(102, 153, 255));
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("SubMenus");
+        jLabel12.setOpaque(true);
 
         jlOperaciones.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jlOperaciones.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -260,17 +246,17 @@ public class frmNiveles extends javax.swing.JInternalFrame {
                 jlOperacionesMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jlOperaciones);
+        jScrollPane5.setViewportView(jlOperaciones);
 
-        jLabel5.setBackground(new java.awt.Color(102, 153, 255));
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Permisos");
-        jLabel5.setOpaque(true);
+        jLabel13.setBackground(new java.awt.Color(102, 153, 255));
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Permisos");
+        jLabel13.setOpaque(true);
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel18.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         chkPermisoOp.setText("Acceso");
         chkPermisoOp.addItemListener(new java.awt.event.ItemListener() {
@@ -279,72 +265,93 @@ public class frmNiveles extends javax.swing.JInternalFrame {
             }
         });
 
-        jCheckBox2.setText("Modificacion");
+        jCheckBox7.setText("Modificacion");
 
-        jCheckBox3.setText("Eliminar");
+        jCheckBox10.setText("Eliminar");
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel18Layout.createSequentialGroup()
                         .addComponent(chkPermisoOp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                        .addComponent(jCheckBox2))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jCheckBox3)
+                        .addComponent(jCheckBox7))
+                    .addGroup(jPanel18Layout.createSequentialGroup()
+                        .addComponent(jCheckBox10)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkPermisoOp)
-                    .addComponent(jCheckBox2))
+                    .addComponent(jCheckBox7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox3)
+                .addComponent(jCheckBox10)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator5)
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
-                .addGap(14, 14, 14)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addGap(0, 682, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator1)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))))
-                .addContainerGap())
+            .addGap(0, 320, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         jtpModulos.addTab("Operaciones", jPanel3);
@@ -422,8 +429,8 @@ public class frmNiveles extends javax.swing.JInternalFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -445,7 +452,7 @@ public class frmNiveles extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -453,21 +460,21 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 545, Short.MAX_VALUE)
+            .addGap(0, 682, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 257, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         jtpModulos.addTab("Consultas", jPanel4);
@@ -479,13 +486,13 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         jLabel8.setText("SubMenus");
         jLabel8.setOpaque(true);
 
-        jlReportes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jlReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+        jlProcesos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jlProcesos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlReportesMouseClicked(evt);
+                jlProcesosMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(jlReportes);
+        jScrollPane3.setViewportView(jlProcesos);
 
         jLabel9.setBackground(new java.awt.Color(102, 153, 255));
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -497,10 +504,10 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        chkPermisoRe.setText("Acceso");
-        chkPermisoRe.addItemListener(new java.awt.event.ItemListener() {
+        chkPermisoPro.setText("Acceso");
+        chkPermisoPro.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkPermisoReItemStateChanged(evt);
+                chkPermisoProItemStateChanged(evt);
             }
         });
 
@@ -516,7 +523,7 @@ public class frmNiveles extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(chkPermisoRe)
+                        .addComponent(chkPermisoPro)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                         .addComponent(jCheckBox8))
                     .addGroup(jPanel11Layout.createSequentialGroup()
@@ -529,7 +536,7 @@ public class frmNiveles extends javax.swing.JInternalFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chkPermisoRe)
+                    .addComponent(chkPermisoPro)
                     .addComponent(jCheckBox8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBox9)
@@ -545,8 +552,8 @@ public class frmNiveles extends javax.swing.JInternalFrame {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -568,7 +575,7 @@ public class frmNiveles extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -576,24 +583,24 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 545, Short.MAX_VALUE)
+            .addGap(0, 682, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 257, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
-        jtpModulos.addTab("Reportes", jPanel5);
+        jtpModulos.addTab("Procesos", jPanel5);
 
         jLabel10.setBackground(new java.awt.Color(102, 153, 255));
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -602,18 +609,18 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         jLabel10.setText("SubMenus");
         jLabel10.setOpaque(true);
 
-        jlAdministracion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jlAdministracion.addMouseListener(new java.awt.event.MouseAdapter() {
+        jlReportes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jlReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlAdministracionMouseClicked(evt);
+                jlReportesMouseClicked(evt);
             }
         });
-        jlAdministracion.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        jlReportes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jlAdministracionValueChanged(evt);
+                jlReportesValueChanged(evt);
             }
         });
-        jScrollPane4.setViewportView(jlAdministracion);
+        jScrollPane4.setViewportView(jlReportes);
 
         jLabel11.setBackground(new java.awt.Color(102, 153, 255));
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -625,10 +632,10 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        chkPermisoAd.setText("Acceso");
-        chkPermisoAd.addItemListener(new java.awt.event.ItemListener() {
+        chkPermisoRe.setText("Acceso");
+        chkPermisoRe.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                chkPermisoAdItemStateChanged(evt);
+                chkPermisoReItemStateChanged(evt);
             }
         });
 
@@ -644,7 +651,7 @@ public class frmNiveles extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addComponent(chkPermisoAd)
+                        .addComponent(chkPermisoRe)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                         .addComponent(jCheckBox11))
                     .addGroup(jPanel13Layout.createSequentialGroup()
@@ -657,7 +664,7 @@ public class frmNiveles extends javax.swing.JInternalFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chkPermisoAd)
+                    .addComponent(chkPermisoRe)
                     .addComponent(jCheckBox11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBox12)
@@ -673,8 +680,8 @@ public class frmNiveles extends javax.swing.JInternalFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -696,7 +703,7 @@ public class frmNiveles extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -704,24 +711,152 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 545, Short.MAX_VALUE)
+            .addGap(0, 682, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 257, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
-        jtpModulos.addTab("Administracion", jPanel6);
+        jtpModulos.addTab("Reportes", jPanel6);
+
+        jLabel14.setBackground(new java.awt.Color(102, 153, 255));
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("SubMenus");
+        jLabel14.setOpaque(true);
+
+        jlAdministracion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jlAdministracion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlAdministracionMouseClicked(evt);
+            }
+        });
+        jlAdministracion.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jlAdministracionValueChanged(evt);
+            }
+        });
+        jScrollPane6.setViewportView(jlAdministracion);
+
+        jLabel15.setBackground(new java.awt.Color(102, 153, 255));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Permisos");
+        jLabel15.setOpaque(true);
+
+        jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        chkPermisoAd.setText("Acceso");
+        chkPermisoAd.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chkPermisoAdItemStateChanged(evt);
+            }
+        });
+
+        jCheckBox15.setText("Modificacion");
+
+        jCheckBox16.setText("Eliminar");
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addComponent(chkPermisoAd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                        .addComponent(jCheckBox15))
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addComponent(jCheckBox16)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chkPermisoAd)
+                    .addComponent(jCheckBox15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox16)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator6)
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 682, Short.MAX_VALUE)
+            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel14Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 320, Short.MAX_VALUE)
+            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel14Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+
+        jtpModulos.addTab("Administracion", jPanel14);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Seleccionar Nivel:");
@@ -759,7 +894,6 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jpBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -775,8 +909,7 @@ public class frmNiveles extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtpModulos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -794,11 +927,14 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         for (int i = 0; i < jlConsultas.getModel().getSize(); i++) {
             menu.add(jlConsultas.getModel().getElementAt(i));
         }
-
-        for (int i = 0; i < jlReportes.getModel().getSize(); i++) {  
-            menu.add(jlReportes.getModel().getElementAt(i));
+        
+        for (int i = 0; i < jlProcesos.getModel().getSize(); i++) {  
+            menu.add(jlProcesos.getModel().getElementAt(i));
         }
 
+        for (int i = 0; i < jlReportes.getModel().getSize(); i++) {
+            menu.add(jlReportes.getModel().getElementAt(i));
+        }
         for (int i = 0; i < jlAdministracion.getModel().getSize(); i++) {
             menu.add(jlAdministracion.getModel().getElementAt(i));
         }
@@ -814,18 +950,6 @@ public class frmNiveles extends javax.swing.JInternalFrame {
             cargarSubmenus();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnAnterior1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnterior1ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnAnterior1ActionPerformed
-
-    private void btnSiguiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguiente1ActionPerformed
-        // TODO add your handling code here:
-        /*for (int i = 0; i < jlOperaciones.getModel().getSize(); i++) {
-            System.out.println("Menu = " + jlOperaciones.getModel().getElementAt(i).getNombre() + " " +jlOperaciones.getModel().getElementAt(i).isPermiso());
-        }*/
-    }//GEN-LAST:event_btnSiguiente1ActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
@@ -847,28 +971,15 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_cboNivelesItemStateChanged
 
-    private void jlAdministracionValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlAdministracionValueChanged
+    private void jlReportesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlReportesValueChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_jlAdministracionValueChanged
+    }//GEN-LAST:event_jlReportesValueChanged
 
-    private void jlAdministracionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlAdministracionMouseClicked
+    private void jlReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlReportesMouseClicked
         // TODO add your handling code here:
-        Menu menu = jlAdministracion.getSelectedValue();
-        chkPermisoAd.setSelected(menu.isPermiso());
-    }//GEN-LAST:event_jlAdministracionMouseClicked
-
-    private void chkPermisoOpItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkPermisoOpItemStateChanged
-        // TODO add your handling code here:
-        if(jlOperaciones.getSelectedIndex() > -1){
-            jlOperaciones.getSelectedValue().setPermiso(chkPermisoOp.isSelected());
-        }
-    }//GEN-LAST:event_chkPermisoOpItemStateChanged
-
-    private void jlOperacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlOperacionesMouseClicked
-        // TODO add your handling code here:
-        Menu menu = jlOperaciones.getSelectedValue();
-        chkPermisoOp.setSelected(menu.isPermiso());
-    }//GEN-LAST:event_jlOperacionesMouseClicked
+        Menu menu = jlReportes.getSelectedValue();
+        chkPermisoRe.setSelected(menu.isPermiso());
+    }//GEN-LAST:event_jlReportesMouseClicked
 
     private void jlConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlConsultasMouseClicked
         // TODO add your handling code here:
@@ -876,11 +987,11 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         chkPermisoCo.setSelected(menu.isPermiso());
     }//GEN-LAST:event_jlConsultasMouseClicked
 
-    private void jlReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlReportesMouseClicked
+    private void jlProcesosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlProcesosMouseClicked
         // TODO add your handling code here:
-        Menu menu = jlReportes.getSelectedValue();
-        chkPermisoRe.setSelected(menu.isPermiso());
-    }//GEN-LAST:event_jlReportesMouseClicked
+        Menu menu = jlProcesos.getSelectedValue();
+        chkPermisoPro.setSelected(menu.isPermiso());
+    }//GEN-LAST:event_jlProcesosMouseClicked
 
     private void chkPermisoCoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkPermisoCoItemStateChanged
         // TODO add your handling code here:
@@ -889,19 +1000,19 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_chkPermisoCoItemStateChanged
 
+    private void chkPermisoProItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkPermisoProItemStateChanged
+        // TODO add your handling code here:
+        if(jlProcesos.getSelectedIndex() > -1){
+            jlProcesos.getSelectedValue().setPermiso(chkPermisoPro.isSelected());
+        }
+    }//GEN-LAST:event_chkPermisoProItemStateChanged
+
     private void chkPermisoReItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkPermisoReItemStateChanged
         // TODO add your handling code here:
         if(jlReportes.getSelectedIndex() > -1){
             jlReportes.getSelectedValue().setPermiso(chkPermisoRe.isSelected());
         }
     }//GEN-LAST:event_chkPermisoReItemStateChanged
-
-    private void chkPermisoAdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkPermisoAdItemStateChanged
-        // TODO add your handling code here:
-        if(jlAdministracion.getSelectedIndex() > -1){
-            jlAdministracion.getSelectedValue().setPermiso(chkPermisoAd.isSelected());
-        }
-    }//GEN-LAST:event_chkPermisoAdItemStateChanged
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
@@ -952,32 +1063,56 @@ public class frmNiveles extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void jlAdministracionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlAdministracionMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jlAdministracionMouseClicked
+
+    private void jlAdministracionValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jlAdministracionValueChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jlAdministracionValueChanged
+
+    private void chkPermisoAdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkPermisoAdItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkPermisoAdItemStateChanged
+
+    private void jlOperacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlOperacionesMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jlOperacionesMouseClicked
+
+    private void chkPermisoOpItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkPermisoOpItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkPermisoOpItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAnterior1;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnSiguiente1;
     private javax.swing.JComboBox<Nivel> cboNiveles;
     private javax.swing.JCheckBox chkPermisoAd;
     private javax.swing.JCheckBox chkPermisoCo;
     private javax.swing.JCheckBox chkPermisoOp;
+    private javax.swing.JCheckBox chkPermisoPro;
     private javax.swing.JCheckBox chkPermisoRe;
+    private javax.swing.JCheckBox jCheckBox10;
     private javax.swing.JCheckBox jCheckBox11;
     private javax.swing.JCheckBox jCheckBox12;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox15;
+    private javax.swing.JCheckBox jCheckBox16;
     private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JCheckBox jCheckBox7;
     private javax.swing.JCheckBox jCheckBox8;
     private javax.swing.JCheckBox jCheckBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -987,27 +1122,33 @@ public class frmNiveles extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JList<Menu> jlAdministracion;
     private javax.swing.JList<Menu> jlConsultas;
     private javax.swing.JList<Menu> jlOperaciones;
+    private javax.swing.JList<Menu> jlProcesos;
     private javax.swing.JList<Menu> jlReportes;
-    private javax.swing.JPanel jpBotones;
     private javax.swing.JTabbedPane jtpModulos;
     // End of variables declaration//GEN-END:variables
 }
