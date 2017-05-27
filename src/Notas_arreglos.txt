@@ -132,3 +132,29 @@ OBSERVACIONES   24-04-2017
 -Agregar .trim() a todos los campos de texto donde se pasan los valores de cadena
 -Revisar la propiedad title de los formularios ya que se genera un error al abrirlos.
 
+-------------------------------------------------------------------------------------------------------
+-----------------------------------------26-05-17------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+MEJORAS GENERALES
+-Usar atajos de teclado y teclash de funcion para los botones
+-Centrar los botones
+-Validaciones de sólo números en los formularios de Venta y Compra
+
+VENTAS
+-El ticket lleva un número correlativo
+-Quitar la validacion, no es necesario agregar un cliente para realizar la venta (al no agregar quedará uno por default)
+-Validacion de no agregar si el stock es inferior a la cantidad que se desea.
+-Calcular IVA en total para ticket y factura
+	.Subtotal es sin IVA
+	.Total hay que sumarle el IVA pero el campo IVA se deja en 0.00
+Nota: En el caso de Crédito fiscal se le suma, pero se deja reflejado el IVA en el campo.
+
+CONSULTAR CAJA
+-Mostrar el total de dinero que hay
+
+----ALGUNAS IDEAS QUE ENCONTRE SOBRE EL CORTE DE CAJA--
+https://youtu.be/usNhaKwbhfo
+https://www.youtube.com/watch?v=ASkt5iWWkGE
+
+---Una idea para aplicar precios por mayoreo--
+https://www.youtube.com/watch?v=EvvCbqP2u2w
