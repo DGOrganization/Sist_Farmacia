@@ -5,21 +5,13 @@
  */
 package Vista;
 
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author darkpastiursSennin
+ * @author dakrpastiursSennin
  */
-public class ControlesGenerales {
-    
-    public static void reiniciarJTable(JTable jTable){
-        DefaultTableModel modelo = (DefaultTableModel) jTable.getModel();
-        while(modelo.getRowCount()>0)modelo.removeRow(0);       
-    }
-    
-    public static class DefaultTableModelImpl extends DefaultTableModel {
+public class DefaultTableModelImpl extends DefaultTableModel {
 
         public DefaultTableModelImpl() {
         }
@@ -28,5 +20,4 @@ public class ControlesGenerales {
         public boolean isCellEditable(int rowIndex, int vColIndex) {
             return false;
         }
-    } 
 }

@@ -16,6 +16,7 @@ public class Venta {
     private long _id;
     private String _nFactura;
     private java.sql.Timestamp _fecha;
+    private Tipo_Venta _tipo;
     private BigDecimal _subtotal;
     private BigDecimal _iva;
     private BigDecimal _total;
@@ -54,7 +55,15 @@ public class Venta {
     public void setFecha(java.util.Date _fecha) {
         this._fecha = new java.sql.Timestamp(_fecha.getTime());
     }
+    
+    public Tipo_Venta getTipo() {
+        return _tipo;
+    }
 
+    public void setTipo(Tipo_Venta _tipo) {
+        this._tipo = _tipo;
+    }
+   
     public BigDecimal getSubtotal() {
         return _subtotal;
     }
@@ -141,5 +150,5 @@ public class Venta {
     public String toString() {
         return _nFactura;
     }
-   
+
 }

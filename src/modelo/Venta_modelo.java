@@ -9,6 +9,7 @@ import configuracion.Gestionar;
 import controlador.Cliente_controlador;
 import entidades.Cliente;
 import entidades.Empleado;
+import entidades.Tipo_Venta;
 import entidades.Venta;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
@@ -31,7 +32,7 @@ public class Venta_modelo {
         boolean exito = false;
         try (
             java.sql.Connection conn = new Conexion().getConnection();
-            CallableStatement cmd = conn.prepareCall("{ call registrarventa(?,?,?,?,?,?,?,?,?,?) }")){
+            CallableStatement cmd = conn.prepareCall("{ call registrarventa(?,?,?,?,?,?,?,?,?,?,?) }")){
             cmd.setInt(1, pVenta.getCliente().getId());
             cmd.setInt(2, pVenta.getEmpleado().getId());
             cmd.setBigDecimal(3, pVenta.getTotal());
@@ -69,12 +70,9 @@ public class Venta_modelo {
             } else {
                 cmd.setBigDecimal(9, pVenta.getIva());
             }
-
-            if (pVenta.getNFactura().isEmpty()) {
-                cmd.setNull(10, java.sql.Types.VARCHAR);
-            } else {
-                cmd.setString(10, pVenta.getNFactura());
-            }
+            
+            cmd.setString(10, pVenta.getNFactura());
+            cmd.setLong(11, pVenta.getTipo().getId());
             exito = cmd.execute();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
@@ -108,6 +106,7 @@ public class Venta_modelo {
                     venta.setIva(resultado.getBigDecimal("iva"));
                     venta.setNFactura(resultado.getObject("nfact") == null ? "Ticket" : resultado.getString("nfact"));
                     venta.setFecha(resultado.getTimestamp("fecha"));
+                    venta.setTipo(new Tipo_Venta_modelo().ListarTipoVenta(new Tipo_Venta(resultado.getInt("tipo"))));
                     venta.setEstado(resultado.getBoolean("estado"));
                     venta.setDetalle(new DetalleVenta_modelo().ObtenerDetalleVenta(venta));
                     lista.add(venta);

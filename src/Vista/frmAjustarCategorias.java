@@ -29,8 +29,8 @@ public class frmAjustarCategorias extends javax.swing.JInternalFrame {
 
     private void cargarDatos(List<Categoria> lista){
         String[] columnas = {"Categoria"};
-        //ControlesGenerales.reiniciarJTable(jtCategoria);
-        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        Validaciones.reiniciarJTable(jtInventario);
+        DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.forEach(datos -> {
             Object[] nuevaFila= {
@@ -40,7 +40,7 @@ public class frmAjustarCategorias extends javax.swing.JInternalFrame {
                 modelo.addRow(nuevaFila);
             }
         });
-        //jtCategoria.setModel(modelo);
+        jtInventario.setModel(modelo);
     }
     /**
      * This method is called from within the constructor to initialize the form.

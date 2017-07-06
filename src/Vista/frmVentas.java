@@ -5,8 +5,6 @@
  */
 package Vista;
 
-import Vista.ControlesGenerales.DefaultTableModelImpl;
-import static Vista.ControlesGenerales.reiniciarJTable;
 import configuracion.Gestionar;
 import controlador.Venta_controlador;
 import entidades.Cliente;
@@ -17,6 +15,7 @@ import entidades.Venta;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
@@ -52,7 +51,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         jTableDetalleVenta.setModel(modelo);
         txtEmpleado.setText(frmMenu.usuarioActual.getEmpleado().toString());
         controlador = new Venta_controlador();
-        clienteActual = new Cliente();
+        clienteActual = new Cliente();    
         ActionListener updateClockAction = (ActionEvent e) -> {
             Locale local = new Locale("es", "SV");
             SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy - hh:mm:ss a", local);
@@ -63,7 +62,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
     }
     
 
-    private void AñadirDetalle(Inventario inventarioActual) {
+    private void addDetalle(Inventario inventarioActual) {
         DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
         if (inventarioActual.getId() != 0) {
             boolean encontrado = false;
@@ -136,10 +135,79 @@ public class frmVentas extends javax.swing.JInternalFrame {
     }
 
     private void setImagen(String url) {
-        ImageIcon imagen = new ImageIcon(url);
-        ImageIcon icono = new ImageIcon(imagen.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), 0));
-        lblImagen.setText("");
-        lblImagen.setIcon(icono);
+        File f = new File(url);
+        if(f.exists() && !f.isDirectory()){
+            ImageIcon imagen = new ImageIcon(url);
+            ImageIcon icono = new ImageIcon(imagen.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), 0));
+            lblImagen.setText("");
+            lblImagen.setIcon(icono);
+        } else {
+            lblImagen.setIcon(null);
+            lblImagen.setText("El producto no tiene imagen");
+        }
+    }
+    
+    private void cambiarCantidad(){
+        int fila = jTableDetalleVenta.getSelectedRow();
+        if (fila > -1) {
+            DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
+            BigDecimal cantidad = new BigDecimal(JOptionPane.showInputDialog(this, "Digita la nueva cantidad a vender"));
+            modelo.setValueAt(cantidad, fila, 1);
+            BigDecimal importe = new BigDecimal(0);
+            BigDecimal descuento = new BigDecimal(modelo.getValueAt(fila, 2).toString());
+            BigDecimal precio = new BigDecimal(modelo.getValueAt(fila, 3).toString());
+            BigDecimal subtotal = precio.multiply(cantidad);
+            descuento = descuento.divide(new BigDecimal(100));
+            importe = importe.add(subtotal);
+            descuento = descuento.multiply(importe);
+            importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
+            modelo.setValueAt(importe, fila, 4);
+            jTableDetalleVenta.setModel(modelo);
+            calcularTotal();
+        }
+    }
+    
+    private void cambiarPrecio(){
+        int fila = jTableDetalleVenta.getSelectedRow();
+        if (fila > -1) {
+            DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
+            BigDecimal cantidad = new BigDecimal(modelo.getValueAt(fila, 1).toString());
+            BigDecimal importe = new BigDecimal(0);
+            BigDecimal descuento = new BigDecimal(modelo.getValueAt(fila, 2).toString());
+            Inventario inv = (Inventario) modelo.getValueAt(fila, 0);
+            JComboBox jcboDialog = new JComboBox(inv.getPrecio().toArray());
+            JOptionPane.showMessageDialog(this, jcboDialog, "Selecciona el precio con el cual se vendera", JOptionPane.INFORMATION_MESSAGE);
+            BigDecimal precio = ((Precio) jcboDialog.getSelectedItem()).getCantidad();
+            modelo.setValueAt(precio, fila, 3);
+            BigDecimal subtotal = precio.multiply(cantidad);
+            descuento = descuento.divide(new BigDecimal(100));
+            importe = importe.add(subtotal);
+            descuento = descuento.multiply(importe);
+            importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
+            modelo.setValueAt(importe, fila, 4);
+            jTableDetalleVenta.setModel(modelo);
+            calcularTotal();
+        }
+    }
+    
+    private void cambiarDescuento(){
+        int fila = jTableDetalleVenta.getSelectedRow();
+        if (fila > -1) {
+            DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
+            BigDecimal cantidad = new BigDecimal(modelo.getValueAt(fila, 1).toString());
+            BigDecimal importe = new BigDecimal(0);  
+            BigDecimal descuento = new BigDecimal(JOptionPane.showInputDialog(this, "Digita el descuento a otorgar en el producto \n Usa cantidades entre 0 y 100"));
+            modelo.setValueAt(descuento, fila, 2);
+            BigDecimal precio = new BigDecimal(modelo.getValueAt(fila, 3).toString());
+            BigDecimal subtotal = precio.multiply(cantidad);
+            descuento = descuento.divide(new BigDecimal(100));
+            importe = importe.add(subtotal);
+            descuento = descuento.multiply(importe);
+            importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
+            modelo.setValueAt(importe, fila, 4);
+            jTableDetalleVenta.setModel(modelo);
+            calcularTotal();
+        }
     }
 
     /**
@@ -234,7 +302,6 @@ public class frmVentas extends javax.swing.JInternalFrame {
         txtNFactura.setAlignmentX(1.0F);
         txtNFactura.setAlignmentY(1.0F);
         txtNFactura.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
-        txtNFactura.setEnabled(false);
         txtNFactura.setMargin(new java.awt.Insets(2, 3, 2, 3));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -664,7 +731,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         frm.setVisible(true);
         if (frm.isVisible() == false) {
             if (frm.getInv_seleccion().getStock().compareTo(BigDecimal.ZERO) > 0) {
-                AñadirDetalle(frm.getInv_seleccion());
+                addDetalle(frm.getInv_seleccion());
             } else {
                 JOptionPane.showMessageDialog(
                         this,
@@ -679,26 +746,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
 
     private void btnSeleccionarPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarPrecioActionPerformed
         // TODO add your handling code here:
-        int fila = jTableDetalleVenta.getSelectedRow();
-        if (fila > -1) {
-            DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
-            BigDecimal cantidad = new BigDecimal(modelo.getValueAt(fila, 1).toString());
-            BigDecimal importe = new BigDecimal(0);
-            BigDecimal descuento = new BigDecimal(modelo.getValueAt(fila, 2).toString());
-            Inventario inv = (Inventario) modelo.getValueAt(fila, 0);
-            JComboBox jcboDialog = new JComboBox(inv.getPrecio().toArray());
-            JOptionPane.showMessageDialog(this, jcboDialog, "Selecciona el precio con el cual se vendera", JOptionPane.INFORMATION_MESSAGE);
-            BigDecimal precio = ((Precio) jcboDialog.getSelectedItem()).getCantidad();
-            modelo.setValueAt(precio, fila, 3);
-            BigDecimal subtotal = precio.multiply(cantidad);
-            descuento = descuento.divide(new BigDecimal(100));
-            importe = importe.add(subtotal);
-            descuento = descuento.multiply(importe);
-            importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
-            modelo.setValueAt(importe, fila, 4);
-            jTableDetalleVenta.setModel(modelo);
-            calcularTotal();
-        }
+        cambiarPrecio();
     }//GEN-LAST:event_btnSeleccionarPrecioActionPerformed
 
     private void btnGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarVentaActionPerformed
@@ -726,7 +774,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
             detalles.add(detalle);
         }
         venta.setDetalle(detalles);
-        if (txtNFactura.getText().isEmpty() && (cboTipoVenta.getSelectedIndex() == 2 || cboTipoVenta.getSelectedIndex() == 1)) {
+        if (txtNFactura.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "La venta es por Credito Fiscal o Factura de consumidor final y es obligatorio poner numero de factura",
                     new Gestionar().Leer("Empresa", "nombre"),
@@ -742,7 +790,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
                         venta.setCambio(frm.getVentaActual().getCambio());
                         if (controlador.Registrar(venta)) {
                             JOptionPane.showMessageDialog(this, "Venta registrada", this.title, JOptionPane.INFORMATION_MESSAGE);
-                            reiniciarJTable(jTableDetalleVenta);
+                            Validaciones.reiniciarJTable(jTableDetalleVenta);
                             txtCliente.setText("");
                             txtComentarios.setText("");
                             lblTotal.setText("0.00");
@@ -775,8 +823,8 @@ public class frmVentas extends javax.swing.JInternalFrame {
         int fila = jTableDetalleVenta.getSelectedRow();
         if (fila > -1) {
             Inventario inv = (Inventario) jTableDetalleVenta.getValueAt(fila, 0);
-            if(inv.getImagen().getUrl().isEmpty()){
-                lblImagen.setText("Este producto no tiene imagen");
+            if(inv.getImagen().getId() == 0){
+                setImagen("");
             } else {
                 setImagen(inv.getImagen().getUrl());
             }
@@ -792,6 +840,12 @@ public class frmVentas extends javax.swing.JInternalFrame {
                     jTableDetalleVenta.setModel(modelo);
                     calcularTotal();
                 }
+            } else if(columna == 1){
+                cambiarCantidad();
+            } else if(columna == 2){
+                cambiarDescuento();
+            } else if(columna == 3){
+                cambiarPrecio();
             }
         } else {
             JOptionPane.showMessageDialog(this,
@@ -803,44 +857,12 @@ public class frmVentas extends javax.swing.JInternalFrame {
 
     private void btnCambiarCantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarCantActionPerformed
         // TODO add your handling code here:
-        int fila = jTableDetalleVenta.getSelectedRow();
-        if (fila > -1) {
-            DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
-            BigDecimal cantidad = new BigDecimal(JOptionPane.showInputDialog(this, "Digita la nueva cantidad a vender"));
-            modelo.setValueAt(cantidad, fila, 1);
-            BigDecimal importe = new BigDecimal(0);
-            BigDecimal descuento = new BigDecimal(modelo.getValueAt(fila, 2).toString());
-            BigDecimal precio = new BigDecimal(modelo.getValueAt(fila, 3).toString());
-            BigDecimal subtotal = precio.multiply(cantidad);
-            descuento = descuento.divide(new BigDecimal(100));
-            importe = importe.add(subtotal);
-            descuento = descuento.multiply(importe);
-            importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
-            modelo.setValueAt(importe, fila, 4);
-            jTableDetalleVenta.setModel(modelo);
-            calcularTotal();
-        }
+        cambiarCantidad();
     }//GEN-LAST:event_btnCambiarCantActionPerformed
 
     private void btnHacerDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHacerDescuentoActionPerformed
         // TODO add your handling code here:
-        int fila = jTableDetalleVenta.getSelectedRow();
-        if (fila > -1) {
-            DefaultTableModel modelo = (DefaultTableModel) jTableDetalleVenta.getModel();
-            BigDecimal cantidad = new BigDecimal(modelo.getValueAt(fila, 1).toString());
-            BigDecimal importe = new BigDecimal(0);  
-            BigDecimal descuento = new BigDecimal(JOptionPane.showInputDialog(this, "Digita el descuento a otorgar en el producto \n Usa cantidades entre 0 y 100"));
-            modelo.setValueAt(descuento, fila, 2);
-            BigDecimal precio = new BigDecimal(modelo.getValueAt(fila, 3).toString());
-            BigDecimal subtotal = precio.multiply(cantidad);
-            descuento = descuento.divide(new BigDecimal(100));
-            importe = importe.add(subtotal);
-            descuento = descuento.multiply(importe);
-            importe = importe.subtract(descuento).setScale(2, BigDecimal.ROUND_HALF_UP);
-            modelo.setValueAt(importe, fila, 4);
-            jTableDetalleVenta.setModel(modelo);
-            calcularTotal();
-        }
+        cambiarDescuento();
     }//GEN-LAST:event_btnHacerDescuentoActionPerformed
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
@@ -876,9 +898,9 @@ public class frmVentas extends javax.swing.JInternalFrame {
     private void cboTipoVentaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTipoVentaItemStateChanged
         // TODO add your handling code here:
         if(cboTipoVenta.getSelectedItem().toString().equals("Ticket")){
-            txtNFactura.setEnabled(false);
+            jLabel20.setText("N° Correlativo");
         } else {
-            txtNFactura.setEnabled(true);
+            jLabel20.setText("N° Factura");
         }
         calcularTotal();
     }//GEN-LAST:event_cboTipoVentaItemStateChanged

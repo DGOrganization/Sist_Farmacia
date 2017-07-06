@@ -65,7 +65,7 @@ public class frmNuevoArticulo extends javax.swing.JDialog {
         controlador = new Inventario_controlador();
         validar = new Validaciones();
         Object[] columnas = {"Producto", "Localizacion", "Stock", "Precio ($)"};
-        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         jtCompatibles.setModel(modelo);
         validar.validarSoloNumeros(txtMargen1);

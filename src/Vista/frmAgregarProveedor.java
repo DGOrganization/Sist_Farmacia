@@ -44,8 +44,8 @@ public class frmAgregarProveedor extends javax.swing.JDialog {
     
     private void cargarDatos(List<Proveedor> lista){
         String[] columnas = {"Nombre", "Telefono", "Direccion"};
-        ControlesGenerales.reiniciarJTable(jtProveedores);
-        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        Validaciones.reiniciarJTable(jtProveedores);
+        DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.forEach(datos -> {
             Object[] nuevaFila= {

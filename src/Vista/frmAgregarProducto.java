@@ -57,8 +57,8 @@ public class frmAgregarProducto extends javax.swing.JDialog {
 
     private void cargarDatos(List<Inventario> lista) {
         String[] columnas = {"Producto", "Descripcion", "Existencia", "Precio", "Bodega"};
-        ControlesGenerales.reiniciarJTable(jtInventario);
-        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        Validaciones.reiniciarJTable(jtInventario);
+        DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.forEach((Inventario datos) -> {
             Object[] nuevafila = {

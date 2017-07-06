@@ -50,8 +50,8 @@ public class frmProducto extends javax.swing.JInternalFrame {
 
     private void cargarDatos(List<Inventario> lista){
         String[] columnas = {"Producto", "Stock Actual", "Ubicacion"};
-        ControlesGenerales.reiniciarJTable(jtInventario);
-        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        Validaciones.reiniciarJTable(jtInventario);
+        DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.stream().forEach(datos -> {
             Object[] nuevaFila = {

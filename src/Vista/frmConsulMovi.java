@@ -34,8 +34,8 @@ public class frmConsulMovi extends javax.swing.JInternalFrame {
     
     private void cargarDatos(List<Movimiento> lista){
         String[] columnas = {"Fecha", "Cantidad", "Movimiento", "Comentario", "Productos"};
-        ControlesGenerales.reiniciarJTable(jtMovimientos);
-        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        Validaciones.reiniciarJTable(jtMovimientos);
+        DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         AtomicInteger totalIn = new AtomicInteger(0);
         AtomicInteger totalOut = new AtomicInteger(0);

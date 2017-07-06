@@ -36,8 +36,8 @@ public class frmAgregarVendedor extends javax.swing.JDialog {
 
     private void cargarDatos(List<Usuario> lista){
         String[] columnas = {"Nombre", "Telefono", "Usuario"};
-        ControlesGenerales.reiniciarJTable(jtUsuarios);
-        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        Validaciones.reiniciarJTable(jtUsuarios);
+        DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.forEach(datos -> {
             Object[] nuevaFila= {

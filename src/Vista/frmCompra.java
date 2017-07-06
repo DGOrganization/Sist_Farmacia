@@ -5,7 +5,6 @@
  */
 package Vista;
 
-import static Vista.ControlesGenerales.reiniciarJTable;
 import configuracion.Gestionar;
 import controlador.Compra_controlador;
 import entidades.Compra;
@@ -46,7 +45,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
         jTableDetalleCompra.setRowHeight(25);
         controlador = new Compra_controlador();
         Object[] columnas = {"Producto", "Cantidad", "Precio ($)", "Importe", "¿Quitar?"};
-        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         jTableDetalleCompra.setModel(modelo);
         ActionListener updateClockAction = (ActionEvent e) -> {
@@ -519,7 +518,7 @@ public class frmCompra extends javax.swing.JInternalFrame {
             compra.setDetalle(detalles);
             if(controlador.Registrar(compra)){
                 JOptionPane.showMessageDialog(this, "Compra registrada", this.title, JOptionPane.INFORMATION_MESSAGE);
-                    reiniciarJTable(jTableDetalleCompra);
+                    Validaciones.reiniciarJTable(jTableDetalleCompra);
                     txtProveedor.setText("");
                     txtNFactura.setText("");
                     lblTotal.setText("0.00");

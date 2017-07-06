@@ -40,8 +40,8 @@ public class frmConsultarVentas extends javax.swing.JInternalFrame {
     
     private void cargarDatos(List<Venta> lista){
         String[] columnas = {"N° Factura", "Fecha", "Total", "Cambio", "Empleado", "Estado"};
-        ControlesGenerales.reiniciarJTable(jtVentas);
-        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        Validaciones.reiniciarJTable(jtVentas);
+        DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.stream().forEach((Venta datos) -> {
             Object[] nuevaFila = {

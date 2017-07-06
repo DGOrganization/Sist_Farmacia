@@ -43,8 +43,8 @@ public class frmClientes extends javax.swing.JInternalFrame {
 
     private void cargarDatos(List<Cliente> lista) {
         String[] columnas = {"Nombre", "Telefono", "Direccion"};
-        ControlesGenerales.reiniciarJTable(jtClientes);
-        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        Validaciones.reiniciarJTable(jtClientes);
+        DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.forEach(datos -> {
             Object[] nuevaFila = {

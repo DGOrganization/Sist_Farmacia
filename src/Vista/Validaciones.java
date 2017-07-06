@@ -7,13 +7,7 @@ package Vista;
 
 
 import com.toedter.calendar.JDateChooser;
-import entidades.Bodega;
-import entidades.Categoria;
-import entidades.Departamento;
 import entidades.Menu;
-import entidades.Municipio;
-import entidades.Nivel;
-import entidades.Unidad;
 import entidades.Usuario;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
@@ -21,7 +15,6 @@ import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,10 +30,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.MenuElement;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
@@ -206,6 +201,11 @@ public class Validaciones {
                 cerrarSesion(menu.getSubElements());
             }            
         }
+    }
+    
+    public static void reiniciarJTable(JTable jTable){
+        DefaultTableModel modelo = (DefaultTableModel) jTable.getModel();
+        while(modelo.getRowCount()>0)modelo.removeRow(0);       
     }
     
     public void duiFormato(JFormattedTextField txt, Component ventana){

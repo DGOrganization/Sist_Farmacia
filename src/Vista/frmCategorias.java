@@ -8,10 +8,8 @@ package Vista;
 import configuracion.Gestionar;
 import controlador.Categoria_controlador;
 import entidades.Categoria;
-import entidades.Inventario;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,8 +39,8 @@ public class frmCategorias extends javax.swing.JInternalFrame {
 
     private void cargarDatos(List<Categoria> lista){
         String[] columnas = {"Categoria"};
-        ControlesGenerales.reiniciarJTable(jtCategoria);
-        DefaultTableModel modelo = new ControlesGenerales.DefaultTableModelImpl();
+        Validaciones.reiniciarJTable(jtCategoria);
+        DefaultTableModel modelo = new DefaultTableModelImpl();
         modelo.setColumnIdentifiers(columnas);
         lista.forEach(datos -> {
             Object[] nuevaFila= {
